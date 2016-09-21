@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FAFAFA"
+    android:paddingLeft="10dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:orientation="horizontal" >
+    
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/text1"
+    android:text="健康巡检"
+    android:textColor="@color/black"
+    android:textSize="16sp"
+    />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/text2"
+    android:layout_marginLeft="20dp"
+    android:text="看选择每月一次/每年一次/每季度一次"
+    android:textColor="#878787"
+    android:textSize="12sp"
+    />
+</LinearLayout>

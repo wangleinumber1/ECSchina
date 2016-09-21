@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/backgroud"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/white"
+         >
+
+        <TextView
+            android:id="@+id/footpricetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            
+            android:text="￥10000.00"
+            android:textSize="14sp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/carpricetextcolor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"           
+            android:layout_toLeftOf="@+id/footpricetext"
+            android:id="@+id/footnumbertext"
+            android:text="共  10件备品备件 合计："
+            android:textColor="#A5A5A5" />
+    </RelativeLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/white"
+    android:padding="15dp"
+    android:id="@+id/fapiaomessage_layout"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发票信息"
+        android:textSize="18sp"
+        android:textColor="#666666"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fanyeicon"
+        android:layout_alignParentRight="true"
+        />
+</RelativeLayout>
+</LinearLayout>

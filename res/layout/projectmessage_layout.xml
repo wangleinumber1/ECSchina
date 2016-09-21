@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/brightgray" >
+
+        <com.jiajie.jiajieproject.widget.ColumnHorizontalScrollView
+            android:id="@+id/mColumnHorizontalScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+             android:background="@color/headercolor"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:id="@+id/mRadioGroup_content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@color/headercolor"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" />
+
+            </com.jiajie.jiajieproject.widget.ColumnHorizontalScrollView>
+           
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

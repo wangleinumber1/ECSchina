@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:paddingBottom="25dp"
+        android:paddingTop="25dp" >
+
+        <CheckBox
+            android:id="@+id/imgeView1"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:checked="true"
+            android:drawableLeft="@drawable/pay_radio"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp" />
+
+        <ImageView
+            android:id="@+id/imgeView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgeView1"
+            android:background="@color/backgroud"
+            android:src="@drawable/class_pruduce" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:paddingBottom="25dp"
+        android:paddingRight="10dp"
+        android:paddingTop="18dp" >
+
+        <TextView
+            android:id="@+id/pricetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="false"
+            android:text="IBM power 7 内存  DDR3 16G"
+            android:textColor="@color/carpricetextcolor" />
+
+        <TextView
+            android:id="@+id/catshoppingitem_layouttext1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pricetext"
+            android:layout_marginTop="10dp"
+            android:text="SN号： 3248938458"
+            android:textColor="@color/textcolor"
+            android:textSize="15sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/catshoppingitem_layouttext1"
+            android:gravity="center_vertical" >
+
+           
+
+            <com.jiajie.jiajieproject.widget.MyAddAndSubView
+                android:id="@+id/my_add_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                />
+
+            <TextView
+                android:id="@+id/numbertext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/my_add_sub"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/my_add_sub"
+                android:text="￥1000.00"
+                android:textColor="#E94516"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:text="请选择支付方式"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+
+    <RadioGroup
+        android:id="@+id/pay_radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <RadioButton
+            android:id="@+id/radioPay1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:checked="true"
+            android:drawableLeft="@drawable/alipayicon"
+            android:drawableRight="@drawable/pay_radio"
+            android:paddingBottom="9dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="9dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/backgroud"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <RadioButton
+            android:id="@+id/radioPay2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableLeft="@drawable/wechatpay"
+            android:drawableRight="@drawable/pay_radio"
+            android:paddingBottom="9dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="9dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/backgroud"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <RadioButton
+            android:id="@+id/radioPay3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableLeft="@drawable/popplepay"
+            android:drawableRight="@drawable/pay_radio"
+            android:paddingBottom="9dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="9dp" />
+    </RadioGroup>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/backgroud" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:text="发票信息"
+        android:textColor="#333333"
+        android:textSize="15sp" />
+
+    <RadioGroup
+        android:id="@+id/fapiaoRadioGroup1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <RadioButton
+            android:id="@+id/fapiaostyle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/fapiaomessage1_radio"
+            android:button="@null"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/fapiaostyle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:background="@drawable/fapiaomessage2_radio"
+            android:button="@null" />
+    </RadioGroup>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="类型"
+            android:textColor="#333333"
+            android:textSize="15sp" />
+
+        <RadioGroup
+            android:id="@+id/fapiaoRadioGroup2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/fapiaostyle3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/pay_radio"
+                android:drawablePadding="10dp"
+                android:text="个人"
+                android:textColor="#333333" />
+
+            <RadioButton
+                android:id="@+id/fapiaostyle4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:button="@null"
+                android:drawableLeft="@drawable/pay_radio"
+                android:drawablePadding="10dp"
+                android:text="单位"
+                android:textColor="#333333" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud" />
+
+    <EditText
+        android:id="@+id/company_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:drawableLeft="@drawable/fapiaohead"
+        android:drawablePadding="15dp"
+        android:hint="请输入公司名称"
+        android:paddingBottom="15dp"
+        android:singleLine="true"
+        android:maxEms="10"
+        android:ellipsize="end"
+        android:paddingLeft="10dp"
+        android:paddingTop="15dp"
+        android:textColor="#333333"
+        android:textColorHint="#737373"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/backgroud" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:text="发票内容"
+        android:textColor="#333333"
+        android:textSize="15sp" />
+
+    <RadioGroup
+        android:id="@+id/fapiaoRadioGroup3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <RadioButton
+            android:id="@+id/fapiaocontent1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:checked="true"
+            android:drawableLeft="@drawable/pay_radio"
+            android:drawablePadding="10dp"
+            android:paddingBottom="10dp"
+            android:text="服务费"
+            android:textColor="#333333" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroud" />
+
+        <RadioButton
+            android:id="@+id/fapiaocontent2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableLeft="@drawable/pay_radio"
+            android:drawablePadding="10dp"
+            android:paddingTop="10dp"
+            android:text="办公用品"
+            android:textColor="#333333" />
+    </RadioGroup>
+
+</LinearLayout>

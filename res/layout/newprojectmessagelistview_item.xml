@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:paddingBottom="20dp"
+    android:paddingTop="20dp" >
+
+    <ImageView
+        android:id="@+id/newprojectmessagepoint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="5"
+        android:padding="10dp"
+        android:src="@drawable/dispoint" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/newprojectmessageTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            
+            android:textColor="@color/textcolor"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/newprojectmessagetime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+             />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/fanyeicon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:layout_weight="5"
+        android:src="@drawable/fanyeicon" />
+<!--android:text="海淀区乘胜追击拿下xx项目"  
+android:hint="2016.3.2"-->
+</LinearLayout>

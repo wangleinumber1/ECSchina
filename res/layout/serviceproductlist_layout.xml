@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/headercolor"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/fanhui"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/fanhuishangji" />
+<TextView
+            android:id="@+id/headercentertextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text=" 服务产品"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+        <RelativeLayout
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/leftImg"
+            android:gravity="center" >
+
+            <EditText
+                android:id="@+id/searchedit"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/searchkuang"
+                android:drawableLeft="@drawable/serch"
+                android:drawablePadding="10dp"
+                android:hint="IBM交换机"
+                android:paddingBottom="3dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="3dp"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/searchbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/searchedit"
+                android:background="@drawable/search_roate"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:text="搜索"
+                android:textColor="@color/headercolor"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/serviceproductlayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/serviceproductbutton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="价格"
+                android:textColor="#9A9A9A"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/serviceproductImage1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/triangleup" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/serviceproductbutton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:text="销量"
+            android:textColor="@color/titlecolorsdeep"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/serviceproductlayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:visibility="invisible"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/serviceproductbutton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="cpu核数"
+                android:textColor="#9A9A9A"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/serviceproductImage3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/xialajiantoushang" />
+        </LinearLayout>
+        <!--
+             <Button
+            android:id="@+id/serviceproductbutton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/xialajiantoushang"
+            android:text="cpu核数"
+            android:textColor="#9A9A9A"
+            android:textSize="18sp" />
+        -->
+    </RelativeLayout>
+    <!--
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:background="#FAFAFA"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        >
+
+        <Button
+            android:id="@+id/serviceproductbutton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/jiangxu"
+            android:text="价格"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/serviceproductbutton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/jiangxu"
+            android:text="销量"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+        <Button
+            android:id="@+id/serviceproductbutton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/xialajiantou"
+            android:text="cpu核数"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <BUtton
+            android:id="@+id/serviceproducttext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:text="cpu核数"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    -->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud" />
+
+    <com.jiajie.jiajieproject.utils.PullToRefreshView
+        android:id="@+id/serviceproductlayout_pull"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <!-- 这里放置listview,gridview或者scrollview的布局 ,PullToRefreshView要设置android:orientation="vertical"属性否则,显示不正确 -->
+
+        <ListView
+            android:id="@+id/serviceproductlayout_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/backgroud"
+            android:dividerHeight="1dp"
+            android:scrollbars="none" />
+    </com.jiajie.jiajieproject.utils.PullToRefreshView>
+
+</LinearLayout>

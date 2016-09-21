@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="210dp"
+    android:background="@color/white" >
+
+    <ImageView
+        android:id="@+id/newpartimage"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="7dp"
+        android:src="@drawable/newproduce" />
+
+    <TextView
+        android:id="@+id/newparttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newpartimage"
+        android:maxLines="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="戴尔DELL R730 服务器(2063/8G/300G 10k 2.5/)"
+        android:textColor="#333333"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/newpartprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newparttext"
+        android:layout_marginTop="25dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="￥28750.00"
+        android:textColor="#E94516"
+        android:textSize="11sp" />
+
+</RelativeLayout>

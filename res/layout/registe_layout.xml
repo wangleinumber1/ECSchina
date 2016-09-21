@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/headercolor" >
+
+        <TextView
+            android:id="@+id/headerleftImg"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:paddingRight="20dp"
+            android:text="取消"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/headercentertextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="公司注册页面"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <!-- android:background="@drawable/graybutton_up_down" -->
+
+    </RelativeLayout>
+<ImageView
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    />
+<EditText
+    android:id="@+id/registeedit1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+   android:paddingBottom="10dp"
+   android:background="@color/white"
+   android:hint="请输入你的姓名"
+   android:paddingLeft="20dp"
+   android:singleLine="true"
+   android:maxLength="4"
+   android:drawablePadding="10dp"
+   android:drawableLeft="@drawable/gongsizhuceyename"
+    />
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="5dp"
+    />
+<EditText
+    android:id="@+id/registeedit2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+   android:paddingBottom="10dp"
+   android:background="@color/white"
+   android:hint="请输密码"
+   android:singleLine="true"
+   android:paddingLeft="20dp"
+   android:drawablePadding="10dp"
+   android:drawableLeft="@drawable/mail"
+    />
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="5dp"
+   
+    />
+<EditText
+    android:id="@+id/registeedit3"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+   android:paddingBottom="10dp"
+   android:background="@color/white"
+   android:hint="请设置一个6-16位的密码"
+   android:maxLength="16"
+   android:singleLine="true"
+   android:paddingLeft="20dp"
+   android:drawablePadding="10dp"
+   android:drawableLeft="@drawable/xinmima"
+    />
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="5dp"
+   
+    />
+<EditText
+    android:id="@+id/registeedit4"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+   android:paddingBottom="10dp"
+   android:background="@color/white"
+   android:hint="请重复输入密码"
+   android:maxLength="16"
+   android:singleLine="true"
+   android:paddingLeft="20dp"
+   android:drawablePadding="10dp"
+   android:drawableLeft="@drawable/chongfumima"
+    />
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+   
+    />
+
+<TextView
+    android:id="@+id/completetext"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:gravity="center"
+    android:text="下一步"
+    android:textColor="@color/white"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:layout_marginTop="40dp"
+   android:background="@color/loginbackgroundcolor"
+    />
+</LinearLayout>

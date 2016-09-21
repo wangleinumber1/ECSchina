@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/layout_main_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.jiajie.jiajieproject.widget.ReboundScrollView
+            android:id="@+id/mainScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <include layout="@layout/mainpageheadview" />
+
+                <include layout="@layout/mainpagegridviewsell_layout" />
+            </LinearLayout>
+        </com.jiajie.jiajieproject.widget.ReboundScrollView>
+
+        <include
+            android:id="@+id/mainpage_header"
+            layout="@layout/mainpage_header" />
+    </FrameLayout>
+
+</LinearLayout>

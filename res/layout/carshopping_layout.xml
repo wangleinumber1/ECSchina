@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <TextView
+            android:id="@+id/headercentertextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="购物车"
+            android:textColor="#333333"
+            android:textSize="18sp" />
+
+        <ToggleButton
+            android:id="@+id/headerRightImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            android:gravity="center"
+            android:textColor="#9C9C9C"
+            android:textOff="完成"
+            android:textOn="编辑"
+            android:textSize="13sp" />
+        <!-- android:background="@drawable/graybutton_up_down" -->
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/bottomLayout"
+                android:orientation="vertical" >
+
+                <com.jiajie.jiajieproject.widget.ReboundScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" >
+
+                        <com.baoyz.swipemenulistview.SwipeMenuListView
+                            android:id="@+id/carshopping_layoutlistview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:cacheColorHint="@android:color/transparent"
+                            android:divider="@color/backgroud"
+                            android:dividerHeight="10dp"
+                            android:scrollbars="none" />
+                    </LinearLayout>
+                </com.jiajie.jiajieproject.widget.ReboundScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bottomLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/backgroud" />
+
+                <RelativeLayout
+                    android:id="@+id/bottom2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/white"
+                    android:orientation="horizontal" >
+
+                    <CheckBox
+                        android:id="@+id/allselect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:button="@null"
+                        android:checked="true"
+                        android:drawableLeft="@drawable/pay_radio"
+                        android:drawablePadding="5dp"
+                        android:text="全选"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/BottomLayout1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                       
+                        android:layout_toRightOf="@+id/allselect" >
+
+                        <Button
+                            android:id="@+id/carshopping_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="25dp"
+                            android:background="@null"
+                            android:drawableLeft="@drawable/carshopping_price"
+                            android:drawablePadding="5dp"
+                            android:text="14540.00"
+                            android:textColor="#E84A1A"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:id="@+id/balance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/balance" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/BottomLayout2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                         android:visibility="gone"
+                        android:layout_centerVertical="true" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/balance"
+                            android:visibility="invisible" />
+
+                        <ImageView
+                            android:id="@+id/movetocare"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/movetocare" />
+
+                        <ImageView
+                            android:id="@+id/car_delete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="25dp"
+                            android:layout_toLeftOf="@+id/movetocare"
+                            android:src="@drawable/car_delete" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <include
+                android:id="@+id/backLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/konglayout"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

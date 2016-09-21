@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/linewithpoint"
+        android:layout_width="10dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp" >
+
+        <ImageView
+            android:id="@+id/point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/wuliuxiangqingyuan" />
+
+        <ImageView
+            android:id="@+id/logisticdetailline"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/point"
+            android:layout_centerHorizontal="true"
+            android:background="#EBEBEB" />
+
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/point"
+            android:layout_centerHorizontal="true"
+            android:background="#EBEBEB" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/linewithpoint"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/logisticdetail_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="货物已从北京万柳出发"
+           android:textColor="@color/textcolor"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/logisticdetail_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2015年8月28"
+                android:textColor="#666666"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/logisticdetail_text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:text="14:00"
+                android:textColor="#666666"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

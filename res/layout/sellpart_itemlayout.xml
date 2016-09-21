@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="150dp"
+    android:background="@color/white" >
+
+    <ImageView
+        android:id="@+id/sellpartimage"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="7dp"
+        android:src="@drawable/sellproduce" />
+
+    <TextView
+        android:id="@+id/sellparttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sellpartimage"
+        android:maxLines="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="EMC 整机 900-566-003"
+        android:textColor="#333333"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/sellpartprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sellparttext"
+        android:layout_marginTop="25dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="￥28750.00"
+        android:textColor="#E94516"
+        android:textSize="11sp" />
+
+</RelativeLayout>

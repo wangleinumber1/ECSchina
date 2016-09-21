@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:paddingBottom="2.5dp" >
+
+    <ImageView
+        android:id="@+id/headerleftImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="17dip"
+        android:paddingRight="12dp"
+        android:paddingTop="5dp"
+        android:src="@drawable/qr_code" />
+
+    <ImageView
+        android:id="@+id/mainpage_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="2.5dp"
+        android:layout_toRightOf="@+id/headerleftImg"
+        android:src="@drawable/search_button" />
+
+    <ImageView
+        android:id="@+id/mainpage_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="12dp"
+        android:paddingRight="17dip"
+        android:paddingTop="5dp"
+        android:src="@drawable/phone" />
+    <!-- android:background="@drawable/graybutton_up_down" -->
+
+</RelativeLayout>

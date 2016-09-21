@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/headerLyout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/headercolor"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/leftImage"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/fanhuishangji" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/leftImg"
+            android:gravity="center" >
+
+            <EditText
+                android:id="@+id/searchedit"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/searchkuang"
+                android:drawableLeft="@drawable/graysearch"
+                android:drawablePadding="10dp"
+                android:hint="IBM交换机"
+                android:paddingBottom="3dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="3dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="#e5e5e5"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/searchbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/searchedit"
+                android:background="@drawable/search_roate"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:text="搜索"
+                android:textColor="@color/headercolor"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/rightImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="5dip"
+            android:gravity="center"
+            android:paddingBottom="5dip"
+            android:paddingLeft="7dip"
+            android:paddingRight="7dip"
+            android:paddingTop="5dip"
+            android:src="@drawable/erweima"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp" >
+
+        <LinearLayout
+            android:id="@+id/cartsclasslayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/cartsclassbutton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="价格"
+                android:textColor="#9A9A9A"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/cartsclassImage1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/triangleup" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/cartsclassbutton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:text="销量"
+            android:textColor="@color/titlecolorsdeep"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/cartsclassbutton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/shaixuan"
+            android:text="筛选"
+            android:textColor="#9A9A9A"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud" />
+
+    <RelativeLayout
+        android:id="@+id/backloading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.jiajie.jiajieproject.utils.PullToRefreshView
+            android:id="@+id/cartsclasslayout_pull"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <!-- 这里放置listview,gridview或者scrollview的布局 ,PullToRefreshView要设置android:orientation="vertical"属性否则,显示不正确 -->
+
+            <ListView
+                android:id="@+id/cartsclasslayout_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@color/backgroud"
+                android:dividerHeight="1dp"
+                android:scrollbars="none" />
+        </com.jiajie.jiajieproject.utils.PullToRefreshView>
+
+       
+    </RelativeLayout>
+</LinearLayout>

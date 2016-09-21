@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/backgroud"
+    >
+    
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scaleType="fitXY"
+    android:id="@+id/goldbarIamge"
+    android:src="@drawable/banner5"
+    />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    >
+    
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+     android:background="@color/white"
+    >
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button1"
+        android:layout_weight="1"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:drawableTop="@drawable/xingnengtiaoyou"
+        android:drawablePadding="10dp"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:text="性能调优"
+        android:textSize="16sp"
+        />
+    <!-- goldperfissionbutton -->
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+         android:layout_weight="1"
+         android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:layout_gravity="center_vertical"
+         android:background="@color/white"
+          android:drawableTop="@drawable/jifangbanqian"
+        android:drawablePadding="10dp"
+        android:text="机房搬家"
+        android:textSize="16sp"
+        />
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button3"
+         android:layout_weight="1"
+         android:background="@color/white"
+         android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:layout_gravity="center_vertical"
+         android:drawableTop="@drawable/shujuqianyi"
+        android:drawablePadding="10dp"
+        android:text="数据迁移"
+        android:textSize="16sp"
+        />
+    
+    </LinearLayout>
+<LinearLayout
+    android:layout_marginTop="1dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    >
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button4"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:layout_gravity="center_vertical"
+         android:drawableTop="@drawable/xunihuashishi"
+        android:drawablePadding="10dp"
+        android:text="虚拟化实施"
+        android:textSize="16sp"
+        />
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button5"
+         android:layout_weight="1"
+         android:background="@color/white"
+         android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:layout_gravity="center_vertical"
+         android:drawableTop="@drawable/anquanpinggu"
+        android:drawablePadding="10dp"
+        android:text="安全评估"
+        android:textSize="16sp"
+        />
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button6"
+         android:layout_weight="1"
+         android:background="@color/white"
+         android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:layout_gravity="center_vertical"
+         android:drawableTop="@drawable/xitongjicheng"
+        android:drawablePadding="10dp"
+        android:text="系统集成"
+        android:textSize="16sp"
+        />
+    
+    
+
+</LinearLayout>
+</LinearLayout>
+
+</LinearLayout>

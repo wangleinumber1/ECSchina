@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FAFAFA" >
+
+    <ImageView
+        android:id="@+id/projectreleaseitemimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:padding="20dp"
+        android:src="@drawable/partsitemimage" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/projectreleaseitemimage"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/projectreleaseitemtext1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="佳杰科技（上海）有限公司"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/projectreleaseitemtext2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="IT服务项目招标信息"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        
+    </LinearLayout>
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/projectrelease_icon"
+    android:src="@drawable/fanyeicon"
+    android:layout_centerVertical="true"
+    android:layout_alignParentRight="true"
+    android:padding="10dp"
+    />
+</RelativeLayout>

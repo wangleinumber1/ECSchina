@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/headercolor"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/leftImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:clickable="false"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/point"
+            android:enabled="false"
+            android:gravity="center_vertical"
+            android:text="城市"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <!--
+        <RelativeLayout
+            android:id="@+id/leftlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/partsmiddlebutton"
+            android:gravity="center_horizontal" >
+
+            <Button
+                android:id="@+id/leftImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:text="北京"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/leftImg"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/leftImg"
+                android:paddingBottom="2dp"
+                android:src="@drawable/xialakey" />
+        </RelativeLayout>
+        -->
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/leftImg"
+            android:gravity="center" >
+
+            <EditText
+                android:id="@+id/searchedit"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/searchkuang"
+                android:drawableLeft="@drawable/graysearch"
+                android:drawablePadding="10dp"
+                android:hint="IBM交换机"
+                android:paddingBottom="3dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="3dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="#e5e5e5"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/searchbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/searchedit"
+                android:background="@drawable/search_roate"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:text="搜索"
+                android:textColor="@color/headercolor"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/rightImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="5dip"
+            android:gravity="center"
+            android:paddingBottom="5dip"
+            android:paddingLeft="7dip"
+            android:paddingRight="7dip"
+            android:paddingTop="5dip"
+            android:src="@drawable/erweima"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

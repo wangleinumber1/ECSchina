@@ -1,0 +1,90 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/FrameLayout01"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <!--
+    <TextView
+        android:id="@+id/iv_tv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@color/title_tv_color"
+        android:textSize="18sp" >
+    </TextView>
+
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="20dip"
+        android:layout_height="25dip"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="10dip"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip" >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/iv_left"
+        android:layout_width="25dip"
+        android:layout_height="25dip"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dip"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip" >
+    </ImageView>
+        -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent" >
+
+            <ImageView
+                android:id="@+id/headerleftImg"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:paddingLeft="10dip"
+                android:paddingRight="20dp"
+                android:src="@drawable/erweimaleft" />
+
+            <TextView
+                android:id="@+id/headercentertextview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="55dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:text="二维码/条码"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <!-- android:background="@drawable/graybutton_up_down" -->
+
+            <ImageView
+                android:id="@+id/headerrightImg"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dip"
+                android:src="@drawable/erweimaright"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+       
+    </RelativeLayout>
+
+</FrameLayout>

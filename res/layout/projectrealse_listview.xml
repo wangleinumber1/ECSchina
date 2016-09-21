@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+   <!--  <com.jiajie.jiajieproject.utils.PullToRefreshView
+        android:id="@+id/projectrealese_pull"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+ -->
+        <!-- 这里放置listview,gridview或者scrollview的布局 ,PullToRefreshView要设置android:orientation="vertical"属性否则,显示不正确 -->
+
+        <ListView
+            android:id="@+id/projectrealese_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/backgroud"
+            android:dividerHeight="1dp"
+            android:scrollbars="none" />
+ <!--    </com.jiajie.jiajieproject.utils.PullToRefreshView> -->
+
+</LinearLayout>

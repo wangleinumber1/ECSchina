@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+     <TextView
+        android:id="@+id/headtext"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:visibility="invisible"
+        />
+<RelativeLayout
+        android:id="@+id/headlayout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white" >
+
+        <Button
+            android:id="@+id/headerleftImg"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:drawableLeft="@drawable/fanhuiicon"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:paddingRight="20dp"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/headercentertextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="物流详情"
+            android:textColor="@color/textcolor"
+            android:textSize="20sp" />
+
+        <!-- android:background="@drawable/graybutton_up_down" -->
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud"
+        />
+    <ListView
+        android:id="@+id/logisticstatedetaillayout_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@color/backgroud"
+        android:dividerHeight="1dp"
+        android:background="@color/white"
+        android:scrollbars="none" />
+
+</LinearLayout>

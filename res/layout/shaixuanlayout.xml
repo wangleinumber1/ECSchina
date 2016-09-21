@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/headtext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <TextView
+            android:id="@+id/shaixuanheaderleftImg"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:paddingRight="20dp"
+            android:text="取消"
+            android:textColor="@color/citytextcolor"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/headercentertextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="筛选"
+            android:textColor="@android:color/black"
+           android:textSize="18sp"  />
+
+        <!-- android:background="@drawable/graybutton_up_down" -->
+
+        <TextView
+            android:id="@+id/shaixuanheaderright"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="确定"
+            android:textColor="@color/citytextcolor"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud" />
+
+    <RelativeLayout
+        android:id="@+id/shaixuanlayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:paddingRight="20dp"
+            android:text="配送至"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/shaixuanlayout1textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="北京市海淀区"
+            android:textColor="@color/hotcolor"
+            android:textSize="16sp" />
+
+        <!-- android:background="@drawable/graybutton_up_down" -->
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:src="@drawable/fanyeicon"
+            android:text="注册"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/backgroud" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/shaixuanlayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"      
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/shaixuanlayout2textview1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/shaixuanyexuanzhong"
+                android:gravity="center"
+                android:text="次日达"
+                android:textColor="@color/headercolor"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/shaixuanlayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"          
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/shaixuanlayout2textview2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_centerInParent="true"
+                android:background="@drawable/shaixuanyelankuang"
+                android:gravity="center"
+                android:text="期货"
+                android:textColor="@color/fapiaotextcolor"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/backgroud" />
+
+    <RelativeLayout
+        android:id="@+id/shaixuanlayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <TextView
+            android:id="@+id/shaixuanlayout3textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:paddingRight="20dp"
+            android:text="品牌"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/shaixuanlayout3button1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/fanyeicon"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="全部"
+             android:textColor="@color/citytextcolor"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud" />
+
+    <RelativeLayout
+        android:id="@+id/shaixuanlayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:visibility="invisible"
+        android:background="@color/white" >
+
+        <TextView
+            android:id="@+id/shaixuanlayout4textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:paddingRight="20dp"
+            android:text="类型"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/shaixuanlayout4button1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/fanyeicon"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="全部"
+           android:textColor="@color/citytextcolor"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud" />
+
+    <RelativeLayout
+        android:id="@+id/shaixuanlayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:background="@color/white" >
+
+        <TextView
+            android:id="@+id/shaixuanlayout5textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:paddingRight="20dp"
+            android:text="种类"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/shaixuanlayout5button1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/fanyeicon"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="全部"
+             android:textColor="@color/citytextcolor"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud" />
+
+    <RelativeLayout
+        android:id="@+id/shaixuanlayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/shaixuanlayout6textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:paddingRight="20dp"
+            android:text="价格"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/shaixuanlayout6button1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/fanyeicon"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="全部"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud"
+        android:visibility="gone" />
+
+</LinearLayout>

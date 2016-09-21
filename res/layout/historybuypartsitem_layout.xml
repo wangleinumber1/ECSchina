@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:paddingRight="25dp"
+                android:src="@drawable/yifukuanzhang" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/historybuypartsitemtext1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+               
+                android:textColor="#666666"
+                android:textSize="16sp" />
+<!-- android:text="订单号1234567894567"
+  android:text="IBM P720 内存条4G"
+   android:text="￥10000.00"
+   android:text="x2"
+    android:text="合同编号：1234567891"
+    android:src="@drawable/image"
+    android:text="运单编号：1234567981"
+    android:text="共100件备件  合计￥100000.00"
+  -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/backgroud" />
+
+            <RelativeLayout
+                android:id="@+id/historybuypartsitemlayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/historybuypartsitemImgeView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/historypartskuang"
+                    android:padding="2dp"
+                    android:src="@drawable/order"
+                     />
+
+                <TextView
+                    android:id="@+id/historybuypartsitemtext2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/historybuypartsitemImgeView1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/historybuypartsitemImgeView1"
+                  
+                    android:textColor="@color/textcolor"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/historybuypartsitemtext21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/historybuypartsitemtext2"
+                    android:layout_marginRight="10dp"
+                   
+                    android:textColor="#666666"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/historybuypartsitemtext3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/historybuypartsitemtext2"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_toRightOf="@+id/historybuypartsitemImgeView1"
+                   
+                    android:textColor="#666666"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/historybuypartsitemtext31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/historybuypartsitemtext21"
+                    android:layout_below="@+id/historybuypartsitemtext21"
+                    
+                    android:textColor="#666666"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/historybuypartsitemtext4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/historybuypartsitemtext3"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_toRightOf="@+id/historybuypartsitemImgeView1"
+                    
+                    android:textColor="#666666"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/historybuypartsitemtext5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/historybuypartsitemtext4"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    
+                    android:textColor="#666666"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/backgroud" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp" >
+
+                <TextView
+                    android:id="@+id/historybuypartsitembutton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/historyitem_button"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
+                    android:text="删除订单"
+                    
+                    android:textColor="@color/headercolor"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/historybuypartsitembutton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/historyitem_button"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
+                    android:text="查看物流"
+                    android:textColor="@color/headercolor"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/historybuypartsitembutton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/historyitem_button"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
+                    android:text="联系客服"
+                    android:textColor="@color/headercolor"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

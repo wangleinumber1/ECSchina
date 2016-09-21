@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white" >
+
+    <ImageView
+        android:id="@+id/cartclassitemimage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:src="@drawable/partsitemimage" />
+
+    <TextView
+        android:id="@+id/cartclassitemtext1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/cartclassitemimage"
+        
+        android:layout_alignParentRight="@+id/cartclassitemimage"
+        android:textColor="#585858"
+        android:layout_marginLeft="20dp"
+        android:textSize="18sp" />
+
+   <TextView
+        android:id="@+id/cartclassitemtext2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cartclassitemtext1"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/cartclassitemimage"
+       
+        android:textColor="@color/hotcolor"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/hoticon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/cartclassitemtext2"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/hotkuang"
+        android:text="热卖中"
+        android:textColor="#EDA4A2"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp"
+        android:textSize="12sp"
+        android:paddingBottom="2dp"
+        android:layout_toRightOf="@+id/cartclassitemtext2"
+        android:src="@drawable/hot" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cartclassitemtext3"
+        
+        android:layout_toRightOf="@+id/cartclassitemimage"
+        android:layout_alignLeft="@+id/cartclassitemtext2"
+        android:layout_below="@+id/cartclassitemtext2"
+        android:layout_marginBottom="5dp"
+        android:textColor="#8D8D8D"
+         />
+ <!-- android:text="IBM  P720 内存条 4G"
+  android:text="￥9999.00"
+  android:text="库存仅剩10件"
+  -->
+</RelativeLayout>

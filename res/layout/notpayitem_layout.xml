@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/backgroud" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#FCFCFC" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp" >
+
+            <TextView
+                android:id="@+id/notpayitem_layouttext1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="订单号1234567894567"
+                android:textColor="#999999"
+                android:textSize="13sp" />
+            <!--
+android:text="订单号1234567894567"
+android:text="数据库调优服务"
+ android:text="￥10000.00"
+ android:text="合同编号：1234567891"
+ android:text="x2"
+  android:text="打款截止日期：2015.1.24"
+   android:text="共一次服务  合计￥100000.00"
+   android:src="@drawable/image" 
+            -->
+
+            <TextView
+                android:id="@+id/notpayitem_layouttext11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="等待付款"
+                android:textColor="#E94516"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/backgroud" />
+
+        <RelativeLayout
+            android:id="@+id/notpayitem_layoutlayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <ImageView
+                android:id="@+id/notpayitem_layoutImgeView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/class_pruduce" />
+
+            <TextView
+                android:id="@+id/notpayitem_layouttext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/notpayitem_layoutImgeView1"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/notpayitem_layoutImgeView1"
+                android:text="IBM power 7 内存 DDR3 16G"
+                android:textColor="@color/textcolor"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/notpayitem_layouttext3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/notpayitem_layouttext2"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/notpayitem_layoutImgeView1"
+                android:text="SN号：3248938595"
+                android:textColor="@color/textcolor"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/notpayitem_layouttext4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/notpayitem_layouttext3"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/notpayitem_layoutImgeView1"
+                android:text="￥10000.00"
+                android:textColor="@color/textcolor"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/notpayitem_layouttext5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/notpayitem_layouttext4"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:text="x2"
+                android:textColor="#999999"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/backgroud"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+           >
+
+            <Button
+                android:id="@+id/notpay_yingfu"               
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="8000.00"
+                android:textSize="13sp"
+                android:background="@null"
+                android:layout_centerVertical="true"
+              android:layout_marginRight="10dp"
+                android:textColor="@color/textcolor"
+                android:drawableLeft="@drawable/notpay_yingfu" />
+
+            <Button
+                android:id="@+id/notpay_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/notpay_yingfu"
+                android:background="@null"
+                android:textSize="13sp"
+                android:drawablePadding="5dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/textcolor"
+                android:drawableLeft="@drawable/notpay_all"
+                android:text="2"
+                android:drawableRight="@drawable/notpay_jian"
+                 />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/backgroud"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingBottom="6dp"
+            android:paddingRight="10dp"
+            android:paddingTop="6dp" >
+
+            <ImageView
+                android:id="@+id/go_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/go_pay" />
+
+            <ImageView
+                android:id="@+id/cancle_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/go_pay"
+                android:src="@drawable/cancle_order" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

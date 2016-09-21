@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/headercolor" >
+
+        <ImageView
+            android:id="@+id/headerleftImg"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:paddingRight="20dp"
+            android:src="@drawable/fanhuishangji" />
+
+        <TextView
+            android:id="@+id/headercentertextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="备件详情"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <!-- android:background="@drawable/graybutton_up_down" -->
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/bottomtab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/black" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" >
+
+                <CheckBox
+                    android:id="@+id/careful"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/goodsdetailbg"
+                    android:button="@null"
+                    android:drawableTop="@drawable/heartbutton"
+                    android:gravity="center"
+                    android:paddingTop="5dp"
+                    android:text="关注"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@color/black"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingTop="5dp" >
+
+                    <ImageView
+                        android:id="@+id/buycar"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/car" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="购物车"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/addcar"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:background="@color/headercolor"
+                android:gravity="center"
+                android:text="加入购物车"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <com.jiajie.jiajieproject.widget.ScrollViewExtend
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottomtab"
+            android:layout_alignParentTop="true"
+            android:fillViewport="true" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <LinearLayout
+                        android:id="@+id/goodsdetailUp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" 
+                        android:background="@color/white"                      
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:id="@+id/BarImage"
+                            android:layout_gravity="center_horizontal"
+                            
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/jiazaitupian"
+                           android:scaleType="fitXY"
+                           />
+
+                        <RadioGroup
+                            android:id="@+id/radiogroup"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
+
+                            <RadioButton
+                                android:id="@+id/rb_parts"
+                                android:layout_width="0dp"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/tabbg"
+                                android:button="@null"
+                                android:checked="true"
+                                android:gravity="center"
+                                android:paddingBottom="10dp"
+                                android:paddingTop="10dp"
+                                android:text="备件介绍"
+                                android:textColor="@color/tab_text_color" />
+
+                            <ImageView
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/backgroud" />
+
+                            <RadioButton
+                                android:id="@+id/rb_goldmedal"
+                                android:layout_width="0dp"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/tabbg"
+                                android:button="@null"
+                                android:gravity="center"
+                                android:paddingBottom="10dp"
+                                android:paddingTop="10dp"
+                                android:text="详细参数"
+                                android:textColor="@color/tab_text_color" />
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/goodsdetailviewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/goodsdetailUp"
+                        android:layout_marginTop="5dp" />
+                    
+                </RelativeLayout>
+                <!-- android:src="@drawable/partsheadimage"   -->
+            </LinearLayout>
+        </com.jiajie.jiajieproject.widget.ScrollViewExtend>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <ImageView
+            android:id="@+id/produce_Image"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:src="@drawable/class_pruduce" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:paddingLeft="10dp"
+        android:orientation="vertical"
+        android:paddingRight="40dp" >
+
+        <TextView
+            android:id="@+id/producename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="IBM DS 300GB 15K FC HDD (136)"
+            android:textColor="@color/classblackcolor"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/produceprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="￥  690.00"
+            android:textColor="@color/classredcolor"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/producecount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="10dp"
+            android:text="库存件数： 6"
+            android:textColor="#8C8C8C"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

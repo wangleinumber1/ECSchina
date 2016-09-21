@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/backgroud"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/layout_main_banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="10dp" >
+
+        <com.jiajie.jiajieproject.widget.ChildViewPager 
+            android:id="@+id/vp_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.jiajie.jiajieproject.widget.CirclePageIndicator
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_gravity="center_horizontal|bottom"
+            
+            android:layout_marginBottom="10dp"
+            
+            android:padding="10dip" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:background="@color/white"
+        >
+
+        <Button
+            android:id="@+id/rb_salesparts"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/cuxiaobeijianicon"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="促销备件"
+            android:textColor="@color/secondcolor"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/rb_scarcityparts"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/xiquejianjianicon"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="稀缺备件"
+            android:textColor="@color/secondcolor"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/rb_partsclass"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/beijianfeileiicon"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="备件分类"
+            android:textColor="@color/secondcolor"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/rb_logisticsstate"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/wuliuzhaungtaiicon"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="物流状态"
+            android:textColor="@color/secondcolor"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

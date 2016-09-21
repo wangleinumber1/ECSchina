@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <ImageView
+            android:id="@+id/headerleftImg"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:paddingRight="20dp"
+            android:src="@drawable/order_back" />
+
+        <TextView
+            android:id="@+id/headercentertextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="账号管理"
+            android:textColor="#333333"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/headerRightImg"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="20dip"
+            android:paddingRight="10dp"
+            android:text="确定"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+        <!-- android:background="@drawable/graybutton_up_down" -->
+
+    </RelativeLayout>
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/backgroud"
+    />
+    <EditText
+        
+        android:id="@+id/edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="赵晶"
+        android:ellipsize="end"
+        android:maxEms="12"
+        android:singleLine="true"
+        android:textColor="#333333"
+        android:textColorHint="#999999"
+        android:textSize="15sp" />
+
+</LinearLayout>

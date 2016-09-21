@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <Button
+            android:id="@+id/cityleftImg"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:drawableLeft="@drawable/guanbi"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:paddingRight="20dp"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/citycentertextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="切换城市"
+            android:textColor="@android:color/black"
+           android:textSize="18sp"  />
+
+        <!-- android:background="@drawable/graybutton_up_down" -->
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroud" >
+
+        <RelativeLayout
+            android:id="@+id/city_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/white" >
+
+            <ListView
+                android:id="@+id/city_list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="#00000000"
+                android:divider="@null"
+                android:scrollbars="none" />
+
+            <com.city.list.main.MyLetterListView
+                android:id="@+id/cityLetterListView"
+                android:layout_width="30dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="100dp"
+                android:background="#00000000" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:maxWidth="80dp"
+            android:minWidth="80dp"
+            android:text=""
+            android:textColor="#3399ff"
+            android:textSize="70sp"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+</LinearLayout>

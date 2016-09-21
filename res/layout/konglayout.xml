@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/middletext"
+        android:layout_centerInParent="true"
+        android:text="您还没有选择任何备件"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/kongcart"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/middletext"
+        android:layout_marginBottom="20dp"
+        />
+    <TextView
+        android:id="@+id/partbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:text="去选备件"
+        android:background="@drawable/car_empty_kuang"
+        android:layout_below="@+id/middletext"
+       android:textColor="@color/headercolor" 
+       android:paddingLeft="15dp"
+       android:paddingRight="15dp"
+       android:paddingTop="5dp"
+       android:paddingBottom="5dp"
+        android:textSize="16sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

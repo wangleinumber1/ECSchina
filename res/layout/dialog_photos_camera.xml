@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <TextView
+        android:id="@+id/bt_photos"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="从本地相册获取"
+        android:gravity="center"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/bt_camera"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/bt_photos"
+        android:layout_marginTop="1dp"
+        android:text="打开照相机"
+         android:gravity="center"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/bt_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/bt_camera"
+        android:layout_marginTop="5dp"
+        android:text="取消"
+         android:gravity="center"
+        android:textColor="@android:color/black" />
+
+</RelativeLayout>

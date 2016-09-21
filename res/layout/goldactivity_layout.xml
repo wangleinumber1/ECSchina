@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/backgroud"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="2.5dp" >
+
+        <ImageView
+            android:id="@+id/headerleftImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="17dip"
+            android:paddingRight="12dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/qr_code_grey" />
+
+        <ImageView
+            android:id="@+id/mainpage_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="2.5dp"
+            android:layout_toRightOf="@+id/headerleftImg"
+            android:src="@drawable/search_greyicon" />
+
+        <ImageView
+            android:id="@+id/mainpage_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="12dp"
+            android:paddingRight="17dip"
+            android:paddingTop="5dp"
+            android:src="@drawable/phone_grey" />
+        <!-- android:background="@drawable/graybutton_up_down" -->
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#e0e0e0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+       
+        <com.jiajie.jiajieproject.widget.ReboundScrollView
+            android:id="@+id/tools_scrlllview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:background="@color/backgroud"
+            android:scrollbars="none"
+            android:fadingEdge="none" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/class_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/classbg_grey"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/classsiamgewithtext" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#e0e0e0" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/tools"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </com.jiajie.jiajieproject.widget.ReboundScrollView>
+
+        <com.jiajie.jiajieproject.widget.YLListView
+            android:id="@+id/goldListView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/backgroud"
+            android:divider="@color/backgroud"
+            android:dividerHeight="1dp"
+            android:listSelector="#00000000"
+            android:scrollbars="none" />
+    </LinearLayout>
+
+</LinearLayout>

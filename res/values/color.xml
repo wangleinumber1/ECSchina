@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 加减框 -->
+    <color name="divider">#333333</color>
+
+    <!-- 提交订单蓝颜色 -->
+    <color name="oredrbluecolor">#002C59</color>
+    <!-- 分类红颜色 -->
+    <color name="classredcolor">#E94516</color>
+    <!-- 分类黑颜色 -->
+    <color name="classblackcolor">#333333</color>
+    <!-- 头部颜色 -->
+    <color name="headercolor">#018DCA</color>
+    <!-- 背景颜色 -->
+    <color name="backgroud">#F0EFF4</color>
+    <!-- 首页tabcolor -->
+    <color name="tabbackgroud">#F6F6F6</color>
+    <!-- 首页tab文字color上 -->
+    <color name="tabtextcolorup">#5E5E5E</color>
+    <!-- 首页tab文字color下 -->
+    <color name="tabtextcolordown">#002C59</color>
+    <!-- partsmiddleup -->
+    <color name="partsmiddleup">#ffffff</color>
+    <!-- partsmiddledown -->
+    <color name="partsmiddledown">#DCDCDC</color>
+    <!-- 热红 -->
+    <color name="hotcolor">#ff771c</color>
+    <!--  -->
+    <!-- 立即下单 -->
+    <color name="lijixiadancolor">#EC6F41</color>
+    <!-- 一键拨号 -->
+    <color name="yijianbohaocolor">#6CAF48</color>
+    <!-- 添加收藏 -->
+    <color name="tianjiashoucangcolor">#EC4242</color>
+
+    <!-- 弹框群聊灰 -->
+    <color name="tuichuqunliaocolor">#CDCDCD</color>
+    <!-- 白色 -->
+    <color name="white">#ffffff</color>
+    <!-- 搜索背景色银白 -->
+    <color name="brightwhite">#F5F5F5</color>
+    <!-- button点击色石板灰 -->
+    <color name="buttondown">#708090</color>
+    <!-- 嘿 -->
+    <color name="black">#000000</color>
+    <!-- 线的颜色银灰 -->
+    <color name="brightgray">#E4E4E4</color>
+    <!-- 注册button颜色黄 -->
+    <color name="brightyellow">#E3c002</color>
+    <!-- decorateitemtextcolor红 -->
+    <color name="decorateitemtextcolor">#ff6628</color>
+    <!-- 选择城市textcolor嘿 -->
+    <color name="citytextcolor">#333333</color>
+    <!-- 店铺框颜色嘿 -->
+    <color name="kuangcolor">#cccccc</color>
+    <color name="province_line_border">#C7C7C7</color>
+    <!-- 购物车价格文字颜色 -->
+    <color name="carpricetextcolor">#494949</color>
+    <!-- 发票文字 -->
+    <color name="fapiaotextcolor">#7A7A7A</color>
+    <!-- button颜色 -->
+    <color name="loginbackgroundcolor">#E94616</color>
+    <color name="possible_result_points">#c0ffbd21</color>
+    <!-- Android standard ICS color -->
+    <color name="result_text">#ff000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="viewfinder_laser">#ffcc0000</color>
+    <!-- Android standard ICS color -->
+    <color name="viewfinder_mask">#cb000000</color>
+    <color name="viewfinder_frame">#ff4EEE94</color>
+    <!-- #ff0000ff -->
+    <color name="newbackgroud">#ffffffff</color>
+    <color name="title_tv_color">#ffffffff</color>
+    <!-- 备件分类筛选价格深色 -->
+    <color name="titlecolorsdeep">#FF771C</color>
+    <!-- 搜索字体颜色 -->
+    <color name="searchcolor">#000000</color>
+    <!-- 分栏色值 -->
+    <color name="secondcolor">#8D8D8D</color>
+    <!-- 字体色值 -->
+    <color name="textcolor">#333333</color>
+    <!-- 支付宝背景样式颜色 -->
+    <color name="navpage">#FFE1E8EB</color>
+    <!-- 分类点击颜色 -->
+<color name="choose_eara_item_press_color">#f4f4f4</color>
+<color name="divide_line">#f7f7f7</color>
+</resources>

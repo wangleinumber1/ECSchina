@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/scarcity_itemkuang"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/salespartsitemimage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:padding="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/partsitemimage" />
+		<ImageView
+		    android:id="@+id/line"
+		    android:layout_width="match_parent"
+		    android:layout_height="1dp"
+		    android:background="@color/backgroud"
+		     android:layout_below="@+id/salespartsitemimage"
+		    />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line"
+            android:background="#F0FAFC"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="2dp"
+             >
+
+            <TextView
+                android:id="@+id/salespartsitemtext1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="IBM  P720 内存条 4G"
+                android:textColor="@color/textcolor"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/salespartsitemtext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/salespartsitemtext1"
+                android:layout_below="@+id/salespartsitemtext1"
+                android:text="价格面议"
+                android:textColor="#FD7F2B"
+                android:layout_marginBottom="10dp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+   
+
+</RelativeLayout>
