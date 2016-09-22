@@ -22,7 +22,7 @@ public class FragmnetPage3 extends BaseFragment{
 
 	@Override
 	protected void initView() {
-		findViewById(R.id.textid).setOnClickListener(new OnClickListener() {
+		findViewById(R.id.openstart).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

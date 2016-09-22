@@ -4,8 +4,11 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.TabActivity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,7 +23,6 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.jiajie.jiajieproject.activity.CarShopppingActivity;
 import com.jiajie.jiajieproject.activity.ClearCacheActivity;
 import com.jiajie.jiajieproject.activity.GoldMedalActivity;
@@ -28,6 +30,7 @@ import com.jiajie.jiajieproject.activity.LoginActivity;
 import com.jiajie.jiajieproject.activity.MineActivity;
 import com.jiajie.jiajieproject.activity.PartsActivity;
 import com.jiajie.jiajieproject.contents.Constants;
+import com.jiajie.jiajieproject.contents.ReciverContents;
 import com.jiajie.jiajieproject.db.service.UserDataService;
 import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.ToolNetwork;
@@ -100,7 +103,16 @@ public class MainActivity extends TabActivity {
 					break;
 
 				case R.id.rb_cart:
-					mTabHost.setCurrentTabByTag(TAB_LIST[2]);
+					if (userDataService.getUserId() == null) {
+						String[] str = { "登录", "是否登陆", "是", "否" };
+						Bundle bundle = new Bundle();
+						bundle.putStringArray(ClearCacheActivity.TAG, str);
+						IntentUtil.startActivityForResult(MainActivity.this,
+								ClearCacheActivity.class, 1111, bundle);
+					} else {
+						mTabHost.setCurrentTabByTag(TAB_LIST[2]);
+					}
+//					mTabHost.setCurrentTabByTag(TAB_LIST[2]);
 					break;
 				case R.id.rb_mine:
 					if (userDataService.getUserId() == null) {
@@ -120,6 +132,8 @@ public class MainActivity extends TabActivity {
 		});
 
 		((RadioButton) mRadioGroup.getChildAt(0)).toggle();
+		//注册广播
+		registerReceiver();
 	}
 
 	public void setRadioGroupCheckById(int id) {
@@ -224,4 +238,44 @@ public class MainActivity extends TabActivity {
 
 	}
 
+	// 动态接受外部传来的广播
+	private class MainBroadcastReciver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context arg0, Intent arg1) {
+			if (ReciverContents.cityListReciver == arg1.getAction()) {
+				myhandler.sendEmptyMessage(2);
+			}
+		}
+	}
+
+	/*
+	 * 注册广播
+	 */
+	private MainBroadcastReciver mReceiver;
+
+	private void registerReceiver() {
+		mReceiver = new MainBroadcastReciver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ReciverContents.cityListReciver);
+		this.registerReceiver(mReceiver, filter);
+	}
+
+	/*
+	 * 取消注册广播
+	 */
+	private void unRegisterReceiver() {
+		if (null != mReceiver) {
+			this.unregisterReceiver(mReceiver);
+			mReceiver = null;
+		}
+	}
+	
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		unRegisterReceiver();
+	}
 }

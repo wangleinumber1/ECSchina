@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.adapter.CarShopppingAdapter;
 import com.jiajie.jiajieproject.contents.Constants;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
+import com.jiajie.jiajieproject.contents.ReciverContents;
 import com.jiajie.jiajieproject.model.OnlyClass;
 import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.ToastUtil;
@@ -64,7 +67,8 @@ public class CarShopppingActivity extends BaseActivity implements
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
 		super.onInit(bundle);
-		InitView();
+		// InitView();
+		backInitView();
 	}
 
 	private void InitView() {
@@ -93,12 +97,32 @@ public class CarShopppingActivity extends BaseActivity implements
 	}
 
 	// 无数据状态
-	// private void backInitView(){
-	// backViewListener bViewListener=new backViewListener();
-	// setContentView(R.layout.konglayout);
-	// findViewById(R.id.headerleftImg).setOnClickListener(bViewListener);
-	// findViewById(R.id.text4).setOnClickListener(bViewListener);
+	private void backInitView() {
+		// backViewListener bViewListener=new backViewListener();
+		setContentView(R.layout.konglayout);
+		findViewById(R.id.head).setVisibility(View.GONE);
+		findViewById(R.id.kongback).setOnClickListener(this);
+	}
+
+	// 无数据时的1点击事件
+	// private class backViewListener implements OnClickListener{
+	//
+	//
+	// @Override
+	// public void onClick(View v) {
+	// switch (v.getId()) {
+	// case R.id.partbutton:
+	// IntentUtil.
+	// break;
+	//
+	// default:
+	// break;
 	// }
+	//
+	// }
+	//
+	// }
+	//
 
 	@Override
 	protected void onStart() {
@@ -117,11 +141,14 @@ public class CarShopppingActivity extends BaseActivity implements
 			IntentUtil.activityForward(mActivity,
 					OrderInformationActivity.class, null, false);
 			break;
-		case R.id.partbutton:
+		case R.id.kongback:
 			// Bundle bundle=new Bundle();
 			// bundle.putBoolean("isFromBusiness", true);
-			Constants.isfromcarshoping = true;
-			IntentUtil.activityForward(this, MainActivity.class, null, true);
+			//发送广播改变底部的tab位置
+			Intent intent = new Intent();
+			intent.setAction(ReciverContents.cityListReciver);
+			CarShopppingActivity.this.sendBroadcast(intent);
+
 			break;
 
 		}

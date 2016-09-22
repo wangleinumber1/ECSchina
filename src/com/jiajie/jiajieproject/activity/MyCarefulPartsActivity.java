@@ -17,6 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.jiajie.jiajieproject.MainActivity;
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.adapter.MyCarefulPartsAdapter;
 import com.jiajie.jiajieproject.contents.Constants;
@@ -53,13 +54,21 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 		myCarefulPartsAdapter = new MyCarefulPartsAdapter(mActivity, mImgLoad);
 		mycarefulpartslayout_gridview.setAdapter(myCarefulPartsAdapter);
 		mycarefulpartslayout_gridview.setOnItemClickListener(this);
-		
+
 		headerleftImg = (ImageView) findViewById(R.id.headerleftImg);
 		// 消除gridview黄色边框
 		mycarefulpartslayout_gridview.setSelector(new ColorDrawable(
 				Color.TRANSPARENT));
 		headerleftImg.setOnClickListener(this);
-//		 new PartsCarefulAsyTask().execute();
+		// new PartsCarefulAsyTask().execute();
+	}
+
+	private void backInitView() {
+		setContentView(R.layout.konglayout);
+		ImageView kongimage=(ImageView) findViewById(R.id.kongback);
+		kongimage.setOnClickListener(this);
+		kongimage.setImageResource(R.drawable.nocare_icon);
+		findViewById(R.id.headerleftImg).setOnClickListener(this);
 	}
 
 	@Override
@@ -75,7 +84,11 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 		case R.id.headerleftImg:
 			finish();
 			break;
-		default:
+		case R.id.kongback:
+			// Bundle bundle=new Bundle();
+			// bundle.putBoolean("isFromBusiness", true);
+			Constants.isfromcarshoping = true;
+			IntentUtil.activityForward(this, MainActivity.class, null, true);
 			break;
 		}
 
@@ -129,10 +142,14 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 			}
 			if (jsonservice.getsuccessState()) {
 				ArrayList<produceClass> list = (ArrayList<produceClass>) result;
-				myCarefulPartsAdapter.setdata(list);
-				myCarefulPartsAdapter.notifyDataSetChanged();
-			}
+				if (list.size() > 0) {
 
+					myCarefulPartsAdapter.setdata(list);
+					myCarefulPartsAdapter.notifyDataSetChanged();
+				} else {
+					backInitView();
+				}
+			}
 		}
 
 	}

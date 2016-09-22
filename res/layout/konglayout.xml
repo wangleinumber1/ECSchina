@@ -2,42 +2,84 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroud" >
+    android:background="@color/white" >
+
+    <LinearLayout
+         android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+           
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" >
+
+            <ImageView
+                android:id="@+id/headerleftImg"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:paddingLeft="10dip"
+                android:paddingRight="20dp"
+                android:src="@drawable/order_back" />
+
+            <TextView
+                android:id="@+id/headercentertextview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="我的关注"
+                android:textColor="#333333"
+                android:textSize="18sp" />
+
+            <!-- android:background="@drawable/graybutton_up_down" -->
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/backgroud" />
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_below="@+id/head" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/middletext"
-        android:layout_centerInParent="true"
-        android:text="您还没有选择任何备件"
-        />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/kongcart"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/middletext"
-        android:layout_marginBottom="20dp"
-        />
-    <TextView
+        <ImageView
+            android:id="@+id/kongback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/kongcart" />
+
+        <!--
+             <ImageView
+            android:id="@+id/qwe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+        -->
+        <!--
+      <ImageView
         android:id="@+id/partbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
-        android:text="去选备件"
-        android:background="@drawable/car_empty_kuang"
+        android:layout_marginTop="20dp"      
+       android:src="@drawable/quxuanbeijian"
         android:layout_below="@+id/middletext"
-       android:textColor="@color/headercolor" 
-       android:paddingLeft="15dp"
-       android:paddingRight="15dp"
-       android:paddingTop="5dp"
-       android:paddingBottom="5dp"
-        android:textSize="16sp" />
+       android:visibility="invisible"
+      />
+        -->
     </RelativeLayout>
 
 </RelativeLayout>
