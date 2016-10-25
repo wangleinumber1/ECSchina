@@ -19,6 +19,7 @@ public class MainPageObject implements Serializable{
 	public String pn;
 	public String name;
 	public String small_image;
+	public String image;
 	public String price;
 	public String qty;
 

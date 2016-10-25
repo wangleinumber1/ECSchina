@@ -27,6 +27,6 @@ public class OnlyClass {
 	public String bestseller;
 	public String onsale;
 	public String featured;
-//	public String new;
+	public String newArrival;
 
 }

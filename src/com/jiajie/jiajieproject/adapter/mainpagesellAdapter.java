@@ -94,7 +94,8 @@ public class mainpagesellAdapter extends MainPageAdapter {
 		imageLoad.loadImg(vh.sellpartimage, list.get(position).small_image,
 				R.drawable.jiazaitupian);
 		vh.sellparttext.setText(list.get(position).name);
-		vh.sellpartprice.setText(list.get(position).price);
+		 vh.sellpartprice.setText("¥"+list.get(position).price.substring(
+					0, list.get(position).price.lastIndexOf('.'))+".00");
 		return convertView;
 	}
 

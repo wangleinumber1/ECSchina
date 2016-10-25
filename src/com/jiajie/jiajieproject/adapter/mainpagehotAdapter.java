@@ -81,7 +81,9 @@ public class mainpagehotAdapter extends MainPageAdapter{
 		}
 		imageLoad.loadImg(vh.hotpartimage, list.get(position).small_image, R.drawable.jiazaitupian);
 		vh. hotparttext.setText(list.get(position).name);
-		 vh.hotpartprice.setText(list.get(position).price);
+	
+		 vh.hotpartprice.setText("¥"+list.get(position).price.substring(
+					0, list.get(position).price.lastIndexOf('.'))+".00");
 		return convertView;
 	}
 

@@ -116,8 +116,8 @@ public class GoodsdetailActivity extends BaseActivity implements
 				R.drawable.jiazaitupian);
 		detailtext1.setText(mainPageObject.name);
 		detailtext2.setText("PN:" + mainPageObject.pn);
-		detailtext3.setText("￥:" + mainPageObject.price);
-		detailtext4.setText("库存" + mainPageObject.qty + "件");
+		detailtext3.setText("¥"+mainPageObject.price.substring(0, mainPageObject.price.lastIndexOf('.'))+".00");
+		detailtext4.setText("库存" + mainPageObject.qty.substring(0, mainPageObject.qty.lastIndexOf('.')) + "件");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("product_id", mainPageObject.id);
 		new orderCarefulsyTask(map, InterfaceParams.userWishList).execute();

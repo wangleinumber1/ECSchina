@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.model.Type;
 import com.jiajie.jiajieproject.utils.ImageLoad;
-import com.mrwujay.cascade.model.produceClass;
+import com.mrwujay.cascade.model.MainPageObject;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class GoldFragmentadapter extends BaseAdapter {
 	// ����Context
 		private LayoutInflater mInflater;
-	    private ArrayList<produceClass> list=new ArrayList<produceClass>();
+	    private ArrayList<MainPageObject> list=new ArrayList<MainPageObject>();
 	    private Context context;
 	    private ImageLoad mImageLoad;
 		public GoldFragmentadapter(Context context,ImageLoad mImageLoad){
@@ -31,8 +31,8 @@ public class GoldFragmentadapter extends BaseAdapter {
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-//			return list.size();
-			return 10;
+			return list.size();
+
 		}
 		@Override
 		public Object getItem(int position) {
@@ -44,10 +44,10 @@ public class GoldFragmentadapter extends BaseAdapter {
 
 		}
 
-		public void setdata(ArrayList<produceClass> list) {
-			this.list.addAll(list);
+		public void setdata(ArrayList<MainPageObject> list) {
+			this.list=list;
 		}
-		public ArrayList<produceClass> getdata(){
+		public ArrayList<MainPageObject> getdata(){
 			return list;
 		}
 		@Override
@@ -70,13 +70,16 @@ public class GoldFragmentadapter extends BaseAdapter {
 				view=(MyView) convertView.getTag();
 				
 			}
-//			mImageLoad.loadImg(view.produce_Image, list.get(position).image, R.drawable.jiazaitupian);
-//			view.producename.setText(list.get(position).name);
+			mImageLoad.loadImg(view.produce_Image, list.get(position).image, R.drawable.jiazaitupian);
+			view.producename.setText(list.get(position).name);
+			view.producecount.setText("¥"+list.get(position).price.substring(0, list.get(position).price.lastIndexOf('.'))+".00");
+			view.producecount.setText("库存数量：  "+list.get(position).qty.substring(0, list.get(position).qty.lastIndexOf('.')));
 	        return convertView;
 		}
 
 		
 		private class MyView{
+			@SuppressWarnings("unused")
 			private ImageView produce_Image;		
 			private TextView producename,produceprice,producecount;
 		}

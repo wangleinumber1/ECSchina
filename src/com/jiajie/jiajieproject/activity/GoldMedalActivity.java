@@ -4,10 +4,14 @@
 package com.jiajie.jiajieproject.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.content.res.ColorStateList;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,8 +31,12 @@ import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.adapter.ClassPopAdapter;
 import com.jiajie.jiajieproject.adapter.GoldFragmentadapter;
 import com.jiajie.jiajieproject.contents.Constants;
+import com.jiajie.jiajieproject.contents.InterfaceParams;
+import com.jiajie.jiajieproject.model.CategoriesClass;
 import com.jiajie.jiajieproject.utils.IntentUtil;
+import com.jiajie.jiajieproject.utils.ToastUtil;
 import com.jiajie.jiajieproject.widget.ReboundScrollView;
+import com.mrwujay.cascade.model.MainPageObject;
 
 /**
  * 项目名称：NewProject 类名称：GoldMedalActivity 类描述： 创建人：王蕾 创建时间：2015-9-8 下午5:24:49
@@ -43,24 +51,21 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	private int currentItem = 0;
 	private ListView MyListView;
 	private ImageView leftImage, RightImage, searchimage;
-	// private ArrayList<CategoriesClass> CategoriesClassList = new
-	// ArrayList<CategoriesClass>();
-	private String[] toolsList = new String[] { "IBM", "HP", "华为", "EMC",
-			"Cisic", "DELL", "ORACLE", "H3C", "苹果", "联想", "INTER", "爱国者", "小米" };
+	private ArrayList<CategoriesClass> CategoriesClassList = new ArrayList<CategoriesClass>();
 	private GoldFragmentadapter goldFragmentadapter;
+	private ArrayList<MainPageObject> goldFragmentList=new ArrayList<MainPageObject>();
 	private LinearLayout toolsLayout;;
 	private ClassPopAdapter classPopAdapter;
 	private int phonecode = 102;
-	private ArrayList<String> poplist = new ArrayList<String>();
+	private ArrayList<CategoriesClass> poplist = new ArrayList<CategoriesClass>();
 	private RelativeLayout class_layout;
-
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
 		super.onInit(bundle);
 		setContentView(R.layout.goldactivity_layout);
 		scrollView = (ReboundScrollView) findViewById(R.id.tools_scrlllview);
-		// new GetIdAsyTask().execute();
+		new GetIdAsyTask("2").execute();
 		InitView();
 
 	}
@@ -73,17 +78,6 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		toolsLayout = (LinearLayout) findViewById(R.id.tools);
 		goldFragmentadapter = new GoldFragmentadapter(mContext, mImgLoad);
 		classPopAdapter = new ClassPopAdapter(this);
-		poplist.add("p系列1");
-		poplist.add("p系列2");
-		poplist.add("p系列3");
-		poplist.add("p系列4");
-		poplist.add("p系列5");
-		poplist.add("p系列6");
-		poplist.add("p系列7");
-		poplist.add("p系列8");
-		poplist.add("p系列9");
-		poplist.add("p系列10");
-		poplist.add("p系列11");
 		MyListView.setAdapter(goldFragmentadapter);
 		MyListView.setOnItemClickListener(this);
 		leftImage.setOnClickListener(this);
@@ -91,7 +85,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		searchimage.setOnClickListener(this);
 		redcolors = getResources().getColorStateList(R.color.classredcolor);
 		blackcolors = getResources().getColorStateList(R.color.classblackcolor);
-		showToolsView(toolsList);
+		
 
 	}
 
@@ -125,33 +119,38 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 
 	}
 
-	private void showToolsView(String[] toolsList) {
-		// toolsTextViews=new TextView[CategoriesClassList.size()];
-		toolsTextViews = new TextView[toolsList.length];
-		views = new View[toolsList.length];
-		// views = new View[CategoriesClassList.size()];
+	@SuppressWarnings("unused")
+	private void showToolsView(ArrayList<CategoriesClass> list) {
+		 toolsTextViews=new TextView[list.size()];
+//		toolsTextViews = new TextView[toolsList.length];
+//		views = new View[toolsList.length];
+		 views = new View[list.size()];
 
-		/*
-		 * for (int i = 0; i < CategoriesClassList.size(); i++) { View
-		 * view=inflater.inflate(R.layout.item_b_top_nav_layout, null);
-		 * view.setId(i); view.setOnClickListener(toolsItemListener); TextView
-		 * textView=(TextView) view.findViewById(R.id.text);
-		 * textView.setText(CategoriesClassList.get(i).name);
-		 * toolsLayout.addView(view); toolsTextViews[i]=textView; views[i]=view;
-		 * }
-		 */
-		for (int i = 0; i < toolsList.length; i++) {
+		for (int i = 0; i < list.size(); i++) {
 			View view = inflater.inflate(R.layout.item_b_top_nav_layout, null);
 			view.setId(i);
+			view.setTag(list.get(i).id.toString());
 			view.setOnClickListener(toolsItemListener);
 			TextView textView = (TextView) view.findViewById(R.id.text);
-			// textView.setText(CategoriesClassList.get(i).name);
-			textView.setText(toolsList[i]);
+			textView.setText(list.get(i).name);
 			toolsLayout.addView(view);
 			toolsTextViews[i] = textView;
 			views[i] = view;
 		}
-		changeTextColor(0);
+
+		// for (int i = 0; i < toolsList.length; i++) {
+		// View view = inflater.inflate(R.layout.item_b_top_nav_layout, null);
+		// view.setId(i);
+		// view.setOnClickListener(toolsItemListener);
+		// TextView textView = (TextView) view.findViewById(R.id.text);
+		// // textView.setText(CategoriesClassList.get(i).name);
+		// textView.setText(toolsList[i]);
+		// toolsLayout.addView(view);
+		// toolsTextViews[i] = textView;
+		// views[i] = view;
+		// }
+		//让第一个处于选中状态
+//		changeTextColor(0);
 	}
 
 	private View.OnClickListener toolsItemListener = new View.OnClickListener() {
@@ -159,12 +158,12 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		public void onClick(View v) {
 			changeTextColor(v.getId());
 			changeTextLocation(v.getId());
-			getPopupWindow(v.getHeight());
-			if ((toolsList.length - v.getId()) < 4) {
+			getPopupWindow(v.getHeight(),(String)v.getTag());
+			if ((CategoriesClassList.size() - v.getId()) < 4) {
 				int[] location = new int[2];
 				v.getLocationOnScreen(location);
-				popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0]+v.getWidth(),
-						location[1] -v.getHeight()*3);
+				popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0]
+						+ v.getWidth(), location[1] - v.getHeight() * 3);
 			} else {
 				popupWindow.showAsDropDown(v, v.getWidth(), -v.getHeight(),
 						Gravity.LEFT);
@@ -228,25 +227,26 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 
 	private PopupWindow popupWindow;
 
-	protected void initPopuptWindow(int height) {
+	protected void initPopuptWindow(int height,String c_id) {
 		// TODO Auto-generated method stub
 		// 获取自定义布局文件activity_popupwindow_left.xml的视图
+		
 		View popupWindow_view = getLayoutInflater().inflate(
 				R.layout.poplistview, null, false);
 		// 创建PopupWindow实例,200,LayoutParams.MATCH_PARENT分别是宽度和高度
 		ListView listview = (ListView) popupWindow_view;
-		classPopAdapter.setdata(poplist);
+		new GetIdSecondAsyTask(c_id).execute();
 		listview.setAdapter(classPopAdapter);
 		classPopAdapter.notifyDataSetChanged();
-		popupWindow = new PopupWindow(popupWindow_view, 200,
-				height*4, true);
+		popupWindow = new PopupWindow(popupWindow_view, 200, height * 4, true);
 		popupWindow.setBackgroundDrawable(new BitmapDrawable());
 		popupWindow.setOutsideTouchable(true);
 		listview.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
+				new GetProductsByCidAsyTask(poplist.get(arg2).id).execute();
+				arg1.setBackgroundResource(R.drawable.classbg_white);
 				if (popupWindow != null && popupWindow.isShowing()) {
 					popupWindow.dismiss();
 					popupWindow = null;
@@ -259,20 +259,128 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	/***
 	 * 获取PopupWindow实例
 	 */
-	private void getPopupWindow(int height) {
-		if (null != popupWindow) {
-			popupWindow.dismiss();
-
-			return;
-		} else {
-			initPopuptWindow(height);
-		}
+	private void getPopupWindow(int height,String cid) {
+//		if (null != popupWindow) {
+//			popupWindow.dismiss();
+//
+//			return;
+//		} else {
+			initPopuptWindow(height,cid);
+//		}
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
+		@SuppressWarnings("unused")
+		MainPageObject mainPageObject=goldFragmentList.get(arg2);
+		Bundle bundle=new Bundle();
+		bundle.putSerializable(PartsActivity.TAG, mainPageObject);
 		IntentUtil.activityForward(mActivity, GoodsdetailActivity.class, null,
 				false);
 	}
+
+	// 获取左侧列表数据
+	private class GetIdAsyTask extends MyAsyncTask {
+		private String c_id;
+
+		@SuppressWarnings("unused")
+		public GetIdAsyTask(String c_id) {
+			this.c_id = c_id;
+		}
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			// TODO Auto-generated method stub
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("c_id", c_id);
+			return jsonservice.getDataList(InterfaceParams.getCategoriesByCid,
+					map, true, CategoriesClass.class);
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected void onPostExecute(Object result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if (result == null) {
+				return;
+			}
+			CategoriesClassList=(ArrayList<CategoriesClass>) result;
+			showToolsView(CategoriesClassList);
+			
+			
+		}
+
+	}
+	// 获取左侧列表二级数据
+	@SuppressWarnings("unused")
+	private class GetIdSecondAsyTask extends MyAsyncTask {
+		private String c_id;
+		
+		@SuppressWarnings("unused")
+		public GetIdSecondAsyTask(String c_id) {
+			this.c_id = c_id;
+		}
+		
+		@Override
+		protected Object doInBackground(Object... params) {
+			// TODO Auto-generated method stub
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("c_id", c_id);
+			return jsonservice.getDataList(InterfaceParams.getCategoriesByCid,
+					map, true, CategoriesClass.class);
+		}
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		protected void onPostExecute(Object result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if (result == null) {
+				return;
+			}
+			
+			poplist=(ArrayList<CategoriesClass>) result;
+			classPopAdapter.setdata(poplist);
+			classPopAdapter.notifyDataSetChanged();
+		
+		}
+		
+	}
+	// 获取右侧列表数据
+	@SuppressWarnings("unused")
+	private class GetProductsByCidAsyTask extends MyAsyncTask {
+		private String c_id;
+		
+		@SuppressWarnings("unused")
+		public GetProductsByCidAsyTask(String c_id) {
+			this.c_id = c_id;
+		}
+		
+		@Override
+		protected Object doInBackground(Object... params) {
+			// TODO Auto-generated method stub
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("c_id", c_id);
+			return jsonservice.getDataList(InterfaceParams.getProductsByCid,
+					map, true, MainPageObject.class);
+		}
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		protected void onPostExecute(Object result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if (result == null) {
+				return;
+			}
+			goldFragmentList=(ArrayList<MainPageObject>) result;
+			goldFragmentadapter.setdata(goldFragmentList);
+			goldFragmentadapter.notifyDataSetChanged();
+		}
+		
+	}
+	
+	
+	
 }

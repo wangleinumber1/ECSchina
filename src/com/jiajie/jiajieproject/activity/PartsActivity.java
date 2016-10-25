@@ -76,7 +76,7 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 	private MyGridView sellgrid, hotgrid, recommandgrid, newgrid;
 	private ImageView leftImage, RightImage, searchimage;
 	private MainPageAdapter mainpagesellAdpter, mainpagehotAdpter,
-			mainpagenewAdpter;
+	mainpagenewAdpter;
 	private ReboundScrollView ReboundScrollView;
 	private RelativeLayout mainpage_header;
 	private int phonecode = 102;
@@ -84,14 +84,12 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 	ArrayList<MainPageObject> BestSelllist = new ArrayList<MainPageObject>();
 	ArrayList<MainPageObject> Hotlist = new ArrayList<MainPageObject>();
 	ArrayList<MainPageObject> Tuijianlist = new ArrayList<MainPageObject>();
-
-	// new是java关键字先用featured，以后后台改
 	ArrayList<MainPageObject> Newlist = new ArrayList<MainPageObject>();
 
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
-		super.onInit(bundle);
+		super.onInit(bundle); 
 		SharePreferDB = new SharePreferDB(mContext, "versionmessage");
 		// 判断是否有网
 		if (!NetworkUtil.isConnected(mActivity)) {
@@ -425,38 +423,32 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 						onlyClass.onsale, MainPageObject.class);
 				Tuijianlist = (ArrayList<MainPageObject>) JSON.parseArray(
 						onlyClass.featured, MainPageObject.class);
-
-				// new是java关键字先用featured，以后后台改
-				// Newlist = (ArrayList<MainPageObject>) JSON.parseArray("new",
-				// MainPageObject.class);
+				Newlist = (ArrayList<MainPageObject>) JSON.parseArray(onlyClass.newArrival,
+						MainPageObject.class);
 				if (BestSelllist.size() > 0) {
-					mainpagehotAdpter.setdata(BestSelllist);
-					mainpagenewAdpter.setdata(BestSelllist);
+
 					mainpagesellAdpter.setdata(BestSelllist);
 					mainpagesellAdpter.notifyDataSetChanged();
-					mainpagenewAdpter.notifyDataSetChanged();
+				}
+
+				 if (Hotlist.size() > 0) {
+
+					mainpagehotAdpter.setdata(Hotlist);
 					mainpagehotAdpter.notifyDataSetChanged();
 
 				}
-				//
-				// else if (Hotlist.size() > 0) {
-				//
-				// mainpagehotAdpter.setdata(Hotlist);
-				// mainpagehotAdpter.notifyDataSetChanged();
-				//
-				// }
-				else if (Tuijianlist.size() > 0) {
+				 if (Tuijianlist.size() > 0) {
 
 					mainpagesellAdpter.setdata(Tuijianlist);
 					mainpagesellAdpter.notifyDataSetChanged();
 
 				}
-				// else if (Newlist.size() > 0) {
-				//
-				// mainpagenewAdpter.setdata(Newlist);
-				// mainpagenewAdpter.notifyDataSetChanged();
-				//
-				// }
+				 if (Newlist.size() > 0) {
+
+					mainpagenewAdpter.setdata(Newlist);
+					mainpagenewAdpter.notifyDataSetChanged();
+
+				}
 
 			}
 		}

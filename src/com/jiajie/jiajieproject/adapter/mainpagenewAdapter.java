@@ -96,7 +96,8 @@ public class mainpagenewAdapter extends MainPageAdapter{
 		}
 		imageLoad.loadImg(vh.newpartimage, list.get(position).small_image, R.drawable.jiazaitupian);
 		vh. newparttext.setText(list.get(position).name);
-		 vh.newpartprice.setText(list.get(position).price);
+		 vh.newpartprice.setText("¥"+list.get(position).price.substring(
+					0, list.get(position).price.lastIndexOf('.'))+".00");
 		return convertView;
 	}
 

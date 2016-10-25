@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jiajie.jiajieproject.R;
+import com.jiajie.jiajieproject.model.CategoriesClass;
 
 /**
  * 项目名称：HaiChuanProject 类名称：FaBuSearchAdapter 类描述： 创建人：王蕾 创建时间：2015-7-29
@@ -20,7 +21,7 @@ import com.jiajie.jiajieproject.R;
  */
 public class ClassPopAdapter extends BaseAdapter {
 
-	private ArrayList<String> list = new ArrayList<String>();
+	private ArrayList<CategoriesClass> list = new ArrayList<CategoriesClass>();
 	private Activity activity;
 
 	public ClassPopAdapter(Activity activity) {
@@ -39,11 +40,11 @@ public class ClassPopAdapter extends BaseAdapter {
 		return position;
 	}
 
-	public void setdata(ArrayList<String> list) {
+	public void setdata(ArrayList<CategoriesClass> list) {
 		this.list=list;
 	}
 
-	public ArrayList<String> getdata() {
+	public ArrayList<CategoriesClass> getdata() {
 		return list;
 	}
 
@@ -65,7 +66,8 @@ public class ClassPopAdapter extends BaseAdapter {
 		} else {
 			vh = (ViewHolder) convertView.getTag();
 		}
-		vh.text.setText(list.get(position));
+		vh.text.setText(list.get(position).name);
+		
 		return convertView;
 	}
 
