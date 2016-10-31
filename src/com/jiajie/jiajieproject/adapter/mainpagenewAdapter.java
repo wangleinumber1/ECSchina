@@ -24,6 +24,7 @@ import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.activity.GoodsdetailActivity;
 import com.jiajie.jiajieproject.activity.HistoryLogisticsActivity;
 import com.jiajie.jiajieproject.activity.OrderInformationActivity;
+import com.jiajie.jiajieproject.activity.PartsActivity;
 import com.jiajie.jiajieproject.adapter.HistoryBuyPartsAdapter.ViewHolder;
 import com.jiajie.jiajieproject.contents.Constants;
 import com.jiajie.jiajieproject.utils.ImageLoad;
@@ -36,9 +37,9 @@ import com.jiajie.jiajieproject.utils.ToastUtil;
  * 项目名称：HaiChuanProject 类名称：FaBuSearchAdapter 类描述： 创建人：王蕾 创建时间：2015-7-29
  * 下午2:19:53 修改备注：
  */
-public class mainpagenewAdapter extends MainPageAdapter{
+public class mainpagenewAdapter extends BaseAdapter implements OnClickListener{
 
-//	private ArrayList<produceClass> list = new ArrayList<produceClass>();
+	private ArrayList<MainPageObject> list = new ArrayList<MainPageObject>();
 	private Activity activity;
 	private ImageLoad imageLoad;
 
@@ -57,6 +58,9 @@ public class mainpagenewAdapter extends MainPageAdapter{
 		}
 	}
 
+	public void setDate(ArrayList<MainPageObject> list) {
+		this.list = list;
+	}
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
@@ -86,6 +90,8 @@ public class mainpagenewAdapter extends MainPageAdapter{
 					R.layout.newpart_itemlayout, null);
 			vh.newpartimage = (ImageView) convertView
 					.findViewById(R.id.newpartimage);
+			vh.new_layout = (RelativeLayout) convertView
+					.findViewById(R.id.new_layout);
 			vh.newpartprice = (TextView) convertView
 					.findViewById(R.id.newpartprice);
 			vh.newparttext = (TextView) convertView
@@ -94,6 +100,8 @@ public class mainpagenewAdapter extends MainPageAdapter{
 		} else {
 			vh = (ViewHolder) convertView.getTag();
 		}
+		vh.new_layout.setOnClickListener(this);
+		vh.new_layout.setTag(position);
 		imageLoad.loadImg(vh.newpartimage, list.get(position).small_image, R.drawable.jiazaitupian);
 		vh. newparttext.setText(list.get(position).name);
 		 vh.newpartprice.setText("¥"+list.get(position).price.substring(
@@ -103,8 +111,18 @@ public class mainpagenewAdapter extends MainPageAdapter{
 
 	class ViewHolder {
 		ImageView newpartimage;
+		RelativeLayout new_layout;
 		TextView newparttext, newpartprice;
 
+	}
+
+	@Override
+	public void onClick(View v) {
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(PartsActivity.TAG, list.get((Integer) v.getTag()));
+		IntentUtil.activityForward(activity,
+				GoodsdetailActivity.class, bundle, false);
+		
 	}
 
 	// // 打电话

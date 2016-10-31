@@ -3,7 +3,11 @@
     android:layout_width="wrap_content"
     android:layout_height="150dp"
     android:background="@color/white" >
-
+<RelativeLayout
+    android:id="@+id/sell_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
     <ImageView
         android:id="@+id/sellpartimage"
         android:layout_width="75dp"
@@ -36,5 +40,5 @@
         android:text="￥28750.00"
         android:textColor="#E94516"
         android:textSize="11sp" />
-
+</RelativeLayout>
 </RelativeLayout>

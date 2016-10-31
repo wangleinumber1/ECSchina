@@ -6,23 +6,30 @@ package com.jiajie.jiajieproject.adapter;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiajie.jiajieproject.R;
+import com.jiajie.jiajieproject.activity.GoodsdetailActivity;
+import com.jiajie.jiajieproject.activity.PartsActivity;
 import com.jiajie.jiajieproject.utils.ImageLoad;
+import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.mrwujay.cascade.model.MainPageObject;
 
 /**
  * 项目名称：HaiChuanProject 类名称：FaBuSearchAdapter 类描述： 创建人：王蕾 创建时间：2015-7-29
  * 下午2:19:53 修改备注：
  */
-public class mainpagehotAdapter extends MainPageAdapter{
+public class mainpagehotAdapter extends BaseAdapter implements OnClickListener{
 
-//	private ArrayList<produceClass> list = new ArrayList<produceClass>();
+	private ArrayList<MainPageObject> list = new ArrayList<MainPageObject>();
 	private Activity activity;
 	private ImageLoad imageLoad;
 
@@ -41,7 +48,9 @@ public class mainpagehotAdapter extends MainPageAdapter{
 			return list.size();
 		}
 	}
-
+	public void setDate(ArrayList<MainPageObject> list) {
+		this.list = list;
+	}
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
@@ -71,6 +80,8 @@ public class mainpagehotAdapter extends MainPageAdapter{
 					R.layout.hotpart_itemlayout, null);
 			vh.hotpartimage = (ImageView) convertView
 					.findViewById(R.id.hotpartproduce);
+			vh.hot_layout = (LinearLayout) convertView
+					.findViewById(R.id.hot_layout);
 			vh.hotpartprice = (TextView) convertView
 					.findViewById(R.id.hotpartprice);
 			vh.hotparttext = (TextView) convertView
@@ -79,6 +90,8 @@ public class mainpagehotAdapter extends MainPageAdapter{
 		} else {
 			vh = (ViewHolder) convertView.getTag();
 		}
+		vh.hot_layout.setOnClickListener(this);
+		vh.hot_layout.setTag(position);
 		imageLoad.loadImg(vh.hotpartimage, list.get(position).small_image, R.drawable.jiazaitupian);
 		vh. hotparttext.setText(list.get(position).name);
 	
@@ -88,11 +101,19 @@ public class mainpagehotAdapter extends MainPageAdapter{
 	}
 
 	class ViewHolder {
+		LinearLayout hot_layout;
 		ImageView hotpartimage;
 		TextView hotparttext, hotpartprice;
 
 	}
-
+	@Override
+	public void onClick(View v) {
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(PartsActivity.TAG, list.get((Integer) v.getTag()));
+		IntentUtil.activityForward(activity,
+				GoodsdetailActivity.class, bundle, false);
+		
+	} 
 	// // 打电话
 	// private void callphone() {
 	// Intent phoneIntent = new Intent("android.intent.action.CALL",

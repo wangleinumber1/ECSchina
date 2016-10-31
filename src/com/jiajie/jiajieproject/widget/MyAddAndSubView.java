@@ -4,6 +4,7 @@ import com.jiajie.jiajieproject.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -71,6 +72,9 @@ public class MyAddAndSubView extends LinearLayout implements OnClickListener {
 		tv_right_add.setOnClickListener(this);
 	}
 
+	
+	
+	
 	@Override
 	public void onClick(View v) {
 
@@ -78,6 +82,7 @@ public class MyAddAndSubView extends LinearLayout implements OnClickListener {
 			if (count > 1) {
 				count--;
 				tv_middle_content.setText(String.valueOf(count));
+				
 			} else {
 				tv_middle_content.setText(String.valueOf(count));
 			}
@@ -90,8 +95,15 @@ public class MyAddAndSubView extends LinearLayout implements OnClickListener {
 		}
 	}
 
+	/** 获取数量 */
 	public int getCount() {
 		return Integer.parseInt(tv_middle_content.getText().toString());
+	}
+
+	/** 设置数量 */
+	public void setCount(String number) {
+		count = Integer.parseInt(number);
+		tv_middle_content.setText(number);
 	}
 
 	public interface OnClickAddAndSubListener {

@@ -157,13 +157,19 @@
             android:layout_centerHorizontal="true"
             android:orientation="horizontal" >
 
-            <ImageView
-                android:id="@+id/detai_care"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="25dp"
-                android:src="@drawable/detai_care" />
+                android:padding="25dp" >
+
+                <CheckBox
+                    android:id="@+id/detai_care"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:background="@drawable/detailchecbox" />
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/detai_incar"

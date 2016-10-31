@@ -47,9 +47,9 @@ import com.mrwujay.cascade.model.produceClass;
  */
 public class CarShopppingActivity extends BaseActivity implements
 		OnClickListener, SwipeMenuCreator, OnMenuItemClickListener,
-		OnSwipeListener, OnCheckedChangeListener {
+		OnCheckedChangeListener {
 	private ToggleButton headerRightImg;
-	private boolean flag = true;
+	private boolean flag = false;
 	private CarShopppingAdapter carShopppingAdapter;
 	private RelativeLayout backLayout;
 	private MyHandler myHandler = new MyHandler();
@@ -62,13 +62,16 @@ public class CarShopppingActivity extends BaseActivity implements
 	private CheckBox allselect;
 	private ImageView movetocare, car_delete, balance;
 	private Button carshopping_price;
+	// 选中的商品
+	private ArrayList<produceClass> selectedproduce = new ArrayList<produceClass>();
+	private String tatalprice;
 
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
 		super.onInit(bundle);
-		// InitView();
-		backInitView();
+		InitView();
+		// backInitView();
 	}
 
 	private void InitView() {
@@ -79,6 +82,7 @@ public class CarShopppingActivity extends BaseActivity implements
 		movetocare = (ImageView) findViewById(R.id.movetocare);
 		car_delete = (ImageView) findViewById(R.id.car_delete);
 		balance = (ImageView) findViewById(R.id.balance);
+		carshopping_price = (Button) findViewById(R.id.carshopping_price);
 		headerRightImg = (ToggleButton) findViewById(R.id.headerRightImg);
 		backLayout = (RelativeLayout) findViewById(R.id.backLayout);
 		carshopping_layoutlistview = (SwipeMenuListView) findViewById(R.id.carshopping_layoutlistview);
@@ -91,8 +95,8 @@ public class CarShopppingActivity extends BaseActivity implements
 		balance.setOnClickListener(this);
 		headerRightImg.setOnCheckedChangeListener(this);
 		carshopping_layoutlistview.setMenuCreator(this);
+		// 右侧icon点击事件
 		carshopping_layoutlistview.setOnMenuItemClickListener(this);
-		carshopping_layoutlistview.setOnSwipeListener(this);
 		allselect.setOnCheckedChangeListener(this);
 	}
 
@@ -104,31 +108,11 @@ public class CarShopppingActivity extends BaseActivity implements
 		findViewById(R.id.kongback).setOnClickListener(this);
 	}
 
-	// 无数据时的1点击事件
-	// private class backViewListener implements OnClickListener{
-	//
-	//
 	// @Override
-	// public void onClick(View v) {
-	// switch (v.getId()) {
-	// case R.id.partbutton:
-	// IntentUtil.
-	// break;
-	//
-	// default:
-	// break;
-	// }
+	// pr() {
+	// super.onStart();
 	//
 	// }
-	//
-	// }
-	//
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		// new CarsAsyTask().execute();
-	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
@@ -137,14 +121,21 @@ public class CarShopppingActivity extends BaseActivity implements
 		case R.id.headerleftImg:
 			finish();
 			break;
+		case R.id.car_delete:
+			//全删
+			myHandler.sendEmptyMessage(8);
+			break;
+		case R.id.movetocare:
+			//全部关注
+			myHandler.sendEmptyMessage(7);
+			break;
 		case R.id.balance:
-			IntentUtil.activityForward(mActivity,
-					OrderInformationActivity.class, null, false);
+			//结算
+			myHandler.sendEmptyMessage(11);
+			
 			break;
 		case R.id.kongback:
-			// Bundle bundle=new Bundle();
-			// bundle.putBoolean("isFromBusiness", true);
-			//发送广播改变底部的tab位置
+			// 发送广播改变底部的tab位置
 			Intent intent = new Intent();
 			intent.setAction(ReciverContents.cityListReciver);
 			CarShopppingActivity.this.sendBroadcast(intent);
@@ -156,17 +147,24 @@ public class CarShopppingActivity extends BaseActivity implements
 	}
 
 	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		new CarsAsyTask().execute();
+	}
+
+	@Override
 	public void create(SwipeMenu menu) {
-		SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
+		SwipeMenuItem careItem = new SwipeMenuItem(getApplicationContext());
 		// set item background
-		openItem.setBackground(new ColorDrawable(Color.rgb(0x99, 0x99, 0x99)));
+		careItem.setBackground(new ColorDrawable(Color.rgb(0x99, 0x99, 0x99)));
 		// set item width
-		openItem.setWidth(dp2px(74));
+		careItem.setWidth(dp2px(74));
 		// set item title font color
-		openItem.setIcon(R.drawable.move_care);
+		careItem.setIcon(R.drawable.move_care);
 
 		// add to menu
-		menu.addMenuItem(openItem);
+		menu.addMenuItem(careItem);
 		SwipeMenuItem deleteItem = new SwipeMenuItem(getApplicationContext());
 		// set item background
 		deleteItem
@@ -209,8 +207,9 @@ public class CarShopppingActivity extends BaseActivity implements
 			if (jsonservice.getToastMessage()) {
 				OnlyClass onlyClass = (OnlyClass) result;
 				ToastUtil.showToast(mActivity, onlyClass.data);
+				// 显示无数据的背景
 				backLayout.setVisibility(View.VISIBLE);
-				// backInitView();
+				backInitView();
 			}
 
 			if (jsonservice.getsuccessState()) {
@@ -221,13 +220,15 @@ public class CarShopppingActivity extends BaseActivity implements
 					carShopppingAdapter.setData(list);
 					carShopppingAdapter.notifyDataSetChanged();
 					SomeMessage jsonMessage = jsonservice.getsomemessage();
-					// catshoppingtext1.setText("合计：¥"
-					// + jsonMessage.total_price.substring(0,
+					tatalprice = jsonMessage.total_price.substring(0,
+							jsonMessage.total_price.lastIndexOf('.')) + ".00";
+					// carshopping_price.setText(
+					// jsonMessage.total_price.substring(0,
 					// jsonMessage.total_price.lastIndexOf('.'))
 					// + ".00");
 					// catshoppingtext2.setText("商品数量：        "
 					// + jsonMessage.count + "件");
-
+					carshopping_price.setText("0.00");
 				} else {
 					backLayout.setVisibility(View.VISIBLE);
 				}
@@ -240,45 +241,45 @@ public class CarShopppingActivity extends BaseActivity implements
 	/**
 	 * 移除购物车 添加 结算
 	 * */
-	// @SuppressWarnings("unused")
-	// private class AddRemoveCarsDeleteAsyTask extends MyAsyncTask {
-	// private String interfacename;
-	// private Map map;
-	//
-	// public AddRemoveCarsDeleteAsyTask(Map map, String interfacename) {
-	// super();
-	// this.map = map;
-	// this.interfacename = interfacename;
-	//
-	// }
-	//
-	// @SuppressWarnings("unchecked")
-	// @Override
-	// protected Object doInBackground(Object... params) {
-	// return jsonservice.getData(interfacename, map, false, null);
-	// }
-	//
-	// @SuppressWarnings("unchecked")
-	// @Override
-	// protected void onPostExecute(Object result) {
-	// // TODO Auto-generated method stub
-	// super.onPostExecute(result);
-	// if (result == null) {
-	// return;
-	// }
-	//
-	// if (jsonservice.getToastMessage()) {
-	// OnlyClass onlyClass = (OnlyClass) result;
-	// if (onlyClass.success) {
-	//
-	// myHandler.sendEmptyMessage(10);
-	// }
-	// ToastUtil.showToast(mActivity, onlyClass.data);
-	// }
-	//
-	// }
-	//
-	// }
+	@SuppressWarnings("unused")
+	private class AddRemoveCarsDeleteAsyTask extends MyAsyncTask {
+		private String interfacename;
+		private Map map;
+
+		public AddRemoveCarsDeleteAsyTask(Map map, String interfacename) {
+			super();
+			this.map = map;
+			this.interfacename = interfacename;
+
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected Object doInBackground(Object... params) {
+			return jsonservice.getData(interfacename, map, false, null);
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected void onPostExecute(Object result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if (result == null) {
+				return;
+			}
+
+			if (jsonservice.getToastMessage()) {
+				OnlyClass onlyClass = (OnlyClass) result;
+				if (onlyClass.success) {
+
+					myHandler.sendEmptyMessage(10);
+				}
+				ToastUtil.showToast(mActivity, onlyClass.data);
+			}
+
+		}
+
+	}
 
 	/**
 	 * 结算
@@ -313,9 +314,10 @@ public class CarShopppingActivity extends BaseActivity implements
 			if (jsonservice.getToastMessage()) {
 				OnlyClass onlyClass = (OnlyClass) result;
 				if (onlyClass.success) {
-					// myHandler.sendEmptyMessage(8);
+					 myHandler.sendEmptyMessage(12);
 					IntentUtil.activityForward(mActivity,
 							OrdercoConfirmationActivity.class, null, true);
+					
 				}
 				ToastUtil.showToast(mActivity, onlyClass.data);
 			}
@@ -329,16 +331,32 @@ public class CarShopppingActivity extends BaseActivity implements
 				getResources().getDisplayMetrics());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onMenuItemClick(int position, SwipeMenu menu, int index) {
-
+		switch (index) {
+		// 移入关注
+		case 0:
+			HashMap<String, String> caremap = new HashMap<String, String>();
+			caremap.put("id", list.get(index).productId);
+			new AddRemoveCarsDeleteAsyTask(caremap, InterfaceParams.addWishList)
+					.execute();
+			carShopppingAdapter.notifyDataSetChanged();
+			break;
 		// 删除
-		// Map map = new HashMap<String, String>();
-		// map.put("id", list.get(index).id);
-		// new AddRemoveCarsDeleteAsyTask(map, InterfaceParams.deleteCart)
-		// .execute();
-		// carShopppingAdapter.notifyDataSetChanged();
-		// 删除后刷新数据
+		case 1:
+			HashMap<String, String> deletemap = new HashMap<String, String>();
+			deletemap.put("id", list.get(index).id);
+			new AddRemoveCarsDeleteAsyTask(deletemap,
+					InterfaceParams.deleteCart).execute();
+			carShopppingAdapter.notifyDataSetChanged();
+
+			break;
+
+		default:
+			break;
+		}
+		// 删除
 
 	}
 
@@ -349,39 +367,73 @@ public class CarShopppingActivity extends BaseActivity implements
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case 9:
-				// carShopppingAdapter.clearData();
-				// carShopppingAdapter.notifyDataSetChanged();
-				// // catshoppingtext1.setText("合计：¥" + 0);
-				// // catshoppingtext2.setText("数量：        " + 0 + "个");
-				// backLayout.setVisibility(View.VISIBLE);
+				if(msg.obj==null){
+					return;
+				}
 				boolean isallselect = (Boolean) msg.obj;
-				allselect.setChecked(isallselect);
+				if (isallselect) {
+					flag = true;
+					allselect.setChecked(flag);
+				} else {
+					flag = false;
+					allselect.setChecked(flag);
+				}
 				break;
 			case 10:
 				// 刷新
-				// new CarsAsyTask().execute();
+				new CarsAsyTask().execute();
 				break;
-			// case 8:
-			// Map map2 = new HashMap<String, String>();
-			// map2.put("update_cart_action", "empty_cart");
-			// new AddRemoveCarsDeleteAsyTask(map2, InterfaceParams.updateCart)
-			// .execute();
-			// carShopppingAdapter.clearData();
-			// carShopppingAdapter.notifyDataSetChanged();
-			// break;
+			case 8:
+				//全部删除
+				if (flag) {
+					Map map2 = new HashMap<String, String>();
+					String message="";
+					for(int i=0;i<list.size();i++){
+						message=message+list.get(i).productId+",";
+					}
+					message=message.substring(0, message.length()-1);
+					map2.put("id",message);
+					new AddRemoveCarsDeleteAsyTask(map2,
+							InterfaceParams.deleteCart).execute();
+					carShopppingAdapter.notifyDataSetChanged();
+				}
+			case 7:
+				//全部移入关注
+				if (flag) {
+					HashMap<String, String> caremap = new HashMap<String, String>();
+					String message="";
+					for(int i=0;i<list.size();i++){
+						message=message+list.get(i).productId+",";
+					}
+					message=message.substring(0, message.length()-1);
+					caremap.put("id",message);
+					new AddRemoveCarsDeleteAsyTask(caremap, InterfaceParams.addWishList)
+							.execute();
+					carShopppingAdapter.notifyDataSetChanged();
+				}
+				break;
 			case 11:
-				// 刷新
-				// Map map = new HashMap<String, String>();
-				// String message = "{" + "\"" +
-				// list.get(msg.arg2).id.toString()
-				// + "\"" + ":" + "{\"" + "qty" + "\"" + ":" + "\""
-				// + msg.arg1 + "\"" + "}}";
-				// map.put("update_cart_action", "update_qty");
-				// map.put("cart", message);
-				// new AddRemoveCarsDeleteAsyTask(map,
-				// InterfaceParams.updateCart)
-				// .execute();
-				// sendEmptyMessage(10);
+				// 结算全部
+				Map map = new HashMap<String, String>();
+//				String message = "{" + "\"" + list.get(msg.arg2).id.toString()
+//						+ "\"" + ":" + "{\"" + "qty" + "\"" + ":" + "\""
+//						+ msg.arg1 + "\"" + "}}";
+				String message=JsonBySelf();
+				map.put("update_cart_action", "update_qty");
+				map.put("cart", message);
+				new UpdateAsyTask(map, InterfaceParams.updateCart)
+						.execute();
+
+				break;
+			case 12:
+				// 清空
+				Map map2 = new HashMap<String, String>();
+				map2.put("update_cart_action", "empty_cart");
+				new AddRemoveCarsDeleteAsyTask(map2,
+						InterfaceParams.updateCart).execute();
+				carShopppingAdapter.clearData();
+				carShopppingAdapter.notifyDataSetChanged();
+				
 				break;
 
 			default:
@@ -392,24 +444,12 @@ public class CarShopppingActivity extends BaseActivity implements
 	}
 
 	// // 全选或全取消
+	@SuppressWarnings("static-access")
 	private void selectedAll() {
-		// for (int i = 0; i < list.size(); i++) {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < list.size(); i++) {
 			carShopppingAdapter.getIsSelected().put(i, flag);
 		}
 		carShopppingAdapter.notifyDataSetChanged();
-	}
-
-	@Override
-	public void onSwipeStart(int position) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onSwipeEnd(int position) {
-		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -457,13 +497,31 @@ public class CarShopppingActivity extends BaseActivity implements
 			BottomLayout1.setVisibility(View.VISIBLE);
 		}
 		if (allselect.isChecked()) {
-			selectedAll();
-			flag = false;
-		} else {
-
-			selectedAll();
 			flag = true;
+			selectedAll();
+			// int count = selected(list);
+			carshopping_price.setText(tatalprice);
+		} else {
+			flag = false;
+			selectedAll();
+			carshopping_price.setText("0.00");
 		}
+
+	}
+
+	// 获取总价
+	@SuppressWarnings("unused")
+	private int selected(ArrayList<produceClass> list) {
+		int count = 0;
+		for (int i = 0; i < list.size(); i++) {
+			// 产品数量
+
+			int num = Integer.parseInt(list.get(i).qty);
+			int price = Integer.parseInt(list.get(i).price);
+			count = count + num * price;
+		}
+
+		return count;
 
 	}
 

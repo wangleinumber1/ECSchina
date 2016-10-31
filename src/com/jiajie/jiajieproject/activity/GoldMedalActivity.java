@@ -59,6 +59,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	private int phonecode = 102;
 	private ArrayList<CategoriesClass> poplist = new ArrayList<CategoriesClass>();
 	private RelativeLayout class_layout;
+	public static final String TAG="GoldMedalActivity";
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
@@ -272,10 +273,10 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		@SuppressWarnings("unused")
-		MainPageObject mainPageObject=goldFragmentList.get(arg2);
+		MainPageObject mainPageObject=goldFragmentList.get(arg2-1);
 		Bundle bundle=new Bundle();
 		bundle.putSerializable(PartsActivity.TAG, mainPageObject);
-		IntentUtil.activityForward(mActivity, GoodsdetailActivity.class, null,
+		IntentUtil.activityForward(mActivity, GoodsdetailActivity.class, bundle,
 				false);
 	}
 

@@ -3,7 +3,11 @@
     android:layout_width="wrap_content"
     android:layout_height="210dp"
     android:background="@color/white" >
-
+<RelativeLayout
+    android:id="@+id/new_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
     <ImageView
         android:id="@+id/newpartimage"
         android:layout_width="125dp"
@@ -37,4 +41,5 @@
         android:textColor="#E94516"
         android:textSize="11sp" />
 
+</RelativeLayout>
 </RelativeLayout>

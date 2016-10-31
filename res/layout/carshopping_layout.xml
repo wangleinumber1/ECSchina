@@ -108,7 +108,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:button="@null"
-                        android:checked="true"
+                        android:checked="false"
                         android:drawableLeft="@drawable/pay_radio"
                         android:drawablePadding="5dp"
                         android:text="全选"
@@ -120,8 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                       
+                        android:layout_centerVertical="true"                       
                         android:layout_toRightOf="@+id/allselect" >
 
                         <Button
@@ -133,7 +132,7 @@
                             android:background="@null"
                             android:drawableLeft="@drawable/carshopping_price"
                             android:drawablePadding="5dp"
-                            android:text="14540.00"
+                            android:text="0.00"
                             android:textColor="#E84A1A"
                             android:textSize="15sp" />
 

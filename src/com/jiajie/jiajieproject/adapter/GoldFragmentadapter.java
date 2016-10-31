@@ -72,7 +72,7 @@ public class GoldFragmentadapter extends BaseAdapter {
 			}
 			mImageLoad.loadImg(view.produce_Image, list.get(position).image, R.drawable.jiazaitupian);
 			view.producename.setText(list.get(position).name);
-			view.producecount.setText("¥"+list.get(position).price.substring(0, list.get(position).price.lastIndexOf('.'))+".00");
+			view.produceprice.setText("¥"+list.get(position).price.substring(0, list.get(position).price.lastIndexOf('.'))+".00");
 			view.producecount.setText("库存数量：  "+list.get(position).qty.substring(0, list.get(position).qty.lastIndexOf('.')));
 	        return convertView;
 		}

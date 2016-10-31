@@ -22,7 +22,9 @@ import com.mrwujay.cascade.model.SomeMessage;
 import com.mrwujay.cascade.model.produceClass;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -93,7 +95,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		// new CarsAsyTask().execute();
+		 new GetDefaultAdressAsyTask().execute();
 
 	}
 
@@ -239,188 +241,114 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 			break;
 		}
 	}
-}
 
-/**
- * 购物车列表
- * */
-/*
- * @SuppressWarnings("unused") private class CarsAsyTask extends MyAsyncTask {
- * 
- * public CarsAsyTask() { super(); }
- * 
- * @SuppressWarnings("unchecked")
- * 
- * @Override protected Object doInBackground(Object... params) { return
- * jsonservice.getCarDataList(InterfaceParams.cart, null, false,
- * produceClass.class, null); }
- * 
- * @SuppressWarnings("unchecked")
- * 
- * @Override protected void onPostExecute(Object result) { // TODO
- * Auto-generated method stub super.onPostExecute(result); if (result == null) {
- * return; }
- * 
- * if (jsonservice.getToastMessage()) { OnlyClass onlyClass = (OnlyClass)
- * result; ToastUtil.showToast(mActivity, onlyClass.data); } if
- * (jsonservice.getsuccessState()) {
- * 
- * list = (ArrayList<produceClass>) result;
- * ordercoConfirmationAdapter.setData(list);
- * ordercoConfirmationAdapter.notifyDataSetChanged(); SomeMessage jsonMessage =
- * jsonservice.getsomemessage(); footpricetext.setText("¥"+
- * jsonMessage.total_price.substring(0,
- * jsonMessage.total_price.lastIndexOf('.'))+".00");
- * footnumbertext.setText("共  " + jsonMessage.count + "件商品 合计：");
- * catshoppingtext1.setText("¥"+ jsonMessage.total_price.substring(0,
- * jsonMessage.total_price.lastIndexOf('.'))+".00"); } // 先加载地址再显示数据 new
- * GetDefaultAdressAsyTask().execute(); }
- * 
- * }
- *//**
- * 获取默认地址
- * */
-/*
- * @SuppressWarnings("unused") private class GetDefaultAdressAsyTask extends
- * MyAsyncTask {
- * 
- * public GetDefaultAdressAsyTask() { super(); }
- * 
- * @SuppressWarnings("unchecked")
- * 
- * @Override protected Object doInBackground(Object... params) { return
- * jsonservice.getData(InterfaceParams.getDefaultAddress, null, false,
- * AdressClass.class); }
- * 
- * @SuppressWarnings("unchecked")
- * 
- * @Override protected void onPostExecute(Object result) { // TODO
- * Auto-generated method stub super.onPostExecute(result); if (result == null) {
- * return; }
- * 
- * if (jsonservice.getToastMessage()) { OnlyClass onlyClass = (OnlyClass)
- * result; ToastUtil.showToast(mActivity, onlyClass.data); } if
- * (jsonservice.getsuccessState()) { AdressClass adressClass = (AdressClass)
- * result; if (adressClass.name == null) { isdefaultAdress = false;
- * headernametext.setText("请添加一个默认收货地址"); headeradresstext.setText("");
- * headernnmbertext.setText(""); } else { isdefaultAdress = true; AdressId =
- * adressClass.id; headernametext.setText(adressClass.name);
- * headeradresstext.setText(adressClass.city + adressClass.street);
- * headernnmbertext.setText(adressClass.telephone);
- * 
- * }
- * 
- * }
- * 
- * }
- * 
- * }
- *//**
- * 自己封装json
- * */
-/*
- * @SuppressWarnings({ "unused", "static-access" }) private String JsonBySelf()
- * {
- * 
- * ArrayList<produceClass> list = ordercoConfirmationAdapter.getData(); String
- * message = "{"; for (int i = 0; i < list.size(); i++) { produceClass
- * produceClass = list.get(i);
- * 
- * if (list.size() > 1) { message = message + "\"" +
- * produceClass.productId.toString() + "\"" + ":" + "{\"" + "qty" + "\"" + ":" +
- * "\"" + produceClass.qty + "\"" + "},"; } else { message = message + "\"" +
- * produceClass.productId.toString() + "\"" + ":" + "{\"" + "qty" + "\"" + ":" +
- * "\"" + produceClass.qty + "\"" + "}"; }
- * 
- * } // ToastUtil.showToast(mActivity, message); if (list.size() < 2) { return
- * message + "}"; } else { message = message.substring(0, message.length() - 1)
- * + "}"; return message; }
- * 
- * }
- *//**
- * 提交订单
- * */
-/*
- * @SuppressWarnings("unused") private class UpdateAsyTask extends MyAsyncTask {
- * private String interfacename; private Map map;
- * 
- * public UpdateAsyTask(Map map, String interfacename) { super(); this.map =
- * map; this.interfacename = interfacename;
- * 
- * }
- * 
- * @SuppressWarnings("unchecked")
- * 
- * @Override protected Object doInBackground(Object... params) { return
- * jsonservice.getData(interfacename, map, false, null); }
- * 
- * @SuppressWarnings("unchecked")
- * 
- * @Override protected void onPostExecute(Object result) { // TODO
- * Auto-generated method stub super.onPostExecute(result); if (result == null) {
- * return; }
- * 
- * if (jsonservice.getToastMessage()) { OnlyClass onlyClass = (OnlyClass)
- * result; if (onlyClass.success) { myHandler.sendEmptyMessage(8); if
- * (ordercoConfirmationAdapter.getData().size() >= 0) { String id =
- * ordercoConfirmationAdapter.getData().get(0).id; Bundle bundle = new Bundle();
- * bundle.putString("orderid", id); IntentUtil.activityForward(mActivity,
- * CompleteActivity.class, bundle, true); }else{ ToastUtil.showToast(mActivity,
- * "没有任何订单"); } } ToastUtil.showToast(mActivity, onlyClass.data); }
- * 
- * }
- * 
- * }
- */
-class MyHandler extends Handler {
+	/**
+	 * 获取默认地址
+	 * */
+	class GetDefaultAdressAsyTask extends AsyncTask {
 
-	// @SuppressWarnings("unchecked")
-	@Override
-	public void handleMessage(Message msg) {
-		// TODO Auto-generated method stub
-		switch (msg.what) {
-		case 8:
-			Map map2 = new HashMap<String, String>();
-			map2.put("update_cart_action", "empty_cart");
-			// new AddRemoveCarsDeleteAsyTask(map2, InterfaceParams.updateCart)
-			// .execute();
-			break;
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		protected Object doInBackground(Object... params) {
+			return jsonservice.getData(InterfaceParams.getDefaultAddress, null,
+					false, AdressClass.class);
+		}
 
-		default:
-			break;
+		@SuppressWarnings("unchecked")
+		@Override
+		protected void onPostExecute(Object result) {
+			super.onPostExecute(result);
+			if (result == null) {
+				return;
+			}
+
+			if (jsonservice.getToastMessage()) {
+				OnlyClass onlyClass = (OnlyClass) result;
+				ToastUtil.showToast(mActivity, onlyClass.data);
+			}
+			if (jsonservice.getsuccessState()) {
+				AdressClass adressClass = (AdressClass) result;
+				if (adressClass.name == null) {
+					isdefaultAdress = false;
+					headernametext.setText("请添加一个默认收货地址");
+					headeradresstext.setText("");
+					headernnmbertext.setText("");
+				} else {
+					isdefaultAdress = true;
+					AdressId = adressClass.id;
+					headernametext.setText(adressClass.name);
+					headeradresstext.setText(adressClass.city
+							+ adressClass.street);
+					headernnmbertext.setText(adressClass.telephone);
+
+				}
+
+			}
+
+		}
+	}
+
+	class MyHandler extends Handler {
+
+		// @SuppressWarnings("unchecked")
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			switch (msg.what) {
+			case 8:
+				Map map2 = new HashMap<String, String>();
+				map2.put("update_cart_action", "empty_cart");
+				 new AddRemoveCarsDeleteAsyTask(map2,
+				 InterfaceParams.updateCart)
+				 .execute();
+				break;
+
+			default:
+				break;
+			}
+
 		}
 
 	}
-	// }
+	
+	
+	@SuppressWarnings("unused")
+	private class AddRemoveCarsDeleteAsyTask extends MyAsyncTask {
+		private String interfacename;
+		private Map map;
 
-	/**
-	 * 移除购物车 添加 结算
-	 * */
-	/*
-	 * @SuppressWarnings("unused") private class AddRemoveCarsDeleteAsyTask
-	 * extends MyAsyncTask { private String interfacename; private Map map;
-	 * 
-	 * public AddRemoveCarsDeleteAsyTask(Map map, String interfacename) {
-	 * super(); this.map = map; this.interfacename = interfacename;
-	 * 
-	 * }
-	 * 
-	 * @SuppressWarnings("unchecked")
-	 * 
-	 * @Override protected Object doInBackground(Object... params) { return
-	 * jsonservice.getData(interfacename, map, false, null); }
-	 * 
-	 * @SuppressWarnings("unchecked")
-	 * 
-	 * @Override protected void onPostExecute(Object result) { // TODO
-	 * Auto-generated method stub super.onPostExecute(result); if (result ==
-	 * null) { return; }
-	 * 
-	 * // if (jsonservice.getToastMessage()) { OnlyClass onlyClass = (OnlyClass)
-	 * result; if (onlyClass.success) { } ToastUtil.showToast(mActivity,
-	 * onlyClass.data); }
-	 * 
-	 * }
-	 */
+		public AddRemoveCarsDeleteAsyTask(Map map, String interfacename) {
+			super();
+			this.map = map;
+			this.interfacename = interfacename;
+
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected Object doInBackground(Object... params) {
+			return jsonservice.getData(interfacename, map, false, null);
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected void onPostExecute(Object result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if (result == null) {
+				return;
+			}
+
+			if (jsonservice.getToastMessage()) {
+				OnlyClass onlyClass = (OnlyClass) result;
+				if (onlyClass.success) {
+
+				}
+				ToastUtil.showToast(mActivity, onlyClass.data);
+			}
+
+		}
+
+	}
 }
-// }

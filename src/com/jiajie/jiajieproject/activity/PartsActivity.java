@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -29,7 +30,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.jiajie.jiajieproject.R;
-import com.jiajie.jiajieproject.adapter.MainPageAdapter;
 import com.jiajie.jiajieproject.adapter.PosterAdapter;
 import com.jiajie.jiajieproject.adapter.mainpagehotAdapter;
 import com.jiajie.jiajieproject.adapter.mainpagenewAdapter;
@@ -43,6 +43,7 @@ import com.jiajie.jiajieproject.model.OnlyClass;
 import com.jiajie.jiajieproject.utils.DeviceInfoUtil;
 import com.jiajie.jiajieproject.utils.DisplayUtil;
 import com.jiajie.jiajieproject.utils.DownLoadApp;
+import com.jiajie.jiajieproject.utils.ImageLoad;
 import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.NetworkUtil;
 import com.jiajie.jiajieproject.utils.ToastUtil;
@@ -75,8 +76,10 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 	private TextView text4;
 	private MyGridView sellgrid, hotgrid, recommandgrid, newgrid;
 	private ImageView leftImage, RightImage, searchimage;
-	private MainPageAdapter mainpagesellAdpter, mainpagehotAdpter,
-	mainpagenewAdpter;
+	private mainpagesellAdapter mainpagesellAdpter;
+	private mainpagehotAdapter mainpagehotAdpter;
+	private mainpagenewAdapter	mainpagenewAdpter;
+	private mainpagesellAdapter	maintuijianAdapter;
 	private ReboundScrollView ReboundScrollView;
 	private RelativeLayout mainpage_header;
 	private int phonecode = 102;
@@ -89,7 +92,7 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
-		super.onInit(bundle); 
+		super.onInit(bundle);
 		SharePreferDB = new SharePreferDB(mContext, "versionmessage");
 		// 判断是否有网
 		if (!NetworkUtil.isConnected(mActivity)) {
@@ -137,65 +140,60 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 		newgrid = (MyGridView) findViewById(R.id.newpartgridview);
 		ReboundScrollView = (ReboundScrollView) findViewById(R.id.mainScroll);
 		mainpage_header = (RelativeLayout) findViewById(R.id.mainpage_header);
-		mainpagesellAdpter = new mainpagesellAdapter(this, mImgLoad);
-		mainpagehotAdpter = new mainpagehotAdapter(this, mImgLoad);
-		mainpagenewAdpter = new mainpagenewAdapter(this, mImgLoad);
-		sellgrid.setAdapter(mainpagesellAdpter);
-		hotgrid.setAdapter(mainpagehotAdpter);
-		recommandgrid.setAdapter(mainpagesellAdpter);
-		newgrid.setAdapter(mainpagenewAdpter);
+		
+		
 		leftImage.setOnClickListener(this);
 		RightImage.setOnClickListener(this);
 		searchimage.setOnClickListener(this);
 		ReboundScrollView.smoothScrollTo(0, 0);
-		sellgrid.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				Bundle bundle = new Bundle();
-				bundle.putSerializable(TAG, BestSelllist.get(arg2));
-				IntentUtil.activityForward(mActivity,
-						GoodsdetailActivity.class, bundle, false);
-			}
-		});
-		hotgrid.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				Bundle bundle = new Bundle();
-				bundle.putSerializable(TAG, Tuijianlist.get(arg2));
-				IntentUtil.activityForward(mActivity,
-						GoodsdetailActivity.class, bundle, false);
-			}
-		});
-		recommandgrid.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				Bundle bundle = new Bundle();
-				bundle.putSerializable(TAG, Tuijianlist.get(arg2));
-				IntentUtil.activityForward(mActivity,
-						GoodsdetailActivity.class, bundle, false);
-			}
-		});
-		newgrid.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				Bundle bundle = new Bundle();
-				bundle.putSerializable(TAG, BestSelllist.get(arg2));
-				IntentUtil.activityForward(mActivity,
-						GoodsdetailActivity.class, bundle, false);
-			}
-		});
+//		sellgrid.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//					long arg3) {
+//				// TODO Auto-generated method stub
+//				Bundle bundle = new Bundle();
+//				bundle.putSerializable(TAG, BestSelllist.get(arg2));
+//				IntentUtil.activityForward(mActivity,
+//						GoodsdetailActivity.class, bundle, false);
+//			}
+//		});
+//		hotgrid.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//					long arg3) {
+//				// TODO Auto-generated method stub
+//				Bundle bundle = new Bundle();
+//				bundle.putSerializable(TAG, Tuijianlist.get(arg2));
+//				IntentUtil.activityForward(mActivity,
+//						GoodsdetailActivity.class, bundle, false);
+//			}
+//		});
+//		recommandgrid.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//					long arg3) {
+//				// TODO Auto-generated method stub
+//				Bundle bundle = new Bundle();
+//				bundle.putSerializable(TAG, Tuijianlist.get(arg2));
+//				IntentUtil.activityForward(mActivity,
+//						GoodsdetailActivity.class, bundle, false);
+//			}
+//		});
+//		newgrid.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//					long arg3) {
+//				// TODO Auto-generated method stub
+//				Bundle bundle = new Bundle();
+//				bundle.putSerializable(TAG, BestSelllist.get(arg2));
+//				IntentUtil.activityForward(mActivity,
+//						GoodsdetailActivity.class, bundle, false);
+//			}
+//		});
 		ReboundScrollView.setOnScrollListener(new OnScrollChangedListener() {
 			int movepageheight = DisplayUtil.dipToPixel(200);
 
@@ -379,7 +377,7 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 	@SuppressWarnings("unused")
 	private class getBestsellerAsyTask extends MyAsyncTask {
 		private String interfaceString;
-		private MainPageAdapter adpter;
+		private BaseAdapter adpter;
 
 		public getBestsellerAsyTask(String interfaceString) {
 			super();
@@ -423,37 +421,36 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 						onlyClass.onsale, MainPageObject.class);
 				Tuijianlist = (ArrayList<MainPageObject>) JSON.parseArray(
 						onlyClass.featured, MainPageObject.class);
-				Newlist = (ArrayList<MainPageObject>) JSON.parseArray(onlyClass.newArrival,
-						MainPageObject.class);
-				if (BestSelllist.size() > 0) {
+				Newlist = (ArrayList<MainPageObject>) JSON.parseArray(
+						onlyClass.newArrival, MainPageObject.class);
+				mainpagesellAdpter = new mainpagesellAdapter(PartsActivity.this, mImgLoad);
+				mainpagehotAdpter = new mainpagehotAdapter(PartsActivity.this, mImgLoad);
+				mainpagenewAdpter = new mainpagenewAdapter(PartsActivity.this, mImgLoad);
+				maintuijianAdapter = new mainpagesellAdapter(PartsActivity.this, mImgLoad);
+				sellgrid.setAdapter(mainpagesellAdpter);
+				hotgrid.setAdapter(mainpagehotAdpter);
+				recommandgrid.setAdapter(maintuijianAdapter);
+				newgrid.setAdapter(mainpagenewAdpter);
 
-					mainpagesellAdpter.setdata(BestSelllist);
+					mainpagesellAdpter.setDate(BestSelllist);
 					mainpagesellAdpter.notifyDataSetChanged();
-				}
 
-				 if (Hotlist.size() > 0) {
-
-					mainpagehotAdpter.setdata(Hotlist);
+					mainpagehotAdpter.setDate(Hotlist);
 					mainpagehotAdpter.notifyDataSetChanged();
-
-				}
-				 if (Tuijianlist.size() > 0) {
-
-					mainpagesellAdpter.setdata(Tuijianlist);
-					mainpagesellAdpter.notifyDataSetChanged();
-
-				}
-				 if (Newlist.size() > 0) {
-
-					mainpagenewAdpter.setdata(Newlist);
+					
+					maintuijianAdapter.setDate(Tuijianlist);
+					maintuijianAdapter.notifyDataSetChanged();
+					 
+					mainpagenewAdpter.setDate(Newlist);
 					mainpagenewAdpter.notifyDataSetChanged();
-
 				}
+
+				
 
 			}
 		}
 
-	}
+	
 
 	// 打电话
 	private void callphone() {

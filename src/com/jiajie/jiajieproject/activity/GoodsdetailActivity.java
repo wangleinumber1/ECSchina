@@ -42,9 +42,11 @@ import com.jiajie.jiajieproject.contents.InterfaceParams;
 import com.jiajie.jiajieproject.model.OnlyClass;
 import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.ScreenUtil;
+import com.jiajie.jiajieproject.utils.StringUtil;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 import com.mrwujay.cascade.model.MainPageObject;
 import com.mrwujay.cascade.model.produceClass;
+import com.ta.utdid2.android.utils.StringUtils;
 
 /**
  * 项目名称：NewProject 类名称：GoodsdetailActivity 类描述： 创建人：王蕾 创建时间：2015-9-18 下午3:46:00
@@ -64,10 +66,12 @@ public class GoodsdetailActivity extends BaseActivity implements
 	private handler handler = new handler();
 	// 是不是刚进入页面
 	private int isFirstCare = 0;
-	private int isFirstunCare = 0;
 	private ImageView detail_imageView, detail_back, qq_link, phone_link,
-			wechat_link, email_link, detai_care, detai_incar;
+			wechat_link, email_link,  detai_incar;
 	private TextView detailtext1, detailtext2, detailtext3, detailtext4;
+	private CheckBox careful;
+	private String product_id;
+	private String item_id;
 
 	@Override
 	protected void onInit(Bundle bundle) {
@@ -92,7 +96,7 @@ public class GoodsdetailActivity extends BaseActivity implements
 		phone_link = (ImageView) findViewById(R.id.phone_link);
 		wechat_link = (ImageView) findViewById(R.id.wechat_link);
 		email_link = (ImageView) findViewById(R.id.email_link);
-		detai_care = (ImageView) findViewById(R.id.detai_care);
+		careful = (CheckBox) findViewById(R.id.detai_care);
 		detai_incar = (ImageView) findViewById(R.id.detai_incar);
 		detailtext1 = (TextView) findViewById(R.id.detailtext1);
 		detailtext2 = (TextView) findViewById(R.id.detailtext2);
@@ -103,17 +107,21 @@ public class GoodsdetailActivity extends BaseActivity implements
 		phone_link.setOnClickListener(this);
 		wechat_link.setOnClickListener(this);
 		email_link.setOnClickListener(this);
-		detai_care.setOnClickListener(this);
 		detai_incar.setOnClickListener(this);
-
+		careful.setOnCheckedChangeListener(new cheCkchangeClass());
 	}
 
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		mImgLoad.loadImg(detail_imageView, mainPageObject.small_image,
-				R.drawable.jiazaitupian);
+		if(StringUtil.checkStr(mainPageObject.small_image)){
+			mImgLoad.loadImg(detail_imageView, mainPageObject.small_image,
+					R.drawable.jiazaitupian);
+		}else{
+			mImgLoad.loadImg(detail_imageView, mainPageObject.image,
+					R.drawable.jiazaitupian);
+		}
 		detailtext1.setText(mainPageObject.name);
 		detailtext2.setText("PN:" + mainPageObject.pn);
 		detailtext3.setText("¥"+mainPageObject.price.substring(0, mainPageObject.price.lastIndexOf('.'))+".00");
@@ -130,12 +138,20 @@ public class GoodsdetailActivity extends BaseActivity implements
 		case R.id.detail_back:
 			finish();
 			break;
-		case R.id.detai_care:
-			// 加关注
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("id", mainPageObject.id);
-			new AddCarefulsyTask(map).execute();
-			break;
+//		case R.id.detai_care:
+//			
+//			if(!StringUtil.checkStr(wishlist_id)){
+//				// 加关注
+//				Map<String, String> map = new HashMap<String, String>();
+//				map.put("id", mainPageObject.id);
+//				new AddCarefulsyTask(map).execute();
+//			}else{
+//				//取消关注
+//				
+//				
+//			}
+		
+//			break;
 
 		case R.id.detai_incar:
 			if (userDataService.getUserId() == null) {
@@ -154,8 +170,7 @@ public class GoodsdetailActivity extends BaseActivity implements
 
 			break;
 
-		default:
-			break;
+	
 		}
 
 	}
@@ -190,18 +205,19 @@ public class GoodsdetailActivity extends BaseActivity implements
 				return;
 			}
 
-			if (jsonservice.getToastMessage()) {
+//			if (jsonservice.getToastMessage()) {
 				OnlyClass onlyClass = (OnlyClass) result;
-				if (!onlyClass.success) {
-
+//				if (!onlyClass.success) {
+					
 					ToastUtil.showToast(mActivity, onlyClass.data);
-				}
-			}
+//				}
+//			}
 
 		}
 
 	}
 
+	
 	/*
 	 * 关注
 	 */
@@ -210,7 +226,7 @@ public class GoodsdetailActivity extends BaseActivity implements
 		@SuppressWarnings("rawtypes")
 		Map map;
 
-		public AddCarefulsyTask(Map map) {
+		public AddCarefulsyTask(Map map, String Interface) {
 			super();
 			this.map = map;
 
@@ -232,9 +248,12 @@ public class GoodsdetailActivity extends BaseActivity implements
 				return;
 			}
 
-			handler.sendEmptyMessage(1);
-			OnlyClass onlyClass = (OnlyClass) result;
-			wishlist_id = onlyClass.wishlist_id;
+//			if (jsonservice.getsuccessState()) {
+
+				OnlyClass onlyClass = (OnlyClass) result;
+				wishlist_id = onlyClass.wishlist_id;
+				ToastUtil.showToast(mContext, onlyClass.data);
+//			}
 
 		}
 
@@ -269,20 +288,20 @@ public class GoodsdetailActivity extends BaseActivity implements
 			if (result == null) {
 				return;
 			}
-
+			
 			OnlyClass onlyClass = (OnlyClass) result;
-			Boolean iscare = onlyClass.success;
-			if (iscare) {
-				detai_care.setFocusable(false);
-				detai_care.setImageResource(R.drawable.havecare);
-				ToastUtil.showToast(mContext, "已关注");
+			wishlist_id=onlyClass.data;
+			if (onlyClass.success) {
+				careful.setChecked(true);
+				isFirstCare++;
 			} else {
-				detai_care.setFocusable(true);
-				detai_care.setImageResource(R.drawable.detai_care);
+				careful.setChecked(false);
+				isFirstCare++;
 			}
 		}
 
 	}
+
 
 	private class handler extends Handler {
 
@@ -327,4 +346,54 @@ public class GoodsdetailActivity extends BaseActivity implements
 		}
 
 	}
+	
+	class cheCkchangeClass implements
+	android.widget.CompoundButton.OnCheckedChangeListener {
+
+@Override
+public void onCheckedChanged(CompoundButton buttonView,
+		boolean isChecked) {
+	if (userDataService.getUserId() == null) {
+		careful.setChecked(false);
+		
+		String[] str = { "登录", "是否登陆", "是", "否" };
+		Bundle bundle = new Bundle();
+		bundle.putStringArray(ClearCacheActivity.TAG, str);
+		IntentUtil.startActivityForResult(GoodsdetailActivity.this,
+				ClearCacheActivity.class, 1111, bundle);
+	} else {
+		Map map = new HashMap<String, String>();
+		if (isChecked) {
+			if (isFirstCare > 0) {
+				// 防止一进入界面就调关注接口		
+				map.put("id", mainPageObject.id);
+				new AddCarefulsyTask(map, InterfaceParams.addWishList)
+						.execute();
+				ToastUtil.showToast(mActivity, "已关注");
+			}
+		} else {
+
+			// map.put("c_id", categrayId);
+			if (isFromcare) {
+				isFirstCare++;
+				map.put("item_id", item_id);
+				new CarefulsyTask(map, InterfaceParams.removeWishList)
+						.execute();
+				ToastUtil.showToast(mActivity, "移除关注");
+			} else {
+				isFirstCare++;
+				map.put("product_id", mainPageObject.id);
+				map.put("wishlist_id", wishlist_id);
+				// product_id = 当前的产品id wishlist_id =
+				new CarefulsyTask(map,
+						InterfaceParams.deleteWishListByProduct)
+						.execute();
+				ToastUtil.showToast(mActivity, "取消关注");
+			}
+
+		}
+
+	}
+}
+}
 }

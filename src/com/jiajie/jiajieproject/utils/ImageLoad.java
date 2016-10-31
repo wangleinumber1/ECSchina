@@ -234,8 +234,7 @@ public class ImageLoad {
 //			new AsyncImg(img,url).execute();
 //		}
 		Glide.with(mContext).load(url).centerCrop()
-		.placeholder(defaultImgId).crossFade(2000)
-        .into(img);
+		.into(img);
 		
 	}
 
