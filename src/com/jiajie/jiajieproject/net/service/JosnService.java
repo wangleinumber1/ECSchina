@@ -203,7 +203,7 @@ public class JosnService {
 	 * @param接受值得类
 	 * */
 	public Object getCarDataList(String Interface, Map map, boolean needCach,
-			Class anyclass, Handler myHandler) {
+			Class anyclass) {
 		String str = mNetRequService.requestData("POST", Interface, map,
 				needCach);
 		if (!StringUtil.checkStr(str))
@@ -224,9 +224,6 @@ public class JosnService {
 				somemessage.count = onlyClass1.count;
 				somemessage.total_price = onlyClass1.total_price;
 				if (onlyClass1.count.equalsIgnoreCase("0")) {
-					if (myHandler != null) {
-						myHandler.sendEmptyMessage(9);
-					}
 					isToast = false;
 					return null;
 				} else {

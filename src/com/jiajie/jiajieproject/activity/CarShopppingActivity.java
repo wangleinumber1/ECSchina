@@ -23,6 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import cn.jpush.android.api.m;
+
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
@@ -54,7 +56,8 @@ public class CarShopppingActivity extends BaseActivity implements
 	private RelativeLayout backLayout;
 	private MyHandler myHandler = new MyHandler();
 	private SwipeMenuListView carshopping_layoutlistview;
-
+	//id和个数
+	private String message;
 	// 所有物品
 	private ArrayList<produceClass> list;
 	// 底部
@@ -108,11 +111,6 @@ public class CarShopppingActivity extends BaseActivity implements
 		findViewById(R.id.kongback).setOnClickListener(this);
 	}
 
-	// @Override
-	// pr() {
-	// super.onStart();
-	//
-	// }
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
@@ -184,15 +182,11 @@ public class CarShopppingActivity extends BaseActivity implements
 	@SuppressWarnings("unused")
 	private class CarsAsyTask extends MyAsyncTask {
 
-		public CarsAsyTask() {
-			super();
-		}
-
 		@SuppressWarnings("unchecked")
 		@Override
 		protected Object doInBackground(Object... params) {
 			return jsonservice.getCarDataList(InterfaceParams.cart, null,
-					false, produceClass.class, myHandler);
+					false, produceClass.class);
 		}
 
 		@SuppressWarnings("unchecked")
@@ -272,7 +266,7 @@ public class CarShopppingActivity extends BaseActivity implements
 				OnlyClass onlyClass = (OnlyClass) result;
 				if (onlyClass.success) {
 
-					myHandler.sendEmptyMessage(10);
+					
 				}
 				ToastUtil.showToast(mActivity, onlyClass.data);
 			}
@@ -316,7 +310,7 @@ public class CarShopppingActivity extends BaseActivity implements
 				if (onlyClass.success) {
 					 myHandler.sendEmptyMessage(12);
 					IntentUtil.activityForward(mActivity,
-							OrdercoConfirmationActivity.class, null, true);
+							OrdercoConfirmationActivity.class, null, false);
 					
 				}
 				ToastUtil.showToast(mActivity, onlyClass.data);
@@ -350,7 +344,7 @@ public class CarShopppingActivity extends BaseActivity implements
 			new AddRemoveCarsDeleteAsyTask(deletemap,
 					InterfaceParams.deleteCart).execute();
 			carShopppingAdapter.notifyDataSetChanged();
-
+			myHandler.sendEmptyMessage(10);
 			break;
 
 		default:
@@ -396,6 +390,7 @@ public class CarShopppingActivity extends BaseActivity implements
 					new AddRemoveCarsDeleteAsyTask(map2,
 							InterfaceParams.deleteCart).execute();
 					carShopppingAdapter.notifyDataSetChanged();
+					myHandler.sendEmptyMessage(10);
 				}
 			case 7:
 				//全部移入关注
@@ -418,11 +413,12 @@ public class CarShopppingActivity extends BaseActivity implements
 //				String message = "{" + "\"" + list.get(msg.arg2).id.toString()
 //						+ "\"" + ":" + "{\"" + "qty" + "\"" + ":" + "\""
 //						+ msg.arg1 + "\"" + "}}";
-				String message=JsonBySelf();
+				 message=JsonBySelf();
 				map.put("update_cart_action", "update_qty");
 				map.put("cart", message);
 				new UpdateAsyTask(map, InterfaceParams.updateCart)
 						.execute();
+				myHandler.sendEmptyMessage(10);
 
 				break;
 			case 12:

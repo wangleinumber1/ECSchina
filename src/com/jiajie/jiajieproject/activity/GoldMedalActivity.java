@@ -9,6 +9,7 @@ import java.util.Map;
 
 import android.content.res.ColorStateList;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -60,6 +61,8 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	private ArrayList<CategoriesClass> poplist = new ArrayList<CategoriesClass>();
 	private RelativeLayout class_layout;
 	public static final String TAG="GoldMedalActivity";
+	private MyHandler myHandler=new MyHandler();
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
@@ -67,6 +70,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		setContentView(R.layout.goldactivity_layout);
 		scrollView = (ReboundScrollView) findViewById(R.id.tools_scrlllview);
 		new GetIdAsyTask("2").execute();
+		new GetProductsByCidAsyTask("2").execute();
 		InitView();
 
 	}
@@ -169,7 +173,11 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 				popupWindow.showAsDropDown(v, v.getWidth(), -v.getHeight(),
 						Gravity.LEFT);
 			}
+			
+		
 		}
+		
+		
 	};
 
 	/**
@@ -228,6 +236,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 
 	private PopupWindow popupWindow;
 
+	@SuppressWarnings("unchecked")
 	protected void initPopuptWindow(int height,String c_id) {
 		// TODO Auto-generated method stub
 		// 获取自定义布局文件activity_popupwindow_left.xml的视图
@@ -238,15 +247,20 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		ListView listview = (ListView) popupWindow_view;
 		new GetIdSecondAsyTask(c_id).execute();
 		listview.setAdapter(classPopAdapter);
-		classPopAdapter.notifyDataSetChanged();
 		popupWindow = new PopupWindow(popupWindow_view, 200, height * 4, true);
 		popupWindow.setBackgroundDrawable(new BitmapDrawable());
 		popupWindow.setOutsideTouchable(true);
+		Message message=myHandler.obtainMessage(1);
+		message.arg1=Integer.parseInt(c_id);
+		myHandler.sendMessage(message);
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				new GetProductsByCidAsyTask(poplist.get(arg2).id).execute();
+				
+				Message message=myHandler.obtainMessage(1);
+				message.arg1=Integer.parseInt(poplist.get(arg2).id);
+				myHandler.sendMessage(message);
 				arg1.setBackgroundResource(R.drawable.classbg_white);
 				if (popupWindow != null && popupWindow.isShowing()) {
 					popupWindow.dismiss();
@@ -260,12 +274,14 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	/***
 	 * 获取PopupWindow实例
 	 */
+	@SuppressWarnings("unchecked")
 	private void getPopupWindow(int height,String cid) {
 //		if (null != popupWindow) {
 //			popupWindow.dismiss();
 //
 //			return;
 //		} else {
+		
 			initPopuptWindow(height,cid);
 //		}
 	}
@@ -281,7 +297,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	}
 
 	// 获取左侧列表数据
-	private class GetIdAsyTask extends MyAsyncTask {
+	private class GetIdAsyTask extends AsyncTask {
 		private String c_id;
 
 		@SuppressWarnings("unused")
@@ -315,7 +331,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	}
 	// 获取左侧列表二级数据
 	@SuppressWarnings("unused")
-	private class GetIdSecondAsyTask extends MyAsyncTask {
+	private class GetIdSecondAsyTask extends AsyncTask {
 		private String c_id;
 		
 		@SuppressWarnings("unused")
@@ -344,6 +360,9 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 			poplist=(ArrayList<CategoriesClass>) result;
 			classPopAdapter.setdata(poplist);
 			classPopAdapter.notifyDataSetChanged();
+			if(poplist.size()==0){
+				popupWindow.dismiss();
+			}
 		
 		}
 		
@@ -382,6 +401,23 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		
 	}
 	
-	
+	@SuppressWarnings("unused")
+	private class MyHandler extends Handler{
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case 1:
+				new GetProductsByCidAsyTask(msg.arg1+"").execute();
+				break;
+
+			default:
+				break;
+			}
+		}
+		
+	}
 	
 }

@@ -398,6 +398,7 @@
         <activity android:name=".activity.MyOrderActivity"></activity>
        <!--注册获取验证码  -->
         <activity android:name=".activity.ZhuCeCodeActivity"></activity>
+        <activity android:name=".activity.OrderListAcitivity"></activity>
     </application>
 
 </manifest>

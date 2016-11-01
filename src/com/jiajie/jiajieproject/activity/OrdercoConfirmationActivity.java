@@ -91,6 +91,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -106,6 +107,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		send_order = (ImageView) findViewById(R.id.send_order);
 		pricecount = (Button) findViewById(R.id.pricecount);
 		headerleftImg.setOnClickListener(this);
+		send_order.setOnClickListener(this);
 
 	}
 
@@ -129,6 +131,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		fapiaoRadioGroup1.setOnCheckedChangeListener(this);
 		fapiaoRadioGroup2.setOnCheckedChangeListener(this);
 		fapiaoRadioGroup3.setOnCheckedChangeListener(this);
+		produce_list.setOnClickListener(this);
 	}
 
 	private void headView() {
@@ -151,34 +154,79 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 					null, false);
 			break;
 		// 去掉发票功能
-		// case R.id.fapiaomessage_layout:
-		//
-		// IntentUtil.startActivityForResult(this,
-		// InvoiceInformationActivity.class, 2, null);
-		//
-		// break;
-		// case R.id.catshoppingsettlementText:
-		// if (isdefaultAdress) {
-		// // 提交订单
-		// @SuppressWarnings("rawtypes")
-		// Map map1 = new HashMap<String, String>();
-		// map1.put("address_id", AdressId);
-		// map1.put("products", JsonBySelf());
-		// new UpdateAsyTask(map1, InterfaceParams.saveOrder).execute();
-		//
-		// } else {
-		// // 没有地址创建一个
-		// ToastUtil.showToast(mContext, "请增加一个默认收货地址");
-		// return;
-		// }
+		 case R.id.produce_list:
+		
+		 IntentUtil.startActivityForResult(this,
+		 InvoiceInformationActivity.class, 2, null);
+		
+		 break;
+		 case R.id.send_order:
+		 if (isdefaultAdress) {
+		 // 提交订单
+		 @SuppressWarnings("rawtypes")
+		 Map map1 = new HashMap<String, String>();
+		 map1.put("address_id", AdressId);
+//		 map1.put("products", JsonBySelf());
+		 new UpdateAsyTask(map1, InterfaceParams.saveOrder).execute();
+		
+		 } else {
+		 // 没有地址创建一个
+		 ToastUtil.showToast(mContext, "请增加一个默认收货地址");
+		 return;
+		 }
 
-		// break;
+		 break;
 
 		default:
 			break;
 		}
 
 	}
+	
+	/**
+	 * 结算
+	 * */
+	@SuppressWarnings("unused")
+	private class UpdateAsyTask extends MyAsyncTask {
+		private String interfacename;
+		private Map map;
+
+		public UpdateAsyTask(Map map, String interfacename) {
+			super();
+			this.map = map;
+			this.interfacename = interfacename;
+
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected Object doInBackground(Object... params) {
+			return jsonservice.getData(interfacename, map, false, null);
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected void onPostExecute(Object result) {
+			// TODO Auto-generated method
+			super.onPostExecute(result);
+			if (result == null) {
+				return;
+			}
+
+			if (jsonservice.getToastMessage()) {
+				OnlyClass onlyClass = (OnlyClass) result;
+				if (onlyClass.success) {
+					
+					
+				}
+				ToastUtil.showToast(mActivity, onlyClass.data);
+			}
+
+		}
+
+	}
+
+	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -245,7 +293,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 	/**
 	 * 获取默认地址
 	 * */
-	class GetDefaultAdressAsyTask extends AsyncTask {
+	class GetDefaultAdressAsyTask extends MyAsyncTask {
 
 		
 		@SuppressWarnings("unchecked")
@@ -272,8 +320,8 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 				if (adressClass.name == null) {
 					isdefaultAdress = false;
 					headernametext.setText("请添加一个默认收货地址");
-					headeradresstext.setText("");
-					headernnmbertext.setText("");
+					headeradresstext.setText("姓名");
+					headernnmbertext.setText("电话");
 				} else {
 					isdefaultAdress = true;
 					AdressId = adressClass.id;
@@ -292,6 +340,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 	class MyHandler extends Handler {
 
 		// @SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
