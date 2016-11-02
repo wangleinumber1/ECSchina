@@ -182,7 +182,7 @@ public class CarShopppingActivity extends BaseActivity implements
 	 * 购物车列表
 	 * */
 	@SuppressWarnings("unused")
-	private class CarsAsyTask extends AsyncTask {
+	private class CarsAsyTask extends MyAsyncTask {
 
 		@SuppressWarnings("unchecked")
 		@Override
@@ -378,6 +378,9 @@ public class CarShopppingActivity extends BaseActivity implements
 				new AddRemoveCarsDeleteAsyTask(caremap, InterfaceParams.addWishList)
 						.execute();
 				carShopppingAdapter.notifyDataSetChanged();
+				Message message1=myHandler.obtainMessage(2);
+				message1.arg1=msg.arg1;
+				myHandler.sendMessage(message1);
 				myHandler.sendEmptyMessage(10);
 				break;
 			case 2:
@@ -386,10 +389,7 @@ public class CarShopppingActivity extends BaseActivity implements
 				deletemap.put("id", list.get(msg.arg1).id);
 				new AddRemoveCarsDeleteAsyTask(deletemap,
 						InterfaceParams.deleteCart).execute();
-				carShopppingAdapter.notifyDataSetChanged();
-				Message message1=myHandler.obtainMessage(2);
-				message1.arg1=msg.arg1;
-				myHandler.sendMessage(message1);
+				carShopppingAdapter.notifyDataSetChanged();			
 				myHandler.sendEmptyMessage(10);
 				break;
 			case 10:
@@ -425,7 +425,7 @@ public class CarShopppingActivity extends BaseActivity implements
 					new AddRemoveCarsDeleteAsyTask(caremap1, InterfaceParams.addWishList)
 							.execute();
 					carShopppingAdapter.notifyDataSetChanged();
-					myHandler.sendEmptyMessage(12);
+					myHandler.sendEmptyMessage(8);
 					myHandler.sendEmptyMessage(10);
 				}
 				break;
