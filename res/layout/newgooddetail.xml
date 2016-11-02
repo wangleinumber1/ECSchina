@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,14 +21,23 @@
                 android:paddingRight="5dp"
                 android:paddingTop="5dp"
                 android:src="@drawable/detail_back" />
-
-            <ImageView
+            <!--
+            <com.jiajie.jiajieproject.view.SmoothImageView
                 android:id="@+id/detail_imageView"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_below="@+id/detail_back"
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/class_pruduce" />
+            -->
+
+            <LinearLayout
+                android:id="@+id/detail_imageView"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_below="@+id/detail_back"
+                android:layout_marginLeft="10dp" >
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/detailtext1"
@@ -167,8 +175,8 @@
                     android:id="@+id/detai_care"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@null"
-                    android:background="@drawable/detailchecbox" />
+                    android:background="@drawable/detailchecbox"
+                    android:button="@null" />
             </RelativeLayout>
 
             <ImageView

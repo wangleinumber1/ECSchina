@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -126,10 +127,11 @@ public class CarShopppingActivity extends BaseActivity implements
 		case R.id.movetocare:
 			//全部关注
 			myHandler.sendEmptyMessage(7);
+			myHandler.sendEmptyMessage(8);
 			break;
 		case R.id.balance:
 			//结算
-			myHandler.sendEmptyMessage(11);
+			myHandler.sendEmptyMessage(6);
 			
 			break;
 		case R.id.kongback:
@@ -180,7 +182,7 @@ public class CarShopppingActivity extends BaseActivity implements
 	 * 购物车列表
 	 * */
 	@SuppressWarnings("unused")
-	private class CarsAsyTask extends MyAsyncTask {
+	private class CarsAsyTask extends AsyncTask {
 
 		@SuppressWarnings("unchecked")
 		@Override
@@ -235,8 +237,8 @@ public class CarShopppingActivity extends BaseActivity implements
 	/**
 	 * 移除购物车 添加 结算
 	 * */
-	@SuppressWarnings("unused")
-	private class AddRemoveCarsDeleteAsyTask extends MyAsyncTask {
+	@SuppressWarnings({ "unused", "rawtypes" })
+	private class AddRemoveCarsDeleteAsyTask extends AsyncTask {
 		private String interfacename;
 		private Map map;
 
@@ -279,7 +281,7 @@ public class CarShopppingActivity extends BaseActivity implements
 	 * 结算
 	 * */
 	@SuppressWarnings("unused")
-	private class UpdateAsyTask extends MyAsyncTask {
+	private class UpdateAsyTask extends AsyncTask {
 		private String interfacename;
 		private Map map;
 
@@ -308,9 +310,7 @@ public class CarShopppingActivity extends BaseActivity implements
 			if (jsonservice.getToastMessage()) {
 				OnlyClass onlyClass = (OnlyClass) result;
 				if (onlyClass.success) {
-					 myHandler.sendEmptyMessage(12);
-					IntentUtil.activityForward(mActivity,
-							OrdercoConfirmationActivity.class, null, false);
+					
 					
 				}
 				ToastUtil.showToast(mActivity, onlyClass.data);
@@ -331,19 +331,17 @@ public class CarShopppingActivity extends BaseActivity implements
 		switch (index) {
 		// 移入关注
 		case 0:
-			HashMap<String, String> caremap = new HashMap<String, String>();
-			caremap.put("id", list.get(index).productId);
-			new AddRemoveCarsDeleteAsyTask(caremap, InterfaceParams.addWishList)
-					.execute();
-			carShopppingAdapter.notifyDataSetChanged();
+			Message message=myHandler.obtainMessage(1);
+			message.arg1=position;
+			myHandler.sendMessage(message);
+			myHandler.sendEmptyMessage(10);
 			break;
 		// 删除
 		case 1:
-			HashMap<String, String> deletemap = new HashMap<String, String>();
-			deletemap.put("id", list.get(index).id);
-			new AddRemoveCarsDeleteAsyTask(deletemap,
-					InterfaceParams.deleteCart).execute();
-			carShopppingAdapter.notifyDataSetChanged();
+			
+			Message message1=myHandler.obtainMessage(2);
+			message1.arg1=position;
+			myHandler.sendMessage(message1);
 			myHandler.sendEmptyMessage(10);
 			break;
 
@@ -373,6 +371,27 @@ public class CarShopppingActivity extends BaseActivity implements
 					allselect.setChecked(flag);
 				}
 				break;
+			case 1:
+				//移入关注
+				HashMap<String, String> caremap = new HashMap<String, String>();
+				caremap.put("id", list.get(msg.arg1).productId);
+				new AddRemoveCarsDeleteAsyTask(caremap, InterfaceParams.addWishList)
+						.execute();
+				carShopppingAdapter.notifyDataSetChanged();
+				myHandler.sendEmptyMessage(10);
+				break;
+			case 2:
+				// 删除单个
+				HashMap<String, String> deletemap = new HashMap<String, String>();
+				deletemap.put("id", list.get(msg.arg1).id);
+				new AddRemoveCarsDeleteAsyTask(deletemap,
+						InterfaceParams.deleteCart).execute();
+				carShopppingAdapter.notifyDataSetChanged();
+				Message message1=myHandler.obtainMessage(2);
+				message1.arg1=msg.arg1;
+				myHandler.sendMessage(message1);
+				myHandler.sendEmptyMessage(10);
+				break;
 			case 10:
 				// 刷新
 				new CarsAsyTask().execute();
@@ -392,34 +411,48 @@ public class CarShopppingActivity extends BaseActivity implements
 					carShopppingAdapter.notifyDataSetChanged();
 					myHandler.sendEmptyMessage(10);
 				}
+				break;
 			case 7:
 				//全部移入关注
 				if (flag) {
-					HashMap<String, String> caremap = new HashMap<String, String>();
+					HashMap<String, String> caremap1 = new HashMap<String, String>();
 					String message="";
 					for(int i=0;i<list.size();i++){
 						message=message+list.get(i).productId+",";
 					}
 					message=message.substring(0, message.length()-1);
-					caremap.put("id",message);
-					new AddRemoveCarsDeleteAsyTask(caremap, InterfaceParams.addWishList)
+					caremap1.put("id",message);
+					new AddRemoveCarsDeleteAsyTask(caremap1, InterfaceParams.addWishList)
 							.execute();
 					carShopppingAdapter.notifyDataSetChanged();
+					myHandler.sendEmptyMessage(12);
+					myHandler.sendEmptyMessage(10);
 				}
 				break;
 			case 11:
-				// 结算全部
+				// 提交个数
 				Map map = new HashMap<String, String>();
-//				String message = "{" + "\"" + list.get(msg.arg2).id.toString()
-//						+ "\"" + ":" + "{\"" + "qty" + "\"" + ":" + "\""
-//						+ msg.arg1 + "\"" + "}}";
-				 message=JsonBySelf();
+				String message = "{" + "\"" + list.get(msg.arg2).id.toString()
+						+ "\"" + ":" + "{\"" + "qty" + "\"" + ":" + "\""
+						+ msg.arg1 + "\"" + "}}";				
 				map.put("update_cart_action", "update_qty");
 				map.put("cart", message);
 				new UpdateAsyTask(map, InterfaceParams.updateCart)
 						.execute();
 				myHandler.sendEmptyMessage(10);
 
+				break;
+			case 6:
+				// 结算全部
+				Map map1 = new HashMap<String, String>();
+								
+				map1.put("update_cart_action", "update_qty");
+				map1.put("cart", JsonBySelf());
+				new UpdateAsyTask(map1, InterfaceParams.updateCart)
+				.execute();
+				myHandler.sendEmptyMessage(12);
+					IntentUtil.activityForward(mActivity,
+							OrdercoConfirmationActivity.class, null, false);
 				break;
 			case 12:
 				// 清空

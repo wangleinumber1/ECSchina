@@ -399,6 +399,7 @@
        <!--注册获取验证码  -->
         <activity android:name=".activity.ZhuCeCodeActivity"></activity>
         <activity android:name=".activity.OrderListAcitivity"></activity>
+        <activity android:name=".activity.SpaceImageDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -39,7 +39,7 @@ import com.mrwujay.cascade.model.produceClass;
  */
 @SuppressWarnings("unused")
 public class CarShopppingAdapter extends BaseAdapter implements
-		OnCheckedChangeListener, OnClickListener {
+		OnCheckedChangeListener,OnClickAddAndSubListener {
 	private Activity activity;
 	private ArrayList<produceClass> list = new ArrayList<produceClass>();
 	private static HashMap<Integer, Boolean> isSelected;
@@ -52,13 +52,13 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		this.mHandler = mHandler;
 		this.imageLoad = imageLoad;
 		isSelected = new HashMap<Integer, Boolean>();
-
+		initDate();
 	}
 
 	// 初始化isSelected的数据
-	private void initDate(ArrayList<produceClass> list) {
+	private void initDate() {
 	
-			for (int i = 0; i < list.size(); i++) {
+			for (int i = 0; i < 10; i++) {
 				getIsSelected().put(i, false);
 			}
 		
@@ -73,7 +73,7 @@ public class CarShopppingAdapter extends BaseAdapter implements
 	}
 
 	public ArrayList<produceClass> setData(ArrayList<produceClass> list) {
-		initDate(list);
+//		initDate(list);
 		return this.list = list;
 
 	}
@@ -153,7 +153,7 @@ public class CarShopppingAdapter extends BaseAdapter implements
 						list.get(position).price.lastIndexOf('.')) + ".00");
 		vh.pricetext.setText(list.get(position).productName);
 		vh.my_add_sub.setCount(list.get(position).qty);
-		vh.my_add_sub.setOnClickListener(this);
+		vh.my_add_sub.setOnClickAddAndSubListener(this);
 		vh.my_add_sub.setTag(position);
 		imageLoad.loadImg(vh.imgeView2, list.get(position).image,
 				R.drawable.jiazaitupian);
@@ -336,15 +336,37 @@ public class CarShopppingAdapter extends BaseAdapter implements
 
 	}
 
+//	@Override
+//	public void onClick(View v) {
+//		MyAddAndSubView view = (MyAddAndSubView) v;
+//		Message message = mHandler.obtainMessage();
+//		message.arg1 = count);
+//		message.arg2 = Integer.parseInt(view.getTag().toString());
+//		message.what = 11;
+//		mHandler.sendMessage(message);
+//
+//	}
+
 	@Override
-	public void onClick(View v) {
-		MyAddAndSubView view = (MyAddAndSubView) v;
+	public void clickAdd(int count, View view) {
+		MyAddAndSubView view1 = (MyAddAndSubView) view;
 		Message message = mHandler.obtainMessage();
-		message.arg1 = view.getCount();
+		message.arg1 = count;
 		message.arg2 = Integer.parseInt(view.getTag().toString());
 		message.what = 11;
 		mHandler.sendMessage(message);
+		
+	}
 
+	@Override
+	public void clickSub(int count, View view) {
+		// TODO Auto-generated method stub
+		MyAddAndSubView view1 = (MyAddAndSubView) view;
+		Message message = mHandler.obtainMessage();
+		message.arg1 = count;
+		message.arg2 = Integer.parseInt(view.getTag().toString());
+		message.what = 11;
+		mHandler.sendMessage(message);
 	}
 
 }

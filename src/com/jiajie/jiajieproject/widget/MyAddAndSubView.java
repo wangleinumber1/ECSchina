@@ -82,7 +82,7 @@ public class MyAddAndSubView extends LinearLayout implements OnClickListener {
 			if (count > 1) {
 				count--;
 				tv_middle_content.setText(String.valueOf(count));
-				
+				onClickAddAndSubListener.clickSub(count,this);
 			} else {
 				tv_middle_content.setText(String.valueOf(count));
 			}
@@ -91,6 +91,7 @@ public class MyAddAndSubView extends LinearLayout implements OnClickListener {
 			if (count >= 1) {
 				count++;
 				tv_middle_content.setText(String.valueOf(count));
+				onClickAddAndSubListener.clickAdd(count,this);
 			}
 		}
 	}
@@ -107,16 +108,14 @@ public class MyAddAndSubView extends LinearLayout implements OnClickListener {
 	}
 
 	public interface OnClickAddAndSubListener {
-		void clickAdd(int count);
+		void clickAdd(int count,View view);
 
-		void clickSub(int count);
+		void clickSub(int count,View view);
 	}
 
 	public OnClickAddAndSubListener onClickAddAndSubListener;
 
-	public OnClickAddAndSubListener getOnClickAddAndSubListener() {
-		return onClickAddAndSubListener;
-	}
+	
 
 	public void setOnClickAddAndSubListener(
 			OnClickAddAndSubListener onClickAddAndSubListener) {
