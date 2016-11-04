@@ -39,5 +39,22 @@ public class produceClass implements Serializable{
 	public String short_description;
 	public String pn;
 	public boolean isChoosed;
+	@Override
+	public String toString() {
+		return "produceClass [id=" + id + ", item_id=" + item_id + ", sku="
+				+ sku + ", name=" + name + ", image=" + image + ", price="
+				+ price + ", qty=" + qty + ", total_price=" + total_price
+				+ ", productName=" + productName + ", product_name="
+				+ product_name + ", productId=" + productId + ", product_id="
+				+ product_id + ", address_id=" + address_id + ", title="
+				+ title + ", url=" + url + ", status=" + status
+				+ ", order_code=" + order_code + ", order_price=" + order_price
+				+ ", order_qty=" + order_qty + ", qty_ordered=" + qty_ordered
+				+ ", express=" + express + ", order_date=" + order_date
+				+ ", customer_name=" + customer_name + ", customer_email="
+				+ customer_email + ", description=" + description
+				+ ", short_description=" + short_description + ", pn=" + pn
+				+ ", isChoosed=" + isChoosed + "]";
+	}
 
 }
