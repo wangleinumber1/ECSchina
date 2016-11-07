@@ -31,6 +31,7 @@ import com.jiajie.jiajieproject.activity.CarShopppingActivity;
 import com.jiajie.jiajieproject.db.service.SharePreferDB;
 import com.jiajie.jiajieproject.utils.ImageLoad;
 import com.jiajie.jiajieproject.utils.ToastUtil;
+import com.jiajie.jiajieproject.utils.YokaLog;
 import com.jiajie.jiajieproject.widget.MyAddAndSubView;
 import com.jiajie.jiajieproject.widget.MyAddAndSubView.OnClickAddAndSubListener;
 import com.mrwujay.cascade.model.produceClass;
@@ -41,17 +42,17 @@ import com.mrwujay.cascade.model.produceClass;
  */
 @SuppressWarnings("unused")
 public class CarShopppingAdapter extends BaseAdapter implements
-		OnCheckedChangeListener, OnClickAddAndSubListener {
+		OnClickListener, OnClickAddAndSubListener {
 	private Activity activity;
 	private ArrayList<produceClass> list = new ArrayList<produceClass>();
 	// private static Map<String, String> isSelected;
 	private Handler mHandler;
 	private ImageLoad imageLoad;
 	private SharePreferDB sharePreferDB;
-
+	private static String TAG="CarShopppingAdapter";
 	@SuppressLint("UseSparseArrays")
 	public CarShopppingAdapter(Activity activity, Handler mHandler,
-			ImageLoad imageLoad, SharePreferDB sharePreferDB) {
+			ImageLoad imageLoad,SharePreferDB sharePreferDB) {
 		this.activity = activity;
 		this.mHandler = mHandler;
 		this.imageLoad = imageLoad;
@@ -138,7 +139,7 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		} else {
 			vh = (ViewHolder) convertView.getTag();
 		}
-		vh.imgeView1.setOnCheckedChangeListener(this);
+		vh.imgeView1.setOnClickListener(this);
 		vh.imgeView1.setTag(position);
 		vh.imgeView1.setChecked(Boolean
 				.parseBoolean(CarShopppingActivity.isSelected.get(list
@@ -182,24 +183,25 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		return flag;
 	}
 
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		// 此处不执行
-		CheckBox imge = (CheckBox) buttonView;
-		int position = (Integer) imge.getTag();
-		list.get(position).isChoosed = imge.isChecked();
-		CarShopppingActivity.isSelected.put(list.get(position).id,
-				imge.isChecked() + "");
-
-		// 如果所有的物品全部被选中，则全选按钮也默认被选中
-		if (isAllSelected()) {
-			Message message = mHandler.obtainMessage(9);
-			message.obj = true;
-			mHandler.sendMessage(message);
-		}	
-		
-		mHandler.sendEmptyMessage(13);
-	}
+//	@Override
+//	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//		// 此处不执行
+//		CheckBox imge = (CheckBox) buttonView;
+//		int position = (Integer) imge.getTag();
+//		list.get(position).isChoosed = imge.isChecked();
+//		CarShopppingActivity.isSelected.put(list.get(position).id,
+//				imge.isChecked() + "");
+//
+//		// 如果所有的物品全部被选中，则全选按钮也默认被选中
+//		if (isAllSelected()) {
+//			Message message = mHandler.obtainMessage(9);
+//			message.obj = true;
+//			mHandler.sendMessage(message);
+//		}	
+//		YokaLog.e(TAG,CarShopppingActivity.isSelected+"00000000000000000000");
+//		if(CarShopppingActivity.isSelected>)
+//		mHandler.sendEmptyMessage(13);
+//	}
 
 	@Override
 	public void clickAdd(int count, View view) {
@@ -209,7 +211,7 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		message.arg2 = Integer.parseInt(view.getTag().toString());
 		message.what = 11;
 		mHandler.sendMessage(message);
-
+	
 	}
 
 	@Override
@@ -221,6 +223,27 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		message.arg2 = Integer.parseInt(view.getTag().toString());
 		message.what = 11;
 		mHandler.sendMessage(message);
+		
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		CheckBox imge = (CheckBox) v;
+		int position = (Integer) imge.getTag();
+		list.get(position).isChoosed = imge.isChecked();
+		CarShopppingActivity.isSelected.put(list.get(position).id,
+				imge.isChecked() + "");
+
+		// 如果所有的物品全部被选中，则全选按钮也默认被选中
+		if (isAllSelected()) {
+			Message message = mHandler.obtainMessage(9);
+			message.obj = true;
+			mHandler.sendMessage(message);
+		}	
+		mHandler.sendEmptyMessage(13);
+		YokaLog.e(TAG,CarShopppingActivity.isSelected+"00000000000000000000");
+		
 	}
 
 }

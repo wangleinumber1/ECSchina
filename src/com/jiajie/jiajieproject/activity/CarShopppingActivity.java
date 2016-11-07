@@ -72,7 +72,8 @@ public class CarShopppingActivity extends BaseActivity implements
 	// 选中的商品
 	private ArrayList<produceClass> selectedproduce = new ArrayList<produceClass>();
 	private String tatalprice;
-	private SharePreferDB sharePreferDB;
+	 private SharePreferDB sharePreferDB;
+	private static String TAG = "CarShopppingActivity";
 
 	@Override
 	protected void onInit(Bundle bundle) {
@@ -94,9 +95,11 @@ public class CarShopppingActivity extends BaseActivity implements
 		headerRightImg = (ToggleButton) findViewById(R.id.headerRightImg);
 		backLayout = (RelativeLayout) findViewById(R.id.backLayout);
 		carshopping_layoutlistview = (SwipeMenuListView) findViewById(R.id.carshopping_layoutlistview);
-		sharePreferDB = new SharePreferDB(mContext, "carshopping.db");
-		carShopppingAdapter = new CarShopppingAdapter(mActivity, myHandler,
-				mImgLoad, sharePreferDB);
+		 sharePreferDB = new SharePreferDB(mContext, "carshopping.db");
+		 carShopppingAdapter = new CarShopppingAdapter(mActivity, myHandler,
+		 mImgLoad, sharePreferDB);
+//		carShopppingAdapter = new CarShopppingAdapter(mActivity, myHandler,
+//				mImgLoad);
 		carshopping_layoutlistview.setAdapter(carShopppingAdapter);
 		headerRightImg.setOnClickListener(this);
 		movetocare.setOnClickListener(this);
@@ -213,28 +216,50 @@ public class CarShopppingActivity extends BaseActivity implements
 				backInitView();
 			}
 
-			if (jsonservice.getsuccessState()) {
-				list = (ArrayList<produceClass>) result;
-				if (list.size() > 0) {
-					backLayout.setVisibility(View.GONE);
-					sharePreferDB.saveData(isSelected);
-					carShopppingAdapter.setData(list);
-					carShopppingAdapter.notifyDataSetChanged();
-					SomeMessage jsonMessage = jsonservice.getsomemessage();
-					tatalprice = jsonMessage.total_price.substring(0,
-							jsonMessage.total_price.lastIndexOf('.')) + ".00";
-					// carshopping_price.setText(
-					// jsonMessage.total_price.substring(0,
-					// jsonMessage.total_price.lastIndexOf('.'))
-					// + ".00");
-					// catshoppingtext2.setText("商品数量：        "
-					// + jsonMessage.count + "件");
+			list = (ArrayList<produceClass>) result;
+			// 刷新最新数据用于计算总价
+//			mHandler.sendEmptyMessage(13);
+			if (list.size() > 0) {
+				backLayout.setVisibility(View.GONE);
+				// sharePreferDB.saveData(isSelected);
+				carShopppingAdapter.setData(list);
+				carShopppingAdapter.notifyDataSetChanged();
+				SomeMessage jsonMessage = jsonservice.getsomemessage();
+				// tatalprice = jsonMessage.total_price.substring(0,
+				// jsonMessage.total_price.lastIndexOf('.')) + ".00";
+				// carshopping_price.setText(
+				// jsonMessage.total_price.substring(0,
+				// jsonMessage.total_price.lastIndexOf('.'))
+				// + ".00");
+				// catshoppingtext2.setText("商品数量：        "
+				// + jsonMessage.count + "件");
 				
-				} else {
-					backLayout.setVisibility(View.VISIBLE);
-				}
+				
+				
+				
+				
+				Map<String, produceClass> newmap = getselectedMap(
+						CarShopppingActivity.isSelected, list);
+				int countprice = 0;
+				for (Map.Entry<String, produceClass> maps : newmap.entrySet()) {
+					// String key = maps.getKey();
+					// 遍历list找到对应ID的值
+					produceClass produceClass = maps.getValue();
+					countprice = countprice
+							+ Integer.parseInt(produceClass.total_price
+									.substring(0, produceClass.total_price
+											.lastIndexOf('.')));
+					YokaLog.e(TAG, newmap.toString());
+					}
 
+				carshopping_price.setText(countprice + ".00");
+				
+				
+
+			} else {
+				backLayout.setVisibility(View.VISIBLE);
 			}
+
 		}
 
 	}
@@ -367,13 +392,13 @@ public class CarShopppingActivity extends BaseActivity implements
 				if (isallselect) {
 					flag = true;
 					allselect.setChecked(flag);
-//					carshopping_price.setText(tatalprice);
+					// carshopping_price.setText(tatalprice);
 				} else {
 					flag = false;
 					allselect.setChecked(flag);
-//					carshopping_price.setText("0.00");
+					// carshopping_price.setText("0.00");
 				}
-				
+
 				break;
 			case 1:
 				// 移入关注
@@ -397,8 +422,9 @@ public class CarShopppingActivity extends BaseActivity implements
 				myHandler.sendEmptyMessage(10);
 				break;
 			case 10:
-				// 刷新
-				sharePreferDB.saveData(isSelected);
+				// // 刷新
+				 sharePreferDB.deletePreference();
+				 sharePreferDB.saveData(isSelected);
 				new CarsAsyTask().execute();
 				break;
 			case 8:
@@ -443,8 +469,8 @@ public class CarShopppingActivity extends BaseActivity implements
 				map.put("update_cart_action", "update_qty");
 				map.put("cart", message);
 				new UpdateAsyTask(map, InterfaceParams.updateCart).execute();
-				myHandler.sendEmptyMessage(10);
-
+				sendEmptyMessage(10);
+//				 mHandler.sendEmptyMessage(13);
 				break;
 			case 6:
 				// 结算全部
@@ -468,34 +494,35 @@ public class CarShopppingActivity extends BaseActivity implements
 
 				break;
 			case 13:
-				//每次点击勾选涮新一次总价
-//				sendEmptyMessage(10);
-				ArrayList<produceClass> newlist = CarShopppingActivity.getselectedList(
+				// 每次点击勾选涮新一次总价
+				// sendEmptyMessage(10);
+				Map<String, produceClass> newmap = getselectedMap(
 						CarShopppingActivity.isSelected, list);
-				Double countprice = 0.0000;
-				for (int i = 0; i < newlist.size(); i++) {
-					// 产品数量
-//					int qty = Integer.parseInt(newlist.get(i).qty);
-//					int price = Integer.parseInt(list.get(position).price.substring(0,
-//							list.get(position).price.lastIndexOf('.')));
-					
-					
-					ToastUtil.showToast(mContext, newlist.get(i)+"");
-					
-					countprice = countprice + Double.parseDouble( newlist.get(i).total_price);
+				int countprice = 0;
+				for (Map.Entry<String, produceClass> maps : newmap.entrySet()) {
+					// String key = maps.getKey();
+					// 遍历list找到对应ID的值
+					produceClass produceClass = maps.getValue();
+					YokaLog.e(TAG,produceClass.toString()+"00000000000000000000");
+					countprice = countprice
+							+ Integer.parseInt(produceClass.total_price
+									.substring(0, produceClass.total_price
+											.lastIndexOf('.')));
 				}
-//				ToastUtil.showToast(mContext, countprice+"");
-				carshopping_price.setText(countprice+"");
-				
+
+				carshopping_price.setText(countprice + ".00");
+					if(newmap.size()==list.size()){
+						allselect.setChecked(true);
+					}else{
+						allselect.setChecked(false);
+					}
 				break;
 
-			default:
-				break;
 			}
-		}
 
+		}
 	}
-	
+
 	// // 全选或全取消
 	@SuppressWarnings("static-access")
 	private void selectedAll() {
@@ -553,11 +580,11 @@ public class CarShopppingActivity extends BaseActivity implements
 			flag = true;
 			selectedAll();
 			// int count = selected(list);
-		
+
 		} else {
 			flag = false;
 			selectedAll();
-		
+
 		}
 
 	}
@@ -578,30 +605,19 @@ public class CarShopppingActivity extends BaseActivity implements
 
 	}
 
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		sharePreferDB.deletePreference();
-	}
-
-	// 将勾选的的产品重新放进一个list
+	// 将勾选的的产品重新放进一个Map
 	@SuppressWarnings("unused")
-	public static ArrayList<produceClass> getselectedList(Map<String, String> maps,
+	public Map<String, produceClass> getselectedMap(Map<String, String> maps,
 			ArrayList<produceClass> list) {
-		ArrayList<produceClass> newlist = new ArrayList<produceClass>();
-		for (Map.Entry<String, String> map : maps.entrySet()) {
-			String key = map.getKey();
-			// 遍历list找到对应ID的值
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).isChoosed) {
-					newlist.add(list.get(i));
-				}
+		Map<String, produceClass> newMap = new HashMap<String, produceClass>();
+		// 遍历list找到对应ID的值
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).isChoosed) {
+				newMap.put(i + "", list.get(i));
 			}
-
 		}
 
-		return newlist;
+		return newMap;
 
 	}
 
