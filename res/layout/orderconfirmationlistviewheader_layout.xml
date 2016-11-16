@@ -93,21 +93,21 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/class_pruduce" />
+               />
 
             <ImageView
                  android:id="@+id/imageView2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/sellproduce" />
+                />
 
             <ImageView
                  android:id="@+id/imageView3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/class_pruduce" />
+                 />
         </LinearLayout>
 
         <ImageView

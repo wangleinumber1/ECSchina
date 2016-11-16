@@ -32,7 +32,7 @@ public class JosnService {
 	private boolean isToast;
 	private boolean success;
 	private SomeMessage somemessage;
-
+	private Boolean carIszero=false;
 	public JosnService(Context context) {
 		this.mContext = context;
 		mNetRequService = new NetRequestService(mContext);
@@ -56,7 +56,11 @@ public class JosnService {
 	public SomeMessage getsomemessage() {
 		return somemessage;
 	}
-
+	public Boolean getCarcountIsZero(){
+		
+	return carIszero;
+	
+}
 	/**
 	 * 公共方法
 	 * 
@@ -211,19 +215,12 @@ public class JosnService {
 		Log.d(TAG, str);
 
 		OnlyClass onlyClass = JSON.parseObject(str, OnlyClass.class);
-
-		// success=onlyClass.success;
-		if (onlyClass.success) {
-			if (anyclass == null) {
-				isToast = true;
-				return onlyClass;
-			} else {
-				success = true;
 				OnlyClass onlyClass1 = JSON.parseObject(onlyClass.data,
 						OnlyClass.class);
 				somemessage.count = onlyClass1.count;
 				somemessage.total_price = onlyClass1.total_price;
 				if (onlyClass1.count.equalsIgnoreCase("0")) {
+					carIszero=true;
 					isToast = false;
 					return null;
 				} else {
@@ -235,10 +232,7 @@ public class JosnService {
 
 			}
 
-		} else {
-			isToast = true;
-			return onlyClass;
 		}
 
-	}
-}
+	
+

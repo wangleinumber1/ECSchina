@@ -146,54 +146,6 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 		RightImage.setOnClickListener(this);
 		searchimage.setOnClickListener(this);
 		ReboundScrollView.smoothScrollTo(0, 0);
-//		sellgrid.setOnItemClickListener(new OnItemClickListener() {
-//
-//			@Override
-//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-//					long arg3) {
-//				// TODO Auto-generated method stub
-//				Bundle bundle = new Bundle();
-//				bundle.putSerializable(TAG, BestSelllist.get(arg2));
-//				IntentUtil.activityForward(mActivity,
-//						GoodsdetailActivity.class, bundle, false);
-//			}
-//		});
-//		hotgrid.setOnItemClickListener(new OnItemClickListener() {
-//
-//			@Override
-//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-//					long arg3) {
-//				// TODO Auto-generated method stub
-//				Bundle bundle = new Bundle();
-//				bundle.putSerializable(TAG, Tuijianlist.get(arg2));
-//				IntentUtil.activityForward(mActivity,
-//						GoodsdetailActivity.class, bundle, false);
-//			}
-//		});
-//		recommandgrid.setOnItemClickListener(new OnItemClickListener() {
-//
-//			@Override
-//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-//					long arg3) {
-//				// TODO Auto-generated method stub
-//				Bundle bundle = new Bundle();
-//				bundle.putSerializable(TAG, Tuijianlist.get(arg2));
-//				IntentUtil.activityForward(mActivity,
-//						GoodsdetailActivity.class, bundle, false);
-//			}
-//		});
-//		newgrid.setOnItemClickListener(new OnItemClickListener() {
-//
-//			@Override
-//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-//					long arg3) {
-//				// TODO Auto-generated method stub
-//				Bundle bundle = new Bundle();
-//				bundle.putSerializable(TAG, BestSelllist.get(arg2));
-//				IntentUtil.activityForward(mActivity,
-//						GoodsdetailActivity.class, bundle, false);
-//			}
-//		});
 		ReboundScrollView.setOnScrollListener(new OnScrollChangedListener() {
 			int movepageheight = DisplayUtil.dipToPixel(200);
 

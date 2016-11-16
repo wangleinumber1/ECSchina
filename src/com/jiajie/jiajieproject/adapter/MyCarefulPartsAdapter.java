@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.utils.ImageLoad;
-import com.mrwujay.cascade.model.produceClass;
+import com.mrwujay.cascade.model.MainPageObject;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -22,7 +22,7 @@ import android.widget.TextView;
  * 修改备注：
  */
 public class MyCarefulPartsAdapter extends BaseAdapter {
-	private ArrayList<produceClass> list = new ArrayList<produceClass>();
+	private ArrayList<MainPageObject> list = new ArrayList<MainPageObject>();
 	private Activity activity;
 	private ImageLoad imageLoad;
 
@@ -37,11 +37,11 @@ public class MyCarefulPartsAdapter extends BaseAdapter {
 
 	}
 
-	public void setdata(ArrayList<produceClass> list) {
+	public void setdata(ArrayList<MainPageObject> list) {
 		this.list=list;
 	}
 
-	public ArrayList<produceClass> getdata() {
+	public ArrayList<MainPageObject> getdata() {
 		return list;
 	}
 

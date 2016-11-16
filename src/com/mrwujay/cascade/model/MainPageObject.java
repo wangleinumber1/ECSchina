@@ -14,6 +14,9 @@ import java.io.Serializable;
  * 修改备注：    
  */
 public class MainPageObject implements Serializable{
+	public String wishlist_id;
+	public String item_id;
+	public String product_id;
 	public String id;
 	public String description;
 	public String pn;

@@ -4,11 +4,15 @@
 package com.jiajie.jiajieproject.adapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,8 +24,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jiajie.jiajieproject.R;
+import com.jiajie.jiajieproject.activity.NotPayActivity;
+import com.jiajie.jiajieproject.activity.OrderDetailActivity;
 import com.jiajie.jiajieproject.activity.OrderInformationActivity;
 import com.jiajie.jiajieproject.contents.Constants;
+import com.jiajie.jiajieproject.contents.InterfaceParams;
+import com.jiajie.jiajieproject.net.service.JosnService;
 import com.jiajie.jiajieproject.utils.ImageLoad;
 import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.ToastUtil;
@@ -36,9 +44,16 @@ public class NotPayAdapter extends BaseAdapter implements OnClickListener {
 	private ArrayList<produceClass> list = new ArrayList<produceClass>();
 	private Activity activity;
 	private ImageLoad imageLoad;
-	public NotPayAdapter(Activity activity, ImageLoad imageLoad) {
+	private JosnService josnService;
+	private Handler myhandler;
+
+	public NotPayAdapter(Activity activity, ImageLoad imageLoad,
+			JosnService josnService,Handler myhandler) {
+		super();
 		this.activity = activity;
 		this.imageLoad = imageLoad;
+		this.josnService = josnService;
+		this.myhandler = myhandler;
 	}
 
 	@Override
@@ -54,7 +69,7 @@ public class NotPayAdapter extends BaseAdapter implements OnClickListener {
 	}
 
 	public void setdata(ArrayList<produceClass> list) {
-		this.list.addAll(list);
+		this.list=list;
 	}
 
 
@@ -111,6 +126,7 @@ public class NotPayAdapter extends BaseAdapter implements OnClickListener {
 		vh.notpay_yingfu.setText(list.get(position).total_price);
 		vh.go_pay.setOnClickListener(this);
 		vh.cancle_order.setOnClickListener(this);
+		vh.cancle_order.setTag(position);
 		return convertView;
 	}
 
@@ -131,15 +147,16 @@ public class NotPayAdapter extends BaseAdapter implements OnClickListener {
 		case R.id.notpayitem_layoutlayout1:
 			int position=(Integer) v.getTag();
 			Bundle bundle=new Bundle();
-			bundle.putString("notpayid", list.get(position).id);
-			bundle.putString("notpayadressid", list.get(position).address_id);
-			IntentUtil.activityForward(activity, OrderInformationActivity.class, bundle, false);
+			bundle.putString(OrderDetailActivity.TAG, list.get(position).id);	
+			bundle.putString(OrderDetailActivity.TAG1, list.get(position).address_id);	
+			IntentUtil.activityForward(activity, OrderDetailActivity.class, bundle, false);
 			break;
 		case R.id.go_pay:
 			ToastUtil.showToast(activity, "去支付");
 			break;
 		case R.id.cancle_order:
-			ToastUtil.showToast(activity, "取消订单");
+			int pos=(Integer) v.getTag();
+			new CancleOrderAsyTask(activity, list.get(pos).id).execute();
 			break;
 
 		default:
@@ -148,6 +165,33 @@ public class NotPayAdapter extends BaseAdapter implements OnClickListener {
 
 	}
 
-	
+	//取消订单
+		private class CancleOrderAsyTask extends com.jiajie.jiajieproject.utils.MyAsyncTask{
+			private String id;
+			public CancleOrderAsyTask(Context context, String id) {
+				super(context);
+				this.id = id;
+			}
+
+		
+			@Override
+			protected Object doInBackground(Object... params) {
+				Map map=new HashMap<String, String>();
+				map.put("id", id);		
+				return josnService.getData(InterfaceParams.cancelOrder, map, false, null);
+			}
+
+			@Override
+			protected void onPostExecute(Object result) {
+				// TODO Auto-generated method stub
+				super.onPostExecute(result);
+				if(result==null){
+					return;
+				}
+				myhandler.sendEmptyMessage(1);
+				
+			}
+			
+		}
 
 }

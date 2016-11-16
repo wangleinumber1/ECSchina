@@ -26,6 +26,7 @@ import com.jiajie.jiajieproject.model.OnlyClass;
 import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 import com.jiajie.jiajieproject.widget.MyGridView;
+import com.mrwujay.cascade.model.MainPageObject;
 import com.mrwujay.cascade.model.produceClass;
 
 /**
@@ -39,7 +40,7 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 	private MyGridView mycarefulpartslayout_gridview;
 	private MyCarefulPartsAdapter myCarefulPartsAdapter;
 	private boolean isFromcare = true;
-
+	private ArrayList<MainPageObject> list=new ArrayList<MainPageObject>();
 	// private int page = 1;
 	@Override
 	protected void onInit(Bundle bundle) {
@@ -71,11 +72,13 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 		findViewById(R.id.headerleftImg).setOnClickListener(this);
 	}
 
+	
+
 	@Override
-	protected void onStart() {
+	protected void onResume() {
 		// TODO Auto-generated method stub
-		super.onStart();
-		new PartsCarefulAsyTask().execute();
+		super.onResume();
+		new PartsCarefulAsyTask().execute();	
 	}
 
 	@Override
@@ -96,11 +99,13 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		String produce_id = myCarefulPartsAdapter.getdata().get(arg2).product_id;
-		String item_id = myCarefulPartsAdapter.getdata().get(arg2).item_id;
+//		String produce_id = myCarefulPartsAdapter.getdata().get(arg2).product_id;
+//		String item_id = myCarefulPartsAdapter.getdata().get(arg2).item_id;
+//		Bundle bundle = new Bundle();
+//		bundle.putString("id", produce_id);
+//		bundle.putString("item_id", item_id);
 		Bundle bundle = new Bundle();
-		bundle.putString("id", produce_id);
-		bundle.putString("item_id", item_id);
+		bundle.putSerializable(PartsActivity.TAG, list.get(arg2));
 		bundle.putBoolean("isFromcare", isFromcare);
 		IntentUtil.activityForward(mActivity, GoodsdetailActivity.class,
 				bundle, false);
@@ -124,7 +129,7 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 			Map map = new HashMap<String, String>();
 			map.put("c_id", Constants.PartsCarefulCID);
 			return jsonservice.getDataList(InterfaceParams.WishList, map,
-					false, produceClass.class);
+					false, MainPageObject.class);
 		}
 
 		@SuppressWarnings("unchecked")
@@ -141,9 +146,9 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 				ToastUtil.showToast(mActivity, onlyClass.data);
 			}
 			if (jsonservice.getsuccessState()) {
-				ArrayList<produceClass> list = (ArrayList<produceClass>) result;
+				 list = (ArrayList<MainPageObject>) result;
 				if (list.size() > 0) {
-
+				
 					myCarefulPartsAdapter.setdata(list);
 					myCarefulPartsAdapter.notifyDataSetChanged();
 				} else {

@@ -4,6 +4,8 @@
 package com.jiajie.jiajieproject.activity;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,6 +32,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jiajie.jiajieproject.R;
+import com.jiajie.jiajieproject.activity.BaseActivity.MyAsyncTask;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
 import com.jiajie.jiajieproject.model.MyAccountClass;
 import com.jiajie.jiajieproject.model.OnlyClass;
@@ -51,7 +54,7 @@ public class MyAccontActivity extends BaseActivity implements OnClickListener {
 	private ImageView headerleftImg;
 	private RelativeLayout layout1, layout2, layout3, layout4, layout5,
 			layout6, layout7;
-	private Button Button1, Button2, Button3, Button4, headerRightImg;
+	private Button Button1, Button2, Button3, Button4;
 	private final int namecode = 11, companycode = 12, emailcode = 13,
 			phonecode = 14;
 
@@ -78,7 +81,6 @@ public class MyAccontActivity extends BaseActivity implements OnClickListener {
 	private void InitView() {
 		headerImage = (CircleImageView) findViewById(R.id.headerImage);
 		headerleftImg = (ImageView) findViewById(R.id.headerleftImg);
-		headerRightImg = (Button) findViewById(R.id.headerRightImg);
 		layout1 = (RelativeLayout) findViewById(R.id.layout1);
 		layout2 = (RelativeLayout) findViewById(R.id.layout2);
 		layout3 = (RelativeLayout) findViewById(R.id.layout3);
@@ -98,7 +100,6 @@ public class MyAccontActivity extends BaseActivity implements OnClickListener {
 		layout6.setOnClickListener(this);
 		layout7.setOnClickListener(this);
 		headerleftImg.setOnClickListener(this);
-		headerRightImg.setOnClickListener(this);
 		new UserInfoAsyTask().execute();
 	}
 
@@ -112,15 +113,6 @@ public class MyAccontActivity extends BaseActivity implements OnClickListener {
 		case R.id.headerleftImg:
 
 			finish();
-			break;
-		case R.id.headerRightImg:
-			// done(filePath);
-			if (filePath != null && new File(filePath).exists()) {
-				EditMineMessage(filePath);
-			} else {
-				ToastUtil.showToast(mContext, "请选择头像");
-			}
-
 			break;
 		// case R.id.layout1:
 		// done(filePath);
@@ -239,22 +231,14 @@ public class MyAccontActivity extends BaseActivity implements OnClickListener {
 
 				break;
 			case RESULT_REQUEST_CODE:
-				// if (data != null) {
-				//
-				// }
 				if (data != null) {
 					Bundle extras = data.getExtras();
 					if (extras != null) {
 						final Bitmap photo = extras.getParcelable("data");
 						getImageToView(data);
-						// Toast.makeText(getApplicationContext(), "���ڱ���",
-						// Toast.LENGTH_SHORT).show();
-						new Thread() {
-							@Override
-							public void run() {
-								IoUtils.saveBitmap(photo, filePath);
-							};
-						}.start();
+						new BitmapToImageAsyTask(photo).execute();
+
+
 					}
 				}
 				break;
@@ -272,18 +256,30 @@ public class MyAccontActivity extends BaseActivity implements OnClickListener {
 			case namecode:
 				name = bundle.getString(TAG);
 				Button1.setText(name);
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("name", name);
+				new MyacountEditAsytask(map).execute();
 				break;
 			case companycode:
 				company = bundle.getString(TAG);
 				Button2.setText(company);
+				HashMap<String, String> map1 = new HashMap<String, String>();
+				map1.put("company", company);
+				new MyacountEditAsytask(map1).execute();
 				break;
 			case emailcode:
 				email = bundle.getString(TAG);
 				Button3.setText(email);
+				HashMap<String, String> map2 = new HashMap<String, String>();
+				map2.put("email", email);
+				new MyacountEditAsytask(map2).execute();
 				break;
 			case phonecode:
 				phone = bundle.getString(TAG);
 				Button4.setText(phone);
+				HashMap<String, String> map3 = new HashMap<String, String>();
+				map3.put("phone", phone);
+				new MyacountEditAsytask(map3).execute();
 				break;
 
 			default:
@@ -354,70 +350,55 @@ public class MyAccontActivity extends BaseActivity implements OnClickListener {
 	// return cursor.getString(column_index);
 	// }
 
-	private void done(final String path) {
+	// @SuppressWarnings("unused")
+	// private void done(final String path) {
+	//
+	// TaskUtil.backFore(new BackFore() {
+	//
+	// @Override
+	// public void onFore() {
+	// File file = null;
+	// if (path != null && new File(filePath).exists()) {
+	// file = new File(filePath);
+	// FileToServer.reg(MyAccontActivity.this, "", file, path);
+	// }
+	// }
+	//
+	// @Override
+	// public void onBack() {
+	//
+	// new Timer().schedule(new TimerTask() {
+	//
+	// @Override
+	// public void run() {
+	// if (path != null && new File(filePath).exists()) {
+	//
+	// } else {
+	// finish();
+	// }
+	//
+	// }
+	//
+	// }, 10);
+	// }
+	//
+	// });
+	// }
 
-		TaskUtil.backFore(new BackFore() {
-
-			@Override
-			public void onFore() {
-				// int code = 201;
-				// Intent data = new Intent();
-				File file = null;
-				if (path != null && new File(filePath).exists()) {
-					file = new File(filePath);
-					MyAccountClass myacount = new MyAccountClass();
-					myacount.name = name;
-					myacount.company = company;
-					myacount.phone = phone;
-					myacount.email = email;
-					myacount.path = filePath;
-					// FileToServer.reg(MyAccontActivity.this, filePath, file,
-					// myacount);
-					FileToServer.reg(MyAccontActivity.this, "", null, myacount);
-				} else {
-
-				}
-
-				// setResult(code, data);
-				// finish();
-			}
-
-			@Override
-			public void onBack() {
-
-				new Timer().schedule(new TimerTask() {
-
-					@Override
-					public void run() {
-						if (path != null && new File(filePath).exists()) {
-
-						} else {
-							finish();
-						}
-
-					}
-
-				}, 10);
-			}
-
-		});
-	}
-
-	// 提交个人信息
-	@SuppressWarnings("unused")
-	private void EditMineMessage(String path) {
-		File file = null;
-		file = new File(filePath);
-		MyAccountClass myacount = new MyAccountClass();
-		myacount.name = name;
-		myacount.company = company;
-		myacount.phone = phone;
-		myacount.email = email;
-		myacount.path = filePath;
-		FileToServer.reg(MyAccontActivity.this, filePath, file, myacount);
-		// FileToServer.reg(MyAccontActivity.this, "", null, myacount);
-
-	}
+	// // 提交个人信息
+	// @SuppressWarnings("unused")
+	// private void EditMineMessage(String path) {
+	// File file = null;
+	// file = new File(filePath);
+	// MyAccountClass myacount = new MyAccountClass();
+	// myacount.name = name;
+	// myacount.company = company;
+	// myacount.phone = phone;
+	// myacount.email = email;
+	// myacount.path = filePath;
+	// FileToServer.reg(MyAccontActivity.this, filePath, file, myacount);
+	//
+	// }
 
 	/**
 	 * 用户信息
@@ -459,6 +440,66 @@ public class MyAccontActivity extends BaseActivity implements OnClickListener {
 			}
 
 		}
+	}
+
+	@SuppressWarnings("unused")
+	private class MyacountEditAsytask extends MyAsyncTask {
+		private Map map;
+
+		@SuppressWarnings("unused")
+		public MyacountEditAsytask(Map map) {
+			super();
+			this.map = map;
+		}
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			// TODO Auto-generated method stub
+			return jsonservice.getData(InterfaceParams.editUserInfo, map,
+					false, null);
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if (result == null) {
+				return;
+			}
+
+			OnlyClass onlyClass = (OnlyClass) result;
+			if (onlyClass.success) {
+				ToastUtil.showToast(mContext, onlyClass.data);
+			}
+
+		}
+
+	}
+
+	// bitmap转成图片
+	@SuppressWarnings("unused")
+	private class BitmapToImageAsyTask extends MyAsyncTask {
+		Bitmap bitmap;
+
+		@SuppressWarnings("unused")
+		public BitmapToImageAsyTask(Bitmap bitmap) {
+			super();
+			this.bitmap = bitmap;
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			FileToServer.reg(mActivity, filePath);
+		}
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			IoUtils.saveBitmap(bitmap, filePath);
+			return null;
+		}
+
 	}
 
 }

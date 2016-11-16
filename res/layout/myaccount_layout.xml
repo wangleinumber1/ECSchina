@@ -31,19 +31,6 @@
             android:text="账号管理"
             android:textColor="#333333"
             android:textSize="18sp" />
-	    <Button
-            android:id="@+id/headerRightImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingLeft="20dip"
-            android:paddingRight="10dp"
-            android:background="@null"
-            android:gravity="center"
-            android:textColor="#9C9C9C"
-            android:text="完成"
-            android:textSize="13sp" />
         <!-- android:background="@drawable/graybutton_up_down" -->
 
     </RelativeLayout>

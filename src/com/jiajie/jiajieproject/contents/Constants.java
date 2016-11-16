@@ -27,7 +27,7 @@ public class Constants {
 	//金牌服务页面的cid
 	public static final String  GoldMedalCID="9";
 	//我关注的备件列表cid
-	public static final String  PartsCarefulCID="10";
+	public static final String  PartsCarefulCID="2";
 
 	//性能页面的cid
 	public static final String  PerfisionallistCID1="15";

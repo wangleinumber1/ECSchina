@@ -32,8 +32,8 @@
             android:background="@null"
             android:gravity="center"
             android:textColor="#9C9C9C"
-            android:textOff="完成"
-            android:textOn="编辑"
+            android:textOff="编辑"
+            android:textOn="完成"
             android:textSize="13sp" />
         <!-- android:background="@drawable/graybutton_up_down" -->
 

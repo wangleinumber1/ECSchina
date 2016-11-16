@@ -42,37 +42,35 @@ import com.mrwujay.cascade.model.produceClass;
  */
 @SuppressWarnings("unused")
 public class CarShopppingAdapter extends BaseAdapter implements
-		OnClickListener, OnClickAddAndSubListener {
+		OnCheckedChangeListener, OnClickAddAndSubListener {
 	private Activity activity;
 	private ArrayList<produceClass> list = new ArrayList<produceClass>();
-	// private static Map<String, String> isSelected;
+	public static Map<Integer, produceClass> isSelected = new HashMap<Integer, produceClass>();
 	private Handler mHandler;
 	private ImageLoad imageLoad;
-	private SharePreferDB sharePreferDB;
-	private static String TAG="CarShopppingAdapter";
+	// private SharePreferDB sharePreferDB;
+	private static String TAG = "CarShopppingAdapter";
+
 	@SuppressLint("UseSparseArrays")
 	public CarShopppingAdapter(Activity activity, Handler mHandler,
-			ImageLoad imageLoad,SharePreferDB sharePreferDB) {
+			ImageLoad imageLoad) {
 		this.activity = activity;
 		this.mHandler = mHandler;
 		this.imageLoad = imageLoad;
-		this.sharePreferDB = sharePreferDB;
-		CarShopppingActivity.isSelected = new HashMap<String, String>();
+		// this.sharePreferDB = sharePreferDB;
 		// initDate();
 	}
 
 	// 初始化isSelected的数据
 	private void initDate() {
-		if (CarShopppingActivity.isSelected.size() > 0) {
-			CarShopppingActivity.isSelected = sharePreferDB.readData();
-
-		} else {
-
-			for (int i = 0; i < list.size(); i++) {
-				CarShopppingActivity.isSelected.put(list.get(i).id, "false");
-			}
+		if(CarShopppingAdapter.isSelected.size()<1)
+		for (int i = 0; i < list.size(); i++) {
+			produceClass produceClass = list.get(i);
+			produceClass.isChoosed = false;
+			CarShopppingAdapter.isSelected.put(i, produceClass);
 
 		}
+
 	}
 
 	// public static Map<String, String> getIsSelected() {
@@ -83,11 +81,9 @@ public class CarShopppingAdapter extends BaseAdapter implements
 	// CarShopppingAdapter.isSelected = isSelected;
 	// }
 
-	public ArrayList<produceClass> setData(ArrayList<produceClass> list) {
+	public void setData(ArrayList<produceClass> list) {
 		this.list = list;
 		initDate();
-		return this.list = list;
-
 	}
 
 	public ArrayList<produceClass> getData() {
@@ -139,17 +135,16 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		} else {
 			vh = (ViewHolder) convertView.getTag();
 		}
-		vh.imgeView1.setOnClickListener(this);
+		vh.imgeView1.setOnCheckedChangeListener(this);
 		vh.imgeView1.setTag(position);
-		vh.imgeView1.setChecked(Boolean
-				.parseBoolean(CarShopppingActivity.isSelected.get(list
-						.get(position).id)));
-
+		if (CarShopppingAdapter.isSelected != null) {
+			vh.imgeView1.setChecked(CarShopppingAdapter.isSelected
+					.get(position).isChoosed);
+		}
 		vh.numbertext.setText("¥"
 				+ list.get(position).price.substring(0,
 						list.get(position).price.lastIndexOf('.')) + ".00");
 		vh.pricetext.setText(list.get(position).productName);
-		vh.my_add_sub.setCount(list.get(position).qty);
 		vh.my_add_sub.setOnClickAddAndSubListener(this);
 		vh.my_add_sub.setTag(position);
 		imageLoad.loadImg(vh.imgeView2, list.get(position).image,
@@ -159,10 +154,9 @@ public class CarShopppingAdapter extends BaseAdapter implements
 
 	class ViewHolder {
 		CheckBox imgeView1;
-		ImageView imgeView2, bt01, bt02;
+		ImageView imgeView2;
 		MyAddAndSubView my_add_sub;
 		TextView pricetext, catshoppingitem_layouttext1, numbertext;
-		EditText edt;
 
 	}
 
@@ -174,8 +168,7 @@ public class CarShopppingAdapter extends BaseAdapter implements
 	private boolean isAllSelected() {
 		boolean flag = true;
 		for (int i = 0; i < list.size(); i++) {
-			if (!Boolean.parseBoolean(CarShopppingActivity.isSelected.get(list
-					.get(i).id))) {
+			if (!list.get(i).isChoosed) {
 				flag = false;
 				break;
 			}
@@ -183,35 +176,34 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		return flag;
 	}
 
-//	@Override
-//	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//		// 此处不执行
-//		CheckBox imge = (CheckBox) buttonView;
-//		int position = (Integer) imge.getTag();
-//		list.get(position).isChoosed = imge.isChecked();
-//		CarShopppingActivity.isSelected.put(list.get(position).id,
-//				imge.isChecked() + "");
-//
-//		// 如果所有的物品全部被选中，则全选按钮也默认被选中
-//		if (isAllSelected()) {
-//			Message message = mHandler.obtainMessage(9);
-//			message.obj = true;
-//			mHandler.sendMessage(message);
-//		}	
-//		YokaLog.e(TAG,CarShopppingActivity.isSelected+"00000000000000000000");
-//		if(CarShopppingActivity.isSelected>)
-//		mHandler.sendEmptyMessage(13);
-//	}
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		CheckBox imge = (CheckBox) buttonView;
+		int position = (Integer) imge.getTag();
+		produceClass produceClass = list.get(position);
+		produceClass.isChoosed = imge.isChecked();
+		CarShopppingAdapter.isSelected.put(position, produceClass);
+
+		// 如果所有的物品全部被选中，则全选按钮也默认被选中
+
+		if (isAllSelected()) {
+			Message message = mHandler.obtainMessage(9);
+			message.obj = true;
+			mHandler.sendMessage(message);
+		}
+		mHandler.sendEmptyMessage(13);
+	}
 
 	@Override
 	public void clickAdd(int count, View view) {
 		MyAddAndSubView view1 = (MyAddAndSubView) view;
 		Message message = mHandler.obtainMessage();
+		message.obj = Integer.parseInt(list.get((Integer) view.getTag()).price);
 		message.arg1 = count;
 		message.arg2 = Integer.parseInt(view.getTag().toString());
 		message.what = 11;
 		mHandler.sendMessage(message);
-	
+
 	}
 
 	@Override
@@ -219,31 +211,31 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		// TODO Auto-generated method stub
 		MyAddAndSubView view1 = (MyAddAndSubView) view;
 		Message message = mHandler.obtainMessage();
+		message.obj = -Integer.parseInt(list.get((Integer) view.getTag()).price);
 		message.arg1 = count;
 		message.arg2 = Integer.parseInt(view.getTag().toString());
 		message.what = 11;
 		mHandler.sendMessage(message);
-		
+
 	}
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		CheckBox imge = (CheckBox) v;
-		int position = (Integer) imge.getTag();
-		list.get(position).isChoosed = imge.isChecked();
-		CarShopppingActivity.isSelected.put(list.get(position).id,
-				imge.isChecked() + "");
-
-		// 如果所有的物品全部被选中，则全选按钮也默认被选中
-		if (isAllSelected()) {
-			Message message = mHandler.obtainMessage(9);
-			message.obj = true;
-			mHandler.sendMessage(message);
-		}	
-		mHandler.sendEmptyMessage(13);
-		YokaLog.e(TAG,CarShopppingActivity.isSelected+"00000000000000000000");
-		
-	}
+	// @Override
+	// public void onClick(View v) {
+	// // TODO Auto-generated method stub
+	// CheckBox imge = (CheckBox) v;
+	// int position = (Integer) imge.getTag();
+	// produceClass produceClass = list.get(position);
+	// produceClass.isChoosed = imge.isChecked();
+	// CarShopppingActivity.isSelected.put(position, produceClass);
+	//
+	// // 如果所有的物品全部被选中，则全选按钮也默认被选中
+	//
+	// if (isAllSelected()) {
+	// Message message = mHandler.obtainMessage(9);
+	// message.obj = true;
+	// mHandler.sendMessage(message);
+	// }
+	//
+	// }
 
 }

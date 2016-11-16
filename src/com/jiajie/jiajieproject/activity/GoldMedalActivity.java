@@ -62,6 +62,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	private RelativeLayout class_layout;
 	public static final String TAG="GoldMedalActivity";
 	private MyHandler myHandler=new MyHandler();
+	private RelativeLayout goldListViewCover;
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onInit(Bundle bundle) {
@@ -81,6 +82,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		searchimage = (ImageView) findViewById(R.id.mainpage_search);
 		MyListView = (ListView) findViewById(R.id.goldListView);
 		toolsLayout = (LinearLayout) findViewById(R.id.tools);
+		goldListViewCover = (RelativeLayout) findViewById(R.id.goldListViewCover);
 		goldFragmentadapter = new GoldFragmentadapter(mContext, mImgLoad);
 		classPopAdapter = new ClassPopAdapter(this);
 		MyListView.setAdapter(goldFragmentadapter);
@@ -88,6 +90,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		leftImage.setOnClickListener(this);
 		RightImage.setOnClickListener(this);
 		searchimage.setOnClickListener(this);
+		goldListViewCover.setOnClickListener(this);
 		redcolors = getResources().getColorStateList(R.color.classredcolor);
 		blackcolors = getResources().getColorStateList(R.color.classblackcolor);
 		
@@ -102,6 +105,10 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 			IntentUtil.startActivityForResult(mActivity, CaptureActivity.class,
 					16, null);
 
+			break;
+		case R.id.goldListViewCover:
+			goldListViewCover.setVisibility(View.GONE);
+			
 			break;
 		case R.id.mainpage_phone:
 			// 多加一个空格来区分跳转页面
@@ -169,9 +176,11 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 				v.getLocationOnScreen(location);
 				popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0]
 						+ v.getWidth(), location[1] - v.getHeight() * 3);
+				goldListViewCover.setVisibility(View.VISIBLE);
 			} else {
 				popupWindow.showAsDropDown(v, v.getWidth(), -v.getHeight(),
 						Gravity.LEFT);
+				goldListViewCover.setVisibility(View.VISIBLE);
 			}
 			
 		
@@ -264,6 +273,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 				arg1.setBackgroundResource(R.drawable.classbg_white);
 				if (popupWindow != null && popupWindow.isShowing()) {
 					popupWindow.dismiss();
+					goldListViewCover.setVisibility(View.GONE);
 					popupWindow = null;
 				}
 
@@ -353,7 +363,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		protected void onPostExecute(Object result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			if (result == null) {
+			if (result == null) { 
 				return;
 			}
 			
@@ -362,6 +372,8 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 			classPopAdapter.notifyDataSetChanged();
 			if(poplist.size()==0){
 				popupWindow.dismiss();
+				goldListViewCover.setVisibility(View.GONE);
+				
 			}
 		
 		}

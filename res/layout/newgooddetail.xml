@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+         <ImageView
+             android:layout_alignParentRight="true"
+                android:id="@+id/detail_back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                
+                />
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/pop_roate" >
+        android:layout_marginTop="60dp"
+         >
 
         <RelativeLayout
             android:id="@+id/up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
-            <ImageView
-                android:id="@+id/detail_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
-                android:src="@drawable/detail_back" />
+           
             <!--
             <com.jiajie.jiajieproject.view.SmoothImageView
                 android:id="@+id/detail_imageView"

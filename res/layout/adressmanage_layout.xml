@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FCFCFC"
@@ -35,67 +34,74 @@
         <!-- android:background="@drawable/graybutton_up_down" -->
 
     </RelativeLayout>
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="@color/backgroud"
-    />
-    <RelativeLayout
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud" />
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <RelativeLayout
-            android:id="@+id/adressBottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#FCFCFC"
-            android:paddingBottom="15dp" >
-
-            <ImageView
-                android:id="@+id/addAdress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/adress_bottom" />
-        </RelativeLayout>
-		<FrameLayout
-		    android:layout_width="match_parent"
-		    android:layout_height="match_parent"
-		    
-		    >
-        <com.jiajie.jiajieproject.widget.ReboundScrollView
-            android:id="@+id/adressListLayout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/adressBottom"
-            android:scrollbars="none" >
+            android:orientation="vertical" >
 
-            <com.jiajie.jiajieproject.widget.MyListView
-                android:id="@+id/adressmanage_layout_listview"
+            <com.jiajie.jiajieproject.widget.ReboundScrollView
+                android:id="@+id/adressListLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/adressBottom"
+                android:scrollbars="none" >
+
+                <com.jiajie.jiajieproject.widget.MyListView
+                    android:id="@+id/adressmanage_layout_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:scrollbars="none" />
+            </com.jiajie.jiajieproject.widget.ReboundScrollView>
+
+            <RelativeLayout
+                android:id="@+id/noadress_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:text="您还没有收货地址，添加一个吧。"
+                    android:textColor="@color/textcolor"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <RelativeLayout
+                android:id="@+id/adressBottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:cacheColorHint="@android:color/transparent"
-                android:scrollbars="none" />
-        </com.jiajie.jiajieproject.widget.ReboundScrollView>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/noadress_back"
-            android:visibility="gone"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:textSize="16sp"
-                android:layout_marginTop="30dp"
-                android:textColor="@color/textcolor"
-                android:text="您还没有收货地址，添加一个吧。"
-                />
-            
+                android:layout_alignParentBottom="true"
+                android:background="#FCFCFC"
+                android:paddingBottom="15dp" >
+
+                <ImageView
+                    android:id="@+id/addAdress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/adress_bottom" />
+            </RelativeLayout>
         </RelativeLayout>
-        </FrameLayout>
-    </RelativeLayout>
+    </FrameLayout>
+
 
 </LinearLayout>

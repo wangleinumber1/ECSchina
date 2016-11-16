@@ -267,7 +267,7 @@
         </activity>
         <activity
             android:name=".activity.GoodsdetailActivity"
-            android:theme="@style/myDialogTheme" >
+            android:theme="@style/gooddetailDialogTheme" >
         </activity>
         <activity android:name=".activity.GoldMedelAndperfisionalActivity" >
         </activity>

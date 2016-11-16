@@ -4,6 +4,7 @@
 package com.jiajie.jiajieproject.adapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -52,8 +53,8 @@ public class OrderListAdapter extends BaseAdapter {
 		return list;
 	}
 
-	public void setdata(ArrayList<produceClass> list) {
-		this.list.addAll(list);
+	public void setdata(List<produceClass> list) {
+		this.list=(ArrayList<produceClass>) list;
 	}
 
 	@Override
@@ -84,14 +85,14 @@ public class OrderListAdapter extends BaseAdapter {
 		produceClass produceClass = list.get(position);
 		imageLoad.loadImg(vh.salespartsitemimage, produceClass.image,
 				R.drawable.jiazaitupian);
-		vh.salespartsitemtext1.setText(produceClass.name);
+		vh.salespartsitemtext1.setText(produceClass.productName+" "+produceClass.pn);
 		if (list.get(position).price.equals("暂无报价")) {
 			vh.salespartsitemtext2.setText(list.get(position).price);
 		} else {
 			vh.salespartsitemtext2.setText("¥"+list.get(position).price.substring(
 					0, list.get(position).price.lastIndexOf('.'))+".00");
 		}
-		vh.salespartsitemtext3.setText("数量："+produceClass.qty.substring(0, produceClass.qty.lastIndexOf('.')));
+		vh.salespartsitemtext3.setText("数量："+produceClass.qty);
 		return convertView;
 	}
 

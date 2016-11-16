@@ -26,27 +26,23 @@ import com.loopj.android.http.RequestParams;
 @SuppressLint("ShowToast")
 public class FileToServer {
 
-	public static void reg(final Activity activity, final String filePath,
-			File file, MyAccountClass myacount) {
+	public static void reg(final Activity activity,
+			 String path) {
 
 		try {
 			String url = "";
 			RequestParams params = new RequestParams();
 			// file : File userId : 用户唯一标志
-			Bitmap photodata = BitmapFactory.decodeFile(filePath);
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			photodata.compress(Bitmap.CompressFormat.PNG, 100, baos);
-			baos.close();
-			byte[] buffer = baos.toByteArray();
-			System.out.println("图片数据" + buffer.length);
-			final String photo = Base64.encodeToString(buffer, 0,
-					buffer.length, Base64.DEFAULT);
-			params.put("name", myacount.name);
-			params.put("company", myacount.company);
-			params.put("phone", myacount.phone);
-			params.put("email", myacount.email);
-			params.put("path", myacount.path);
-			params.put("image", file);
+//			Bitmap photodata = BitmapFactory.decodeFile(filePath);
+//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//			photodata.compress(Bitmap.CompressFormat.PNG, 100, baos);
+//			baos.close();
+//			byte[] buffer = baos.toByteArray();
+//			System.out.println("图片数据" + buffer.length);
+//			final String photo = Base64.encodeToString(buffer, 0,
+//					buffer.length, Base64.DEFAULT);
+			params.put("path", path);
+			params.put("image", new File(path));
 			url = NetUrl.TEST_HOST + InterfaceParams.editUserInfo;
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.addHeader("Cookie", DeviceParamsDB.cookie);		

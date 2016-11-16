@@ -3,12 +3,15 @@
  */
 package com.jiajie.jiajieproject.activity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.activity.BaseActivity.MyAsyncTask;
+import com.jiajie.jiajieproject.adapter.CarShopppingAdapter;
 import com.jiajie.jiajieproject.adapter.OrdercoConfirmationAdapter;
 import com.jiajie.jiajieproject.adapter.PartsAdapter;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
@@ -16,6 +19,8 @@ import com.jiajie.jiajieproject.model.AdressClass;
 import com.jiajie.jiajieproject.model.OnlyClass;
 import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.PullToRefreshView;
+import com.jiajie.jiajieproject.utils.StringUtil;
+import com.jiajie.jiajieproject.utils.YokaLog;
 import com.jiajie.jiajieproject.utils.PullToRefreshView.OnFooterRefreshListener;
 import com.jiajie.jiajieproject.utils.PullToRefreshView.OnHeaderRefreshListener;
 import com.mrwujay.cascade.model.SomeMessage;
@@ -53,8 +58,6 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 	private LinearLayout adress_layout;
 	// private PullToRefreshView orderconfirmation_layoutpull;
 	private ImageView headerleftImg;
-	private MyHandler myHandler = new MyHandler();
-	private ArrayList<produceClass> list;
 	// 是否有默认地址
 	private boolean isdefaultAdress = false;
 	private String AdressId;
@@ -81,6 +84,11 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 	ImageView send_order;
 	// 总价
 	Button pricecount;
+	private String bill_type = "General Invoice";
+	private String bill_content = "";
+	private String bill_title = "Personal";
+	private String bill_company;
+	public static List<produceClass> newlist = new ArrayList<produceClass>();
 
 	@Override
 	protected void onInit(Bundle bundle) {
@@ -96,42 +104,49 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		 new GetDefaultAdressAsyTask().execute();
+		new GetDefaultAdressAsyTask().execute();
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void InitView() {
 		headerleftImg = (ImageView) findViewById(R.id.headerleftImg);
-		headView();
-		middleView();
+
 		send_order = (ImageView) findViewById(R.id.send_order);
 		pricecount = (Button) findViewById(R.id.pricecount);
 		headerleftImg.setOnClickListener(this);
 		send_order.setOnClickListener(this);
-
+		headView();
+		middleView();
 	}
 
 	// 支付发票部分
 	private void middleView() {
 		produce_list = (LinearLayout) findViewById(R.id.produce_list);
 		pay_radioGroup = (RadioGroup) findViewById(R.id.pay_radioGroup);
+		company_edittext = (EditText) findViewById(R.id.company_edittext);
 		fapiaoRadioGroup1 = (RadioGroup) findViewById(R.id.fapiaoRadioGroup1);
 		fapiaoRadioGroup2 = (RadioGroup) findViewById(R.id.fapiaoRadioGroup2);
 		fapiaoRadioGroup3 = (RadioGroup) findViewById(R.id.fapiaoRadioGroup3);
 		radioPay1 = (RadioButton) findViewById(R.id.radioPay1);
 		radioPay2 = (RadioButton) findViewById(R.id.radioPay2);
 		radioPay3 = (RadioButton) findViewById(R.id.radioPay3);
+		// 普通、专用
 		fapiaostyle1 = (RadioButton) findViewById(R.id.fapiaostyle1);
 		fapiaostyle2 = (RadioButton) findViewById(R.id.fapiaostyle2);
+		// 个人、单位
 		fapiaostyle3 = (RadioButton) findViewById(R.id.fapiaostyle3);
 		fapiaostyle4 = (RadioButton) findViewById(R.id.fapiaostyle4);
+		// 服务办公
 		fapiaocontent1 = (RadioButton) findViewById(R.id.fapiaocontent1);
 		fapiaocontent2 = (RadioButton) findViewById(R.id.fapiaocontent2);
+		produceCount=(TextView) findViewById(R.id.produceCount);
 		pay_radioGroup.setOnCheckedChangeListener(this);
 		fapiaoRadioGroup1.setOnCheckedChangeListener(this);
 		fapiaoRadioGroup2.setOnCheckedChangeListener(this);
 		fapiaoRadioGroup3.setOnCheckedChangeListener(this);
 		produce_list.setOnClickListener(this);
+		produceCount.setText("共"+newlist.size()+"件");
 	}
 
 	private void headView() {
@@ -139,7 +154,21 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		headernnmbertext = (TextView) findViewById(R.id.headernnmbertext);
 		headeradresstext = (TextView) findViewById(R.id.headeradresstext);
 		adress_layout = (LinearLayout) findViewById(R.id.adress_layout);
+		imageView1 = (ImageView) findViewById(R.id.imageView1);
+		imageView2 = (ImageView) findViewById(R.id.imageView2);
+		imageView3 = (ImageView) findViewById(R.id.imageView3);
 		adress_layout.setOnClickListener(this);
+		setIMage(newlist);
+		
+		int countprice = 0;
+		for (int i = 0; i < newlist.size(); i++) {
+			produceClass produceClass = newlist.get(i);
+			countprice = countprice
+					+ Integer.parseInt(produceClass.total_price.substring(0,
+							produceClass.total_price.lastIndexOf('.')));
+		}
+		pricecount.setText(countprice + ".00");
+		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -154,35 +183,54 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 					null, false);
 			break;
 		// 去掉发票功能
-		 case R.id.produce_list:
-		
-		 IntentUtil.startActivityForResult(this,
-		 InvoiceInformationActivity.class, 2, null);
-		
-		 break;
-		 case R.id.send_order:
-		 if (isdefaultAdress) {
-		 // 提交订单
-		 @SuppressWarnings("rawtypes")
-		 Map map1 = new HashMap<String, String>();
-		 map1.put("address_id", AdressId);
-//		 map1.put("products", JsonBySelf());
-		 new UpdateAsyTask(map1, InterfaceParams.saveOrder).execute();
-		
-		 } else {
-		 // 没有地址创建一个
-		 ToastUtil.showToast(mContext, "请增加一个默认收货地址");
-		 return;
-		 }
+		case R.id.produce_list:
 
-		 break;
+			IntentUtil.activityForward(mActivity, OrderListAcitivity.class,
+					null, false);
+
+			break;
+		case R.id.send_order:
+			if (isdefaultAdress) {
+				if (fapiaostyle4.isChecked()) {
+					if (StringUtil.checkStr(company_edittext.getText()
+							.toString())) {
+						ToastUtil.showToast(mContext, "请填写发票抬头");
+						return;
+					}
+				}
+				// 提交订单
+				@SuppressWarnings("rawtypes")
+				Map map1 = new HashMap<String, String>();
+				map1.put("address_id", AdressId);
+				map1.put("fapiao[bill_type]", bill_type);
+				map1.put("fapiao[bill_content]", bill_content);
+				map1.put("fapiao[bill_title]", bill_title);
+				map1.put("fapiao[bill_company]", company_edittext.getText()
+						.toString());
+
+				map1.put("products", JsonBySelf());
+				String message = "";
+				for (int i = 0; i < newlist.size(); i++) {
+					message = message + newlist.get(i).id + ",";
+				}
+				message = message.substring(0, message.length() - 1);
+				map1.put("cart_id", message);
+				new UpdateAsyTask(map1, InterfaceParams.saveOrder).execute();
+
+			} else {
+				// 没有地址创建一个
+				ToastUtil.showToast(mContext, "请增加一个默认收货地址");
+				return;
+			}
+
+			break;
 
 		default:
 			break;
 		}
 
 	}
-	
+
 	/**
 	 * 结算
 	 * */
@@ -215,18 +263,13 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 
 			if (jsonservice.getToastMessage()) {
 				OnlyClass onlyClass = (OnlyClass) result;
-				if (onlyClass.success) {
-					
-					
-				}
+				CarShopppingAdapter.isSelected.clear();
 				ToastUtil.showToast(mActivity, onlyClass.data);
 			}
 
 		}
 
 	}
-
-	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -255,10 +298,12 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		case R.id.fapiaoRadioGroup1:
 			switch (checkedId) {
 			case R.id.fapiaostyle1:
-				ToastUtil.showToast(mContext, "普通");
+				// 增值
+				bill_type = "VAT Invoice";
 				break;
 			case R.id.fapiaostyle2:
-				ToastUtil.showToast(mContext, "专用");
+				// 普通
+				bill_type = "General Invoice";
 				break;
 
 			}
@@ -267,10 +312,14 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		case R.id.fapiaoRadioGroup2:
 			switch (checkedId) {
 			case R.id.fapiaostyle3:
-				ToastUtil.showToast(mContext, "个人");
+				// 个人
+				company_edittext.setVisibility(View.GONE);
+
 				break;
 			case R.id.fapiaostyle4:
-				ToastUtil.showToast(mContext, "单位");
+				// 单位
+				company_edittext.setVisibility(View.VISIBLE);
+				bill_title = "Units";
 				break;
 
 			}
@@ -295,7 +344,6 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 	 * */
 	class GetDefaultAdressAsyTask extends MyAsyncTask {
 
-		
 		@SuppressWarnings("unchecked")
 		@Override
 		protected Object doInBackground(Object... params) {
@@ -337,67 +385,61 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		}
 	}
 
-	class MyHandler extends Handler {
+	/**
+	 * 自己封装json
+	 * */
+	@SuppressWarnings({ "unused", "static-access" })
+	private String JsonBySelf() {
 
-		// @SuppressWarnings("unchecked")
-		@SuppressWarnings("unchecked")
-		@Override
-		public void handleMessage(Message msg) {
-			// TODO Auto-generated method stub
-			switch (msg.what) {
-			case 8:
-				Map map2 = new HashMap<String, String>();
-				map2.put("update_cart_action", "empty_cart");
-				 new AddRemoveCarsDeleteAsyTask(map2,
-				 InterfaceParams.updateCart)
-				 .execute();
-				break;
+		ArrayList<produceClass> list = (ArrayList<produceClass>) newlist;
+		// StringBuilder builder = new StringBuilder();
+		String message = "{";
+		for (int i = 0; i < list.size(); i++) {
+			produceClass produceClass = list.get(i);
+			// if (carShopppingAdapter.getIsSelected().get(i)) {
 
-			default:
-				break;
+			if (list.size() > 1) {
+				message = message + "\"" + produceClass.productId.toString()
+						+ "\"" + ":" + "{\"" + "qty" + "\"" + ":" + "\""
+						+ produceClass.qty + "\"" + "},";
+			} else {
+				message = message + "\"" + produceClass.productId.toString()
+						+ "\"" + ":" + "{\"" + "qty" + "\"" + ":" + "\""
+						+ produceClass.qty + "\"" + "}";
 			}
 
+			// }
+		}
+		// ToastUtil.showToast(mActivity, message);
+		if (list.size() < 2) {
+			return message + "}";
+		} else {
+			message = message.substring(0, message.length() - 1) + "}";
+			return message;
 		}
 
 	}
-	
-	
-	@SuppressWarnings("unused")
-	private class AddRemoveCarsDeleteAsyTask extends MyAsyncTask {
-		private String interfacename;
-		private Map map;
 
-		public AddRemoveCarsDeleteAsyTask(Map map, String interfacename) {
-			super();
-			this.map = map;
-			this.interfacename = interfacename;
+	// 设置头部图片
+	private void setIMage(List<produceClass> list) {
+		if (list.size() == 1) {
+			mImgLoad.loadImg(imageView1, newlist.get(0).image,
+					R.drawable.jiazaitupian);
 
+		} else if (list.size() == 2) {
+			mImgLoad.loadImg(imageView1, newlist.get(0).image,
+					R.drawable.jiazaitupian);
+			mImgLoad.loadImg(imageView2, newlist.get(1).image,
+					R.drawable.jiazaitupian);
+
+		} else if (list.size() == 3 | list.size() > 3) {
+			mImgLoad.loadImg(imageView1, newlist.get(0).image,
+					R.drawable.jiazaitupian);
+			mImgLoad.loadImg(imageView2, newlist.get(1).image,
+					R.drawable.jiazaitupian);
+			mImgLoad.loadImg(imageView3, newlist.get(2).image,
+					R.drawable.jiazaitupian);
 		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		protected Object doInBackground(Object... params) {
-			return jsonservice.getData(interfacename, map, false, null);
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		protected void onPostExecute(Object result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			if (result == null) {
-				return;
-			}
-
-			if (jsonservice.getToastMessage()) {
-				OnlyClass onlyClass = (OnlyClass) result;
-				if (onlyClass.success) {
-
-				}
-				ToastUtil.showToast(mActivity, onlyClass.data);
-			}
-
-		}
-
 	}
+
 }

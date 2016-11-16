@@ -37,7 +37,7 @@ public class MediaImageView extends ImageView implements Checkable{
 	}
 	
 	public void refreshDrawableState(){
-		int resId = isChecked() ? R.drawable.cartcircle : R.drawable.selecedicon;
+		int resId = isChecked() ? R.drawable.selecedicon:R.drawable.cartcircle;
 		this.setImageResource(resId);
 	}
 }

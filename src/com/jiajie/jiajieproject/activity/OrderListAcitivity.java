@@ -1,6 +1,7 @@
 package com.jiajie.jiajieproject.activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,7 @@ public class OrderListAcitivity extends BaseActivity {
 	private ImageView headerleftImg;
 	private MyListView orderlistlayout_listview;
 	private OrderListAdapter orderListAdapter;
-	private ArrayList<produceClass> list = new ArrayList<produceClass>();
+	
 
 	@Override
 	protected void onInit(Bundle bundle) {
@@ -31,6 +32,7 @@ public class OrderListAcitivity extends BaseActivity {
 		InitView();
 	}
 
+	@SuppressWarnings("unchecked")
 	private void InitView() {
 		findViewById(R.id.headerleftImg).setOnClickListener(
 				new OnClickListener() {
@@ -41,9 +43,11 @@ public class OrderListAcitivity extends BaseActivity {
 						finish();
 					}
 				});
+		
 		orderlistlayout_listview = (MyListView) findViewById(R.id.orderlistlayout_listview);
 		orderListAdapter = new OrderListAdapter(mActivity, mImgLoad);
 		orderlistlayout_listview.setAdapter(orderListAdapter);
+		orderListAdapter.setdata(OrdercoConfirmationActivity.newlist);
 	}
 
 	

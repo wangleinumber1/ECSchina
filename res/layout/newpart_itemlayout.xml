@@ -23,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/newpartimage"
         android:maxLines="2"
+        android:maxEms="7"
+        android:ellipsize="end"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="戴尔DELL R730 服务器(2063/8G/300G 10k 2.5/)"

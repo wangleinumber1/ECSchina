@@ -8,12 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.jiajie.jiajieproject.R;
+import com.jiajie.jiajieproject.activity.LogoActivity.Myhandler;
 import com.jiajie.jiajieproject.adapter.NotPayAdapter;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
 import com.jiajie.jiajieproject.model.OnlyClass;
@@ -34,6 +37,7 @@ public class NotPayActivity extends BaseActivity  implements
 	private NotPayAdapter notPayAdapter;
 	private ReboundScrollView nopaylayout;
 	private RelativeLayout no_orderlayout;
+	private Myhandler myhandler=new Myhandler();
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
@@ -47,7 +51,7 @@ public class NotPayActivity extends BaseActivity  implements
 		no_orderlayout=(RelativeLayout) findViewById(R.id.no_orderlayout);
 		headerleftImg = (ImageView) findViewById(R.id.headerleftImg);
 		notpay_layout_listview = (MyListView) findViewById(R.id.notpay_layout_listview);
-		notPayAdapter=new  NotPayAdapter(mActivity,mImgLoad);
+		notPayAdapter=new  NotPayAdapter(mActivity,mImgLoad,jsonservice,myhandler);
 		notpay_layout_listview.setAdapter(notPayAdapter);
 		headerleftImg.setOnClickListener(this);
 		new PartsAsyTask().execute();
@@ -125,5 +129,27 @@ public class NotPayActivity extends BaseActivity  implements
 		}
 
 	}
+	
+@SuppressWarnings("unused")
+private class Myhandler extends Handler{
+
+	@Override
+	public void handleMessage(Message msg) {
+		// TODO Auto-generated method stub
+		super.handleMessage(msg);
+		switch (msg.what) {
+		case 1:
+			new PartsAsyTask().execute();
+			break;
+
+		default:
+			break;
+		}
+		
+		
+	}
+	
+}
+	
 
 }

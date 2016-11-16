@@ -10,13 +10,17 @@ import java.util.Map;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.activity.AddAdressActivity;
@@ -29,7 +33,6 @@ import com.jiajie.jiajieproject.utils.MyAsyncTask;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 import com.jiajie.jiajieproject.widget.MediaImageView;
 
-
 /**
  * 项目名称：HaiChuanProject 类名称：FaBuSearchAdapter 类描述： 创建人：王蕾 创建时间：2015-7-29
  * 下午2:19:53 修改备注：
@@ -41,14 +44,12 @@ public class AdressManageAdapter extends BaseAdapter implements OnClickListener 
 	ArrayList<AdressClass> list = new ArrayList<AdressClass>();
 	private JosnService jsonservice;
 
-	public AdressManageAdapter(Activity activity,
-			JosnService jsonservice,Handler myhandler) {
+	public AdressManageAdapter(Activity activity, JosnService jsonservice,
+			Handler myhandler) {
 		this.activity = activity;
 		this.jsonservice = jsonservice;
 		this.myhandler = myhandler;
 	}
-
-
 
 	@Override
 	public int getCount() {
@@ -57,8 +58,9 @@ public class AdressManageAdapter extends BaseAdapter implements OnClickListener 
 	}
 
 	public void setdata(ArrayList<AdressClass> list) {
-		this.list=list;
+		this.list = list;
 	}
+
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
@@ -90,6 +92,7 @@ public class AdressManageAdapter extends BaseAdapter implements OnClickListener 
 		} else {
 			vh = (ViewHolder) convertView.getTag();
 		}
+
 		vh.imgeView1.setOnClickListener(this);
 		vh.imgeView1.setTag(position);
 		vh.button1.setOnClickListener(this);
@@ -113,21 +116,27 @@ public class AdressManageAdapter extends BaseAdapter implements OnClickListener 
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.imgeView1:
+			
 			MediaImageView checkImage = (MediaImageView) v;
+			
+			//只有不是默认地址时可以点击
+			if(checkImage.isChecked()){
 			Integer tagnumber = (Integer) v.getTag();
 			new AdressDefaultAsyTask(list.get(tagnumber).entity_id).execute();
+			}
 			break;
 		case R.id.button2:
 			Button button = (Button) v;
 			Integer adressidposition = (Integer) v.getTag();
-			Bundle bundle=new Bundle();
+			Bundle bundle = new Bundle();
 			bundle.putString("adressid", list.get(adressidposition).entity_id);
-			IntentUtil.activityForward(activity, AddAdressActivity.class, bundle, false);
+			IntentUtil.activityForward(activity, AddAdressActivity.class,
+					bundle, false);
 			break;
+
 		case R.id.button1:
-			Button button2 = (Button) v;
-			Integer deleteposition = (Integer) v.getTag();
-			new AdressDeleteAsyTask(list.get(deleteposition).entity_id).execute();
+			Integer id = (Integer) v.getTag();
+			popwindowUpDown(list.get(id).entity_id);
 			break;
 
 		default:
@@ -168,8 +177,9 @@ public class AdressManageAdapter extends BaseAdapter implements OnClickListener 
 
 			if (jsonservice.getToastMessage()) {
 				OnlyClass onlyClass = (OnlyClass) result;
-				if(onlyClass.success){
+				if (onlyClass.success) {
 					myhandler.sendEmptyMessage(10);
+					mPopupWindow.dismiss();
 				}
 				ToastUtil.showToast(activity, onlyClass.data);
 			}
@@ -177,18 +187,19 @@ public class AdressManageAdapter extends BaseAdapter implements OnClickListener 
 		}
 
 	}
+
 	/**
 	 * 默认地址
 	 * */
 	@SuppressWarnings("unused")
 	private class AdressDefaultAsyTask extends MyAsyncTask {
 		private String id;
-		
+
 		public AdressDefaultAsyTask(String id) {
 			super(activity);
 			this.id = id;
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		@Override
 		protected Object doInBackground(Object... params) {
@@ -197,7 +208,7 @@ public class AdressManageAdapter extends BaseAdapter implements OnClickListener 
 			return jsonservice.getData(InterfaceParams.setDefaultAddress, map,
 					false, null);
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void onPostExecute(Object result) {
@@ -206,16 +217,68 @@ public class AdressManageAdapter extends BaseAdapter implements OnClickListener 
 			if (result == null) {
 				return;
 			}
-			
+
 			if (jsonservice.getToastMessage()) {
 				OnlyClass onlyClass = (OnlyClass) result;
-				if(onlyClass.success){
+				if (onlyClass.success) {
 					myhandler.sendEmptyMessage(10);
 				}
 				ToastUtil.showToast(activity, onlyClass.data);
 			}
-			
+
 		}
-		
+
 	}
+
+	PopupWindow mPopupWindow;
+
+	// 底部弹出popwindow
+	@SuppressWarnings("unused")
+	private void popwindowUpDown(final String id) {
+		
+		View view = LayoutInflater.from(activity).inflate(R.layout.mine_layout,
+				null);
+		View poplayout = LayoutInflater.from(activity).inflate(
+				R.layout.minepopwindow_layout, null);
+		TextView text1 = (TextView) poplayout.findViewById(R.id.text1);
+		TextView text2 = (TextView) poplayout.findViewById(R.id.text2);
+		TextView text3 = (TextView) poplayout.findViewById(R.id.text3);
+		text2.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				new AdressDeleteAsyTask(id).execute();
+
+			}
+		});
+		text3.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mPopupWindow.dismiss();
+
+			}
+		});
+		text1.setText("是否删除？");
+		text2.setText("删除");
+		text3.setText("取消");
+		mPopupWindow = new PopupWindow(poplayout, LayoutParams.MATCH_PARENT,
+				LayoutParams.WRAP_CONTENT, true);
+		mPopupWindow.setFocusable(true);
+		// 改变背景透明度
+		setPopBackgroud((float) 0.7);
+
+		// mPopupWindow.setBackgroundDrawable(new PaintDrawable());
+		mPopupWindow.setAnimationStyle(R.style.mypopwindow_anim_updownstyle);
+		mPopupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+	}
+
+	// 设置半透明背景
+	public void setPopBackgroud(float alpha) {
+		WindowManager.LayoutParams params = activity.getWindow()
+				.getAttributes();
+		params.alpha = alpha;
+		activity.getWindow().setAttributes(params);
+	}
+
 }

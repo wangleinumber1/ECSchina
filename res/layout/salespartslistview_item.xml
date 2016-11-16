@@ -4,6 +4,8 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:paddingBottom="15dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
     android:paddingTop="15dp" >
 
     <ImageView
@@ -20,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="@+id/salespartsitemimage"
         android:layout_alignTop="@+id/salespartsitemimage"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/salespartsitemimage"
         android:text="IBM  P720 内存条 4G"
@@ -30,9 +33,10 @@
         android:id="@+id/salespartsitemtext3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="库存数量：6"
         android:layout_alignBottom="@+id/salespartsitemimage"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:text="库存数量：6"
         android:textColor="#8D8D8D" />
 
     <TextView
@@ -40,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/salespartsitemimage"
+        android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/salespartsitemimage"
         android:text="￥9999.00"
         android:textColor="#E94516"
