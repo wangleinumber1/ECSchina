@@ -425,8 +425,13 @@ public class GoodsdetailActivity extends BaseActivity implements
 	 * */
 	@SuppressWarnings("unused")
 	private void openQQ() {
-		String url = "mqqwpa://im/chat?chat_type=wpa&uin=1790815223";
-		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+		try {
+			String url = "mqqwpa://im/chat?chat_type=wpa&uin=1790815223";
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+		} catch (Exception e) {
+		ToastUtil.showToast(mContext, "QQ还没有安装");
+		}
+		
 	}
 
 	/**

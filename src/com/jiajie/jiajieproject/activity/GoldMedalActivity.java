@@ -70,7 +70,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	private PullToRefreshView goldPullToRefreshView;
 	int page = 1;
 	int pageSize = 10;
-	String cid="2";
+	String cid="10";
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onInit(Bundle bundle) {
@@ -78,7 +78,8 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		super.onInit(bundle);
 		setContentView(R.layout.goldactivity_layout);
 		scrollView = (ReboundScrollView) findViewById(R.id.tools_scrlllview);
-		new GetIdAsyTask("2").execute();	
+		new GetIdAsyTask("10").execute();
+		new GetProductsByCidAsyTask(cid, page).execute();
 		InitView();
 
 	}
@@ -110,12 +111,6 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	
 	
 	
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		new GetProductsByCidAsyTask(cid, page).execute();
-	}
 
 	@Override
 	public void onClick(View v) {
@@ -179,7 +174,8 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 			changeTextColor(v.getId());
 			changeTextLocation(v.getId());
 			getPopupWindow(v.getHeight(), (String) v.getTag());
-			if ((CategoriesClassList.size() - v.getId()) < 4) {
+			if ((CategoriesClassList.size() - v.getId()) < 4&CategoriesClassList.size()>8) {
+				
 				int[] location = new int[2];
 				v.getLocationOnScreen(location);
 				popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0]

@@ -11,7 +11,7 @@
     android:layout_height="wrap_content"
     android:scaleType="fitXY"
     android:id="@+id/goldbarIamge"
-    android:src="@drawable/banner5"
+    
     />
 <LinearLayout
     android:layout_width="match_parent"

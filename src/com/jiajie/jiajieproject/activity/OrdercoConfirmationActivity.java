@@ -192,7 +192,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		case R.id.send_order:
 			if (isdefaultAdress) {
 				if (fapiaostyle4.isChecked()) {
-					if (StringUtil.checkStr(company_edittext.getText()
+					if (!StringUtil.checkStr(company_edittext.getText()
 							.toString())) {
 						ToastUtil.showToast(mContext, "请填写发票抬头");
 						return;
@@ -270,13 +270,6 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		}
 
 	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		switch (group.getId()) {

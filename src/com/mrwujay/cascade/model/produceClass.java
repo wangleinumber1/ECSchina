@@ -47,5 +47,16 @@ public class produceClass implements Serializable{
 				+ ", short_description=" + short_description + ", pn=" + pn
 				+ ", isChoosed=" + isChoosed + "]";
 	}
-
+	public boolean isChoosed() {
+		return isChoosed;
+	}
+	public void setChoosed(boolean isChoosed) {
+		this.isChoosed = isChoosed;
+	}
+	public String getqty() {
+		return qty;
+	}
+	public void setqty(String qty) {
+		this.qty = qty;
+	}
 }

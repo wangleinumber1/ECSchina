@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.R.integer;
-import android.content.BroadcastReceiver;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,25 +21,17 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import cn.jpush.android.api.m;
-
-import com.alibaba.fastjson.JSONArray;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.baoyz.swipemenulistview.SwipeMenuListView.OnMenuItemClickListener;
-import com.baoyz.swipemenulistview.SwipeMenuListView.OnSwipeListener;
-import com.jiajie.jiajieproject.MainActivity;
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.adapter.CarShopppingAdapter;
-import com.jiajie.jiajieproject.contents.Constants;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
 import com.jiajie.jiajieproject.contents.ReciverContents;
-import com.jiajie.jiajieproject.db.service.SharePreferDB;
 import com.jiajie.jiajieproject.model.OnlyClass;
 import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.ToastUtil;
@@ -52,6 +43,7 @@ import com.mrwujay.cascade.model.produceClass;
  * 项目名称：NewProject 类名称：CatShopppingActivity 类描述： 创建人：王蕾 创建时间：2015-10-12
  * 下午3:19:35 修改备注： 购物车列表
  */
+@SuppressWarnings("unused")
 public class CarShopppingActivity extends BaseActivity implements
 		OnClickListener, SwipeMenuCreator, OnMenuItemClickListener,
 		OnCheckedChangeListener {
@@ -61,9 +53,6 @@ public class CarShopppingActivity extends BaseActivity implements
 	private RelativeLayout backLayout;
 	private MyHandler myHandler = new MyHandler();
 	private SwipeMenuListView carshopping_layoutlistview;
-	// id和个数
-	private String message;
-
 	// 所有物品
 	private ArrayList<produceClass> list;
 	// 底部
@@ -73,16 +62,14 @@ public class CarShopppingActivity extends BaseActivity implements
 	private Button carshopping_price;
 	// 选中的商品
 	private ArrayList<produceClass> selectedproduce = new ArrayList<produceClass>();
-	private String tatalprice;
 	// private SharePreferDB sharePreferDB;
 	public static String TAG = "CarShopppingActivity";
-	private int countprice;
+
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
 		super.onInit(bundle);
 		InitView();
-		// backInitView();
 	}
 
 	private void InitView() {
@@ -97,8 +84,6 @@ public class CarShopppingActivity extends BaseActivity implements
 		headerRightImg = (ToggleButton) findViewById(R.id.headerRightImg);
 		backLayout = (RelativeLayout) findViewById(R.id.backLayout);
 		carshopping_layoutlistview = (SwipeMenuListView) findViewById(R.id.carshopping_layoutlistview);
-		// sharePreferDB = new SharePreferDB(mContext, "carshopping.db");
-		
 		headerRightImg.setOnClickListener(this);
 		movetocare.setOnClickListener(this);
 		car_delete.setOnClickListener(this);
@@ -107,22 +92,7 @@ public class CarShopppingActivity extends BaseActivity implements
 		carshopping_layoutlistview.setMenuCreator(this);
 		// 右侧icon点击事件
 		carshopping_layoutlistview.setOnMenuItemClickListener(this);
-		allselect.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (allselect.isChecked()) {
-					flag = true;
-					selectedAll();
-					selectedGetPrice();
-				} else {
-					flag = false;
-					selectedAll();
-					selectedGetPrice();
-				}
-				
-			}
-		});
+		allselect.setOnClickListener(this);
 
 	}
 
@@ -137,17 +107,45 @@ public class CarShopppingActivity extends BaseActivity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.allselect:
+			selectedAll();
+			break;
 		case R.id.headerleftImg:
 			finish();
 			break;
 		case R.id.car_delete:
-			// 全删
-			myHandler.sendEmptyMessage(8);
+			if (!carShopppingAdapter.isclear) {
+				ArrayList<produceClass> arraydelete = getselectedList(carShopppingAdapter
+						.getData());
+				Map map2 = new HashMap<String, String>();
+				String message11 = "";
+				for (int i = 0; i < arraydelete.size(); i++) {
+					message11 = message11 + arraydelete.get(i).productId + ",";
+				}
+				message11 = message11.substring(0, message11.length() - 1);
+				map2.put("id", message11);
+				new AddRemoveCarsDeleteAsyTask(map2, InterfaceParams.deleteCart)
+						.execute();
+				carShopppingAdapter.clearData();
+				carShopppingAdapter.notifyDataSetChanged();
+			}
 			break;
 		case R.id.movetocare:
-			// 全部关注
-			myHandler.sendEmptyMessage(7);
-			myHandler.sendEmptyMessage(8);
+			if (!carShopppingAdapter.isclear) {
+				ArrayList<produceClass> arraycare = getselectedList(carShopppingAdapter
+						.getData());
+				HashMap<String, String> caremap1 = new HashMap<String, String>();
+				String message = "";
+				for (int i = 0; i < arraycare.size(); i++) {
+					message = message + arraycare.get(i).productId + ",";
+				}
+				message = message.substring(0, message.length() - 1);
+				caremap1.put("id", message);
+				new AddRemoveCarsDeleteAsyTask(caremap1,
+						InterfaceParams.addWishList).execute();
+				carShopppingAdapter.clearData();
+				carShopppingAdapter.notifyDataSetChanged();
+			}
 			break;
 		case R.id.balance:
 			// 结算
@@ -156,10 +154,10 @@ public class CarShopppingActivity extends BaseActivity implements
 			break;
 		case R.id.kongback:
 			// 发送广播改变底部的tab位置
+
 			Intent intent = new Intent();
 			intent.setAction(ReciverContents.cityListReciver);
 			CarShopppingActivity.this.sendBroadcast(intent);
-
 			break;
 
 		}
@@ -173,8 +171,6 @@ public class CarShopppingActivity extends BaseActivity implements
 		super.onResume();
 		carShopppingAdapter = new CarShopppingAdapter(mActivity, myHandler,
 				mImgLoad);
-		// carShopppingAdapter = new CarShopppingAdapter(mActivity, myHandler,
-		// mImgLoad);
 		carshopping_layoutlistview.setAdapter(carShopppingAdapter);
 		new CarsAsyTask().execute();
 	}
@@ -229,20 +225,9 @@ public class CarShopppingActivity extends BaseActivity implements
 			} else {
 				list = (ArrayList<produceClass>) result;
 				backLayout.setVisibility(View.GONE);
-				// sharePreferDB.saveData(isSelected);
-				carShopppingAdapter.clearData();
 				carShopppingAdapter.setData(list);
+				carshopping_price.setText("0.00");
 				carShopppingAdapter.notifyDataSetChanged();
-				SomeMessage jsonMessage = jsonservice.getsomemessage();
-				// tatalprice = jsonMessage.total_price.substring(0,
-				// jsonMessage.total_price.lastIndexOf('.')) + ".00";
-				// carshopping_price.setText(
-				// jsonMessage.total_price.substring(0,
-				// jsonMessage.total_price.lastIndexOf('.'))
-				// + ".00");
-				// catshoppingtext2.setText("商品数量：        "
-				// + jsonMessage.count + "件");
-				selectedGetPrice();
 			}
 
 		}
@@ -253,7 +238,7 @@ public class CarShopppingActivity extends BaseActivity implements
 	 * 移除购物车 添加 结算
 	 * */
 	@SuppressWarnings({ "unused", "rawtypes" })
-	private class AddRemoveCarsDeleteAsyTask extends AsyncTask {
+	private class AddRemoveCarsDeleteAsyTask extends MyAsyncTask {
 		private String interfacename;
 		private Map map;
 
@@ -295,7 +280,7 @@ public class CarShopppingActivity extends BaseActivity implements
 	 * 结算
 	 * */
 	@SuppressWarnings("unused")
-	private class UpdateAsyTask extends AsyncTask {
+	private class UpdateAsyTask extends MyAsyncTask {
 		private String interfacename;
 		private Map map;
 
@@ -347,14 +332,14 @@ public class CarShopppingActivity extends BaseActivity implements
 			Message message = myHandler.obtainMessage(1);
 			message.arg1 = position;
 			myHandler.sendMessage(message);
-			
+
 			break;
 		// 删除
 		case 1:
 			Message message1 = myHandler.obtainMessage(2);
 			message1.arg1 = position;
 			myHandler.sendMessage(message1);
-			
+
 			break;
 
 		default:
@@ -364,17 +349,13 @@ public class CarShopppingActivity extends BaseActivity implements
 
 	}
 
+	@SuppressLint("HandlerLeak")
 	private class MyHandler extends Handler {
-
-		@SuppressWarnings({ "unchecked", "static-access" })
+		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
 			switch (msg.what) {
-			case 9:
-
-				flag = (Boolean) msg.obj;
-				allselect.setChecked(flag);
-				break;
 			case 1:
 				// 移入关注
 				HashMap<String, String> caremap = new HashMap<String, String>();
@@ -385,7 +366,7 @@ public class CarShopppingActivity extends BaseActivity implements
 				Message message1 = myHandler.obtainMessage(2);
 				message1.arg1 = msg.arg1;
 				myHandler.sendMessage(message1);
-			
+
 				break;
 			case 2:
 				// 删除单个
@@ -393,106 +374,55 @@ public class CarShopppingActivity extends BaseActivity implements
 				deletemap.put("id", list.get(msg.arg1).id);
 				new AddRemoveCarsDeleteAsyTask(deletemap,
 						InterfaceParams.deleteCart).execute();
-				carShopppingAdapter.notifyDataSetChanged();
 				carShopppingAdapter.getData().remove(msg.arg1);
-				CarShopppingAdapter.isSelected.remove(msg.arg1);
+				flag = false;
+				carshopping_price.setText("0.00");
+				selectedAll(); // 删除商品后，取消所有的选择
+				flag = true;
 				carShopppingAdapter.notifyDataSetChanged();
 				break;
+
 			case 10:
-				// // 刷新
-				// sharePreferDB.deletePreference();
-				// sharePreferDB.saveData(isSelected);
-				new CarsAsyTask().execute();
-				break;
-			case 8:
-				// 全部删除
-				if (flag) {
-					Map map2 = new HashMap<String, String>();
-					String message = "";
-					for (int i = 0; i < list.size(); i++) {
-						message = message + list.get(i).productId + ",";
-					}
-					message = message.substring(0, message.length() - 1);
-					map2.put("id", message);
-					new AddRemoveCarsDeleteAsyTask(map2,
-							InterfaceParams.deleteCart).execute();
-					carShopppingAdapter.clearData();
-					carShopppingAdapter.notifyDataSetChanged();
-					
-				}
-				break;
-			case 7:
-				// 全部移入关注
-				if (flag) {
-					HashMap<String, String> caremap1 = new HashMap<String, String>();
-					String message = "";
-					for (int i = 0; i < list.size(); i++) {
-						message = message + list.get(i).productId + ",";
-					}
-					message = message.substring(0, message.length() - 1);
-					caremap1.put("id", message);
-					new AddRemoveCarsDeleteAsyTask(caremap1,
-							InterfaceParams.addWishList).execute();
-					myHandler.sendEmptyMessage(8);
-					
+				float price = (Float) msg.obj;
+				if (price > 0) {
+					carshopping_price.setText("" + price);
 				}
 				break;
 			case 11:
-				// 提交个数
-				Map map = new HashMap<String, String>();
-				String message = "{" + "\"" + list.get(msg.arg2).id.toString()
-						+ "\"" + ":" + "{\"" + "qty" + "\"" + ":" + "\""
-						+ msg.arg1 + "\"" + "}}";
-				map.put("update_cart_action", "update_qty");
-				map.put("cart", message);
-				int price=(Integer) msg.obj;
-				
-				new UpdateAsyTask(map, InterfaceParams.updateCart).execute();
+				// 所有列表中的商品全部被选中，让全选按钮也被选中
+				// flag记录是否全被选中
+				flag = !(Boolean) msg.obj;
 
-				// mHandler.sendEmptyMessage(13);
+				allselect.setChecked((Boolean) msg.obj);
 				break;
 			case 6:
-				// 结算全部
-				// Map map1 = new HashMap<String, String>();
-				// map1.put("update_cart_action", "update_qty");
-				// map1.put("cart", JsonBySelf());
-				// new UpdateAsyTask(map1,
-				// InterfaceParams.updateCart).execute();
-				// myHandler.sendEmptyMessage(12);
 
-				OrdercoConfirmationActivity.newlist = getselectedList(list);
-				IntentUtil.activityForward(mActivity,
-						OrdercoConfirmationActivity.class, null, false);
+				OrdercoConfirmationActivity.newlist = getselectedList(carShopppingAdapter
+						.getData());
+				if (OrdercoConfirmationActivity.newlist.size() > 0) {
+					IntentUtil.activityForward(mActivity,
+							OrdercoConfirmationActivity.class, null, false);
+				} else {
+					ToastUtil.showToast(mContext, "购物车没有任何货物");
+					Intent intent = new Intent();
+					intent.setAction(ReciverContents.cityListReciver);
+					CarShopppingActivity.this.sendBroadcast(intent);
+				}
 				break;
-			case 12:
-				// 清空
-				Map map2 = new HashMap<String, String>();
-				map2.put("update_cart_action", "empty_cart");
-				new AddRemoveCarsDeleteAsyTask(map2, InterfaceParams.updateCart)
-						.execute();
-				carShopppingAdapter.clearData();
-				carShopppingAdapter.notifyDataSetChanged();
-
-				break;
-			case 13:
-				// 每次点击勾选涮新一次总价
-				// sendEmptyMessage(10);
-				selectedGetPrice();
-
-				break;
-
 			}
-
 		}
+
 	}
 
 	// // 全选或全取消
+
 	@SuppressWarnings("static-access")
 	private void selectedAll() {
+		if (!flag) {
+			carshopping_price.setText("0.00");
+		}
 		for (int i = 0; i < list.size(); i++) {
-			produceClass produceClass = list.get(i);
-			produceClass.isChoosed = flag;
-			CarShopppingAdapter.isSelected.put(i, produceClass);
+			carShopppingAdapter.getIsSelected().put(i, flag);
 		}
 		carShopppingAdapter.notifyDataSetChanged();
 	}
@@ -506,7 +436,6 @@ public class CarShopppingActivity extends BaseActivity implements
 			BottomLayout2.setVisibility(View.GONE);
 			BottomLayout1.setVisibility(View.VISIBLE);
 		}
-	
 
 	}
 
@@ -523,28 +452,6 @@ public class CarShopppingActivity extends BaseActivity implements
 
 		return newlist;
 
-	}
-
-	/**
-	 * 通过选择的商品获取总价
-	 * */
-	private void selectedGetPrice() {
-		ArrayList<produceClass> newlist = getselectedList(list);
-		int countprice = 0;
-		for (int i = 0; i < newlist.size(); i++) {
-			// String key = maps.getKey();
-			// 遍历list找到对应ID的值
-			produceClass produceClass = newlist.get(i);
-			// YokaLog.e(TAG, produceClass.toString()
-			// + "00000000000000000000");
-			countprice = countprice
-					+ Integer.parseInt(produceClass.total_price.substring(0,
-							produceClass.total_price.lastIndexOf('.')));
-		}
-		YokaLog.e(TAG, "list.size()=" + list.size() + "newlist.size()="
-				+ newlist.size() + "isSelected.size()="
-				+ CarShopppingAdapter.isSelected.size());
-		carshopping_price.setText(countprice + ".00");
 	}
 
 }

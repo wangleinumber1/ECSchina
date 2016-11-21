@@ -209,16 +209,16 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 		rows = new ArrayList<BannerPic>();
 		BannerPic bannerPic1 = new BannerPic();
 		BannerPic bannerPic2 = new BannerPic();
-		BannerPic bannerPic3 = new BannerPic();
+//		BannerPic bannerPic3 = new BannerPic();
 		bannerPic1.res = R.drawable.banner1;
 		bannerPic2.res = R.drawable.banner2;
-		bannerPic3.res = R.drawable.banner3;
+//		bannerPic3.res = R.drawable.banner3;
 		rows.add(bannerPic1);
 		rows.add(bannerPic2);
-		rows.add(bannerPic3);
+//		rows.add(bannerPic3);
 		bannerList.add(bannerPic1);
 		bannerList.add(bannerPic2);
-		bannerList.add(bannerPic3);
+//		bannerList.add(bannerPic3);
 		PosterAdapter adapter = new PosterAdapter(getSupportFragmentManager(),
 				bannerList);
 		vp_banner.setAdapter(adapter);

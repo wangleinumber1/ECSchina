@@ -169,6 +169,7 @@ public class JosnService {
 	 * @param是否缓存
 	 * @param接受值得类
 	 * */
+	@SuppressWarnings("unchecked")
 	public Object getDataList(String Interface, Map map, boolean needCach,
 			Class anyclass) {
 		String str = mNetRequService.requestData("POST", Interface, map,
@@ -178,10 +179,11 @@ public class JosnService {
 		Log.d(TAG, str);
 
 		OnlyClass onlyClass = JSON.parseObject(str, OnlyClass.class);
-		@SuppressWarnings("unchecked")
-		OnlyClass onlyClass2  = (OnlyClass) JSON.parseArray(onlyClass.v, anyclass);
-		PartsActivity.appUrl=onlyClass2.url;
-		PartsActivity.version=onlyClass2.version;
+//		if(Interface.equalsIgnoreCase(InterfaceParams.getProductsByCid)){
+//		OnlyClass onlyClass2  = (OnlyClass) JSON.parseArray(onlyClass.v, anyclass);
+//		PartsActivity.appUrl=onlyClass2.url;
+//		PartsActivity.version=onlyClass2.version;
+//		}
 		// success=onlyClass.success;
 		if (onlyClass.success) {
 			if (anyclass == null) {
