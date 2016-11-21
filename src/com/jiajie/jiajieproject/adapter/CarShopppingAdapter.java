@@ -147,6 +147,7 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		vh.pricetext.setText(list.get(position).productName);
 		vh.my_add_sub.setOnClickAddAndSubListener(this);
 		vh.my_add_sub.setTag(position);
+		vh.my_add_sub.setCount(list.get(position).qty);
 		imageLoad.loadImg(vh.imgeView2, list.get(position).image,
 				R.drawable.jiazaitupian);
 		return convertView;
@@ -198,7 +199,9 @@ public class CarShopppingAdapter extends BaseAdapter implements
 	public void clickAdd(int count, View view) {
 		MyAddAndSubView view1 = (MyAddAndSubView) view;
 		Message message = mHandler.obtainMessage();
-		message.obj = Integer.parseInt(list.get((Integer) view.getTag()).price);
+		String pricestr=list.get((Integer) view.getTag()).price;
+		int price=Integer.parseInt( pricestr.split(".0000")[0]);
+		message.obj = price;
 		message.arg1 = count;
 		message.arg2 = Integer.parseInt(view.getTag().toString());
 		message.what = 11;
@@ -211,7 +214,9 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		// TODO Auto-generated method stub
 		MyAddAndSubView view1 = (MyAddAndSubView) view;
 		Message message = mHandler.obtainMessage();
-		message.obj = -Integer.parseInt(list.get((Integer) view.getTag()).price);
+		String pricestr=list.get((Integer) view.getTag()).price;
+		int price=Integer.parseInt( pricestr.split(".0000")[0]);
+		message.obj = -price;
 		message.arg1 = count;
 		message.arg2 = Integer.parseInt(view.getTag().toString());
 		message.what = 11;

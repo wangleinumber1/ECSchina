@@ -57,6 +57,7 @@ public class GoodsdetailActivity extends BaseActivity implements
 	private String product_id;
 	private String item_id;
 	private String URL;
+	private int count;
 	private LinearLayout image_linear;
 	SquareCenterImageView detail_imageView;
 
@@ -123,9 +124,9 @@ public class GoodsdetailActivity extends BaseActivity implements
 		detailtext3.setText("¥"
 				+ mainPageObject.price.substring(0,
 						mainPageObject.price.lastIndexOf('.')) + ".00");
-		detailtext4.setText("库存"
-				+ mainPageObject.qty.substring(0,
-						mainPageObject.qty.lastIndexOf('.')) + "件");
+		count=Integer.parseInt(mainPageObject.qty.substring(0,
+						mainPageObject.qty.lastIndexOf('.')));
+		detailtext4.setText("库存"+ count + "件");
 		Map<String, String> map = new HashMap<String, String>();
 
 		if (StringUtil.checkStr(mainPageObject.id)) {
@@ -224,7 +225,14 @@ public class GoodsdetailActivity extends BaseActivity implements
 			// if (jsonservice.getToastMessage()) {
 			OnlyClass onlyClass = (OnlyClass) result;
 			// if (!onlyClass.success) {
-
+			if(Interface.equalsIgnoreCase(InterfaceParams.addCart)){
+				if(count>0){
+				count--;
+				detailtext4.setText("库存"+ count + "件");
+				}else{					
+					detailtext4.setText("库存"+ 0 + "件");
+				}
+			}
 			ToastUtil.showToast(mActivity, onlyClass.data);
 			// }
 			// }

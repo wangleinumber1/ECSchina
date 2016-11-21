@@ -178,6 +178,10 @@ public class JosnService {
 		Log.d(TAG, str);
 
 		OnlyClass onlyClass = JSON.parseObject(str, OnlyClass.class);
+		@SuppressWarnings("unchecked")
+		OnlyClass onlyClass2  = (OnlyClass) JSON.parseArray(onlyClass.v, anyclass);
+		PartsActivity.appUrl=onlyClass2.url;
+		PartsActivity.version=onlyClass2.version;
 		// success=onlyClass.success;
 		if (onlyClass.success) {
 			if (anyclass == null) {

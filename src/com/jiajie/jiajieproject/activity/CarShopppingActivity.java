@@ -76,7 +76,7 @@ public class CarShopppingActivity extends BaseActivity implements
 	private String tatalprice;
 	// private SharePreferDB sharePreferDB;
 	public static String TAG = "CarShopppingActivity";
-
+	private int countprice;
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
@@ -347,15 +347,14 @@ public class CarShopppingActivity extends BaseActivity implements
 			Message message = myHandler.obtainMessage(1);
 			message.arg1 = position;
 			myHandler.sendMessage(message);
-			myHandler.sendEmptyMessage(10);
+			
 			break;
 		// 删除
 		case 1:
-
 			Message message1 = myHandler.obtainMessage(2);
 			message1.arg1 = position;
 			myHandler.sendMessage(message1);
-			myHandler.sendEmptyMessage(10);
+			
 			break;
 
 		default:
@@ -386,7 +385,7 @@ public class CarShopppingActivity extends BaseActivity implements
 				Message message1 = myHandler.obtainMessage(2);
 				message1.arg1 = msg.arg1;
 				myHandler.sendMessage(message1);
-				myHandler.sendEmptyMessage(10);
+			
 				break;
 			case 2:
 				// 删除单个
@@ -395,7 +394,9 @@ public class CarShopppingActivity extends BaseActivity implements
 				new AddRemoveCarsDeleteAsyTask(deletemap,
 						InterfaceParams.deleteCart).execute();
 				carShopppingAdapter.notifyDataSetChanged();
-				myHandler.sendEmptyMessage(10);
+				carShopppingAdapter.getData().remove(msg.arg1);
+				CarShopppingAdapter.isSelected.remove(msg.arg1);
+				carShopppingAdapter.notifyDataSetChanged();
 				break;
 			case 10:
 				// // 刷新
@@ -415,8 +416,9 @@ public class CarShopppingActivity extends BaseActivity implements
 					map2.put("id", message);
 					new AddRemoveCarsDeleteAsyTask(map2,
 							InterfaceParams.deleteCart).execute();
+					carShopppingAdapter.clearData();
 					carShopppingAdapter.notifyDataSetChanged();
-					myHandler.sendEmptyMessage(10);
+					
 				}
 				break;
 			case 7:
@@ -431,9 +433,8 @@ public class CarShopppingActivity extends BaseActivity implements
 					caremap1.put("id", message);
 					new AddRemoveCarsDeleteAsyTask(caremap1,
 							InterfaceParams.addWishList).execute();
-					carShopppingAdapter.notifyDataSetChanged();
 					myHandler.sendEmptyMessage(8);
-					myHandler.sendEmptyMessage(10);
+					
 				}
 				break;
 			case 11:
@@ -444,6 +445,8 @@ public class CarShopppingActivity extends BaseActivity implements
 						+ msg.arg1 + "\"" + "}}";
 				map.put("update_cart_action", "update_qty");
 				map.put("cart", message);
+				int price=(Integer) msg.obj;
+				
 				new UpdateAsyTask(map, InterfaceParams.updateCart).execute();
 
 				// mHandler.sendEmptyMessage(13);

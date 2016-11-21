@@ -56,7 +56,7 @@ import com.mrwujay.cascade.model.MainPageObject;
 
 /**
  * 项目名称：NewProject 类名称：PartsActivity 类描述： 创建人：王蕾 创建时间：2015-9-8 下午5:24:26
- * 修改备注：最热目前没有数据用推荐list代替,new是java关键字需要后台更改
+ *
  */
 public class PartsActivity extends BaseActivity implements OnClickListener {
 	private ChildViewPager vp_banner;
@@ -71,7 +71,6 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 	public static String version = "";
 	public static String appUrl;
 	private DeviceInfo deviceInfo;
-	private SharePreferDB SharePreferDB;
 	String versioncodeNumber;
 	private TextView text4;
 	private MyGridView sellgrid, hotgrid, recommandgrid, newgrid;
@@ -93,7 +92,6 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
 		super.onInit(bundle);
-		SharePreferDB = new SharePreferDB(mContext, "versionmessage");
 		// 判断是否有网
 		if (!NetworkUtil.isConnected(mActivity)) {
 			setContentView(R.layout.nomessageload_view_layout);
@@ -112,11 +110,10 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 			setContentView(R.layout.mainpagelayout);
 			deviceInfo = DeviceInfoUtil.getDeviceInfo(mContext);
 			if (!version.equals("")) {
-				versioncodeNumber = version;
-				Integer versioncode = Integer.valueOf(versioncodeNumber);
+				Integer versioncode = Integer.valueOf(version);
 				if (versioncode > deviceInfo.getAppVersionCode()) {
 					DownLoadApp.showDialog(PartsActivity.this, "应用版本更新",
-							SharePreferDB.readData().get("url"));
+							appUrl);
 
 				}
 			}
@@ -181,11 +178,13 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void onStart() {
+	protected void onResume() {
 		// TODO Auto-generated method stub
-		super.onStart();
+		super.onResume();
 		new getBestsellerAsyTask(InterfaceParams.getAll).execute();
 	}
+
+
 
 	private void initBanner() {
 		vp_banner = (ChildViewPager) findViewById(R.id.vp_banner);
@@ -206,8 +205,6 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 
 			}
 		});
-		// app/ad/getAdList
-		// locationUserId:操作人ID
 		bannerList = new ArrayList<BannerPic>();
 		rows = new ArrayList<BannerPic>();
 		BannerPic bannerPic1 = new BannerPic();
@@ -219,11 +216,9 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 		rows.add(bannerPic1);
 		rows.add(bannerPic2);
 		rows.add(bannerPic3);
-		// rows.add(new BannerPic());
 		bannerList.add(bannerPic1);
 		bannerList.add(bannerPic2);
 		bannerList.add(bannerPic3);
-		// bannerList.add(new BannerPic());
 		PosterAdapter adapter = new PosterAdapter(getSupportFragmentManager(),
 				bannerList);
 		vp_banner.setAdapter(adapter);
@@ -352,14 +347,6 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 			if (result == null) {
 				return;
 			}
-
-			// if(version>deviceInfo.getAppVersionCode()){
-			// DownLoadApp.showDialog(PartsActivity.this, "应用版本更新", appUrl);
-			// }
-			Map map = new HashMap<String, String>();
-			map.put("version", version);
-			map.put("url", appUrl);
-			SharePreferDB.saveData(map);
 			if (jsonservice.getToastMessage()) {
 				OnlyClass onlyClass = (OnlyClass) result;
 				ToastUtil.showToast(mActivity, onlyClass.data);

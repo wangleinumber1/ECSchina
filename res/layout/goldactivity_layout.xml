@@ -55,15 +55,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal" >
-       
+
         <com.jiajie.jiajieproject.widget.ReboundScrollView
             android:id="@+id/tools_scrlllview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="3"
             android:background="@color/backgroud"
-            android:scrollbars="none"
-            android:fadingEdge="none" >
+            android:fadingEdge="none"
+            android:scrollbars="none" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,30 +99,44 @@
                     android:orientation="vertical" />
             </LinearLayout>
         </com.jiajie.jiajieproject.widget.ReboundScrollView>
-		<FrameLayout
-		    android:layout_width="match_parent"
-		    android:layout_height="match_parent"	
-		     android:layout_weight="1"	    
-		    >
-            <com.jiajie.jiajieproject.widget.YLListView
-            android:id="@+id/goldListView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"         
-            android:background="@color/backgroud"
-            android:divider="@color/backgroud"
-            android:dividerHeight="1dp"
-            android:listSelector="#00000000"
-            android:scrollbars="none" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <com.jiajie.jiajieproject.utils.PullToRefreshView
+                    android:id="@+id/goldPullToRefreshView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                     >
+
+                    <ListView
+                        android:id="@+id/goldListView"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@color/backgroud"
+                        android:divider="@color/backgroud"
+                        android:dividerHeight="1dp"
+                        android:listSelector="#00000000"
+                        android:scrollbars="none" />
+                </com.jiajie.jiajieproject.utils.PullToRefreshView>
+            </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/goldListViewCover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#e0000000"
                 android:alpha="0.5"
-                android:visibility="gone"
-                ></RelativeLayout>
-		</FrameLayout>
-        
+                android:background="#e0000000"
+                android:visibility="gone" >
+            </RelativeLayout>
+        </FrameLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -45,7 +45,7 @@ public class GoldFragmentadapter extends BaseAdapter {
 		}
 
 		public void setdata(ArrayList<MainPageObject> list) {
-			this.list=list;
+			this.list.addAll(list);
 		}
 		public ArrayList<MainPageObject> getdata(){
 			return list;

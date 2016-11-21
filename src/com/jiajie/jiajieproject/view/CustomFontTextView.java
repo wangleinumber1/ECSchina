@@ -25,7 +25,7 @@ public class CustomFontTextView extends TextView {
 
 	public CustomFontTextView(Context context, AttributeSet attrs,
 			int defStyleAttr, int defStyleRes) {
-		super(context, attrs, defStyleAttr, defStyleRes);
+		super(context, attrs, defStyleAttr);
 		// TODO Auto-generated constructor stub
 	}
 
