@@ -46,6 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="false"
             android:text="IBM power 7 内存  DDR3 16G"
+            android:singleLine="true"
+            android:ellipsize="end" 
             android:textColor="@color/carpricetextcolor" />
 
         <TextView

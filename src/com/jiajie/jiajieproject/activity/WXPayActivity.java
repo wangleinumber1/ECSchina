@@ -31,9 +31,9 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.xmlpull.v1.XmlPullParser;
 
-public class PayActivity extends Activity {
+public class WXPayActivity extends Activity {
 
-	public static final String TAG = "MicroMsg.SDKSample.PayActivity";
+	public static final String TAG = "MicroMsg.SDKSample.WXPayActivity";
 	PayReq req;
 	final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 	Map<String, String> resultunifiedorder;
@@ -129,7 +129,7 @@ public class PayActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			dialog = ProgressDialog.show(PayActivity.this,
+			dialog = ProgressDialog.show(WXPayActivity.this,
 					getString(R.string.app_tip),
 					getString(R.string.getting_prepayid));
 		}

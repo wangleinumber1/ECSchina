@@ -384,9 +384,9 @@ public class CarShopppingActivity extends BaseActivity implements
 
 			case 10:
 				float price = (Float) msg.obj;
-				if (price > 0) {
-					carshopping_price.setText("" + price);
-				}
+
+				carshopping_price.setText("" + price);
+
 				break;
 			case 11:
 				// 所有列表中的商品全部被选中，让全选按钮也被选中
@@ -418,9 +418,7 @@ public class CarShopppingActivity extends BaseActivity implements
 
 	@SuppressWarnings("static-access")
 	private void selectedAll() {
-		if (!flag) {
-			carshopping_price.setText("0.00");
-		}
+
 		for (int i = 0; i < list.size(); i++) {
 			carShopppingAdapter.getIsSelected().put(i, flag);
 		}

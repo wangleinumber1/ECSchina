@@ -89,7 +89,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 	private String bill_title = "Personal";
 	private String bill_company;
 	public static List<produceClass> newlist = new ArrayList<produceClass>();
-
+	private Boolean ISAlipay=true;
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
@@ -263,7 +263,6 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 
 			if (jsonservice.getToastMessage()) {
 				OnlyClass onlyClass = (OnlyClass) result;
-				CarShopppingAdapter.isSelected.clear();
 				ToastUtil.showToast(mActivity, onlyClass.data);
 			}
 
@@ -277,10 +276,10 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		case R.id.pay_radioGroup:
 			switch (checkedId) {
 			case R.id.radioPay1:
-				ToastUtil.showToast(mContext, "支付宝");
+				ISAlipay=true;
 				break;
 			case R.id.radioPay2:
-				ToastUtil.showToast(mContext, "威信");
+				ISAlipay=false;
 				break;
 			case R.id.radioPay3:
 				ToastUtil.showToast(mContext, "对公");

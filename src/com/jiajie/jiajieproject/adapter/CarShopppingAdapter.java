@@ -142,6 +142,7 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		vh.numbertext.setText("¥"
 				+ list.get(position).price.substring(0,
 						list.get(position).price.lastIndexOf('.')) + ".00");
+		vh.catshoppingitem_layouttext1.setText(list.get(position).pn);
 		vh.pricetext.setText(list.get(position).productName);
 		vh.my_add_sub.setOnClickAddAndSubListener(this);
 		vh.my_add_sub.setTag(position);
@@ -186,6 +187,7 @@ public class CarShopppingAdapter extends BaseAdapter implements
 				price = Integer.parseInt(produceClass.price.split(".0000")[0]);
 				totalPrice += Integer.parseInt(produceClass.qty) * price;
 			}
+			
 		}
 		return totalPrice;
 	}
