@@ -6,6 +6,7 @@ package com.jiajie.jiajieproject.activity;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -144,6 +145,9 @@ public class GoodsdetailActivity extends BaseActivity implements
 		switch (v.getId()) {
 		case R.id.detail_back:
 			finish();
+			break;
+		case R.id.email_link:
+			openEmail();
 			break;
 		case R.id.qq_link:
 			openQQ();
@@ -439,8 +443,28 @@ public class GoodsdetailActivity extends BaseActivity implements
 	 * */
 	@SuppressWarnings("unused")
 	private void openWechat() {
-
+		Intent intent = new Intent();
+		ComponentName cmp = new ComponentName("com.tencent.mm","com.tencent.mm.ui.LauncherUI");
+		intent.setAction(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_LAUNCHER);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.setComponent(cmp);
+		startActivityForResult(intent, 0);
 	}
+	/**
+	 * 打开手机邮箱
+	 * */
+	@SuppressWarnings("unused")
+	private void openEmail() {
+		Uri uri = Uri.parse("mailto:"+"1243191154@qq.com"); 
+	    Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+	    //intent.putExtra(Intent.EXTRA_CC, email); // 抄送人
+	   // intent.putExtra(Intent.EXTRA_SUBJECT, "这是邮件的主题部分"); // 主题
+	   // intent.putExtra(Intent.EXTRA_TEXT, "这是邮件的正文部分"); // 正文
+	    startActivity(Intent.createChooser(intent, "请选择邮件类应用"));
+	}
+
+	
 
 	// 打电话
 	private void callphone() {

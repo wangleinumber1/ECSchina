@@ -87,7 +87,7 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 	ArrayList<MainPageObject> Hotlist = new ArrayList<MainPageObject>();
 	ArrayList<MainPageObject> Tuijianlist = new ArrayList<MainPageObject>();
 	ArrayList<MainPageObject> Newlist = new ArrayList<MainPageObject>();
-
+	private SharePreferDB sharePreferDB;
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
@@ -108,9 +108,11 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 
 		} else {
 			setContentView(R.layout.mainpagelayout);
+			sharePreferDB=new SharePreferDB(mContext, "appversion.db");
 			deviceInfo = DeviceInfoUtil.getDeviceInfo(mContext);
-			if (!version.equals("")) {
-				Integer versioncode = Integer.valueOf(version);
+			if (sharePreferDB.readData().size()>0) {
+				Integer versioncode =Integer.parseInt( sharePreferDB.readData().get("version"));
+				appUrl= sharePreferDB.readData().get("appUpdateUrl");
 				if (versioncode > deviceInfo.getAppVersionCode()) {
 					DownLoadApp.showDialog(PartsActivity.this, "应用版本更新",
 							appUrl);
@@ -119,6 +121,7 @@ public class PartsActivity extends BaseActivity implements OnClickListener {
 			}
 			initView();
 		}
+	
 	}
 
 	@SuppressWarnings("unchecked")

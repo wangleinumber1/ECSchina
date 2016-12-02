@@ -33,6 +33,7 @@ import com.jiajie.jiajieproject.adapter.ClassPopAdapter;
 import com.jiajie.jiajieproject.adapter.GoldFragmentadapter;
 import com.jiajie.jiajieproject.contents.Constants;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
+import com.jiajie.jiajieproject.db.service.SharePreferDB;
 import com.jiajie.jiajieproject.model.CategoriesClass;
 import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.PullToRefreshView;
@@ -71,6 +72,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	int page = 1;
 	int pageSize = 10;
 	String cid="10";
+	private SharePreferDB sharePreferDB;
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onInit(Bundle bundle) {
@@ -78,6 +80,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		super.onInit(bundle);
 		setContentView(R.layout.goldactivity_layout);
 		scrollView = (ReboundScrollView) findViewById(R.id.tools_scrlllview);
+		sharePreferDB=new SharePreferDB(mContext, "appversion.db");
 		new GetIdAsyTask("10").execute();
 		new GetProductsByCidAsyTask(cid, page).execute();
 		InitView();
@@ -416,6 +419,11 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 			if (result == null) {
 				return;
 			}
+			//保存版本信息，便于首页更新版本
+			Map<String,String> map=new HashMap<String,String>();			
+			map.put("version", 	PartsActivity.version);
+			map.put("appUpdateUrl", PartsActivity.appUrl);
+			sharePreferDB.saveData(map);
 			goldFragmentList = (ArrayList<MainPageObject>) result;
 			goldFragmentadapter.setdata(goldFragmentList);
 			goldFragmentadapter.notifyDataSetChanged();

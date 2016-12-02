@@ -120,7 +120,7 @@ public class CarShopppingActivity extends BaseActivity implements
 				Map map2 = new HashMap<String, String>();
 				String message11 = "";
 				for (int i = 0; i < arraydelete.size(); i++) {
-					message11 = message11 + arraydelete.get(i).productId + ",";
+					message11 = message11 + arraydelete.get(i).id + ",";
 				}
 				message11 = message11.substring(0, message11.length() - 1);
 				map2.put("id", message11);
@@ -143,8 +143,8 @@ public class CarShopppingActivity extends BaseActivity implements
 				caremap1.put("id", message);
 				new AddRemoveCarsDeleteAsyTask(caremap1,
 						InterfaceParams.addWishList).execute();
-				carShopppingAdapter.clearData();
-				carShopppingAdapter.notifyDataSetChanged();
+				// 关注后清空列表
+				myHandler.sendEmptyMessage(7);
 			}
 			break;
 		case R.id.balance:
@@ -266,9 +266,7 @@ public class CarShopppingActivity extends BaseActivity implements
 
 			if (jsonservice.getToastMessage()) {
 				OnlyClass onlyClass = (OnlyClass) result;
-				if (onlyClass.success) {
 
-				}
 				ToastUtil.showToast(mActivity, onlyClass.data);
 			}
 
@@ -409,6 +407,26 @@ public class CarShopppingActivity extends BaseActivity implements
 					CarShopppingActivity.this.sendBroadcast(intent);
 				}
 				break;
+			case 7:
+
+				if (!carShopppingAdapter.isclear) {
+					ArrayList<produceClass> arraydelete = getselectedList(carShopppingAdapter
+							.getData());
+					Map map2 = new HashMap<String, String>();
+					String message11 = "";
+					for (int i = 0; i < arraydelete.size(); i++) {
+						message11 = message11 + arraydelete.get(i).id
+								+ ",";
+					}
+					message11 = message11.substring(0, message11.length() - 1);
+					map2.put("id", message11);
+					new AddRemoveCarsDeleteAsyTask(map2,
+							InterfaceParams.deleteCart).execute();
+					carShopppingAdapter.clearData();
+					carShopppingAdapter.notifyDataSetChanged();
+				}
+				break;
+
 			}
 		}
 

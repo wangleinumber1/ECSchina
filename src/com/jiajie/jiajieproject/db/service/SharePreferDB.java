@@ -18,7 +18,7 @@ public class SharePreferDB {
 	private SharedPreferences mSharedPreferences;
 	private String mFileName;
 	private SharedPreferences.Editor mEditor ;
-	private SharePreferDB(){}
+
 	
 	public SharePreferDB(Context context,String fileName){   
 		this.mContext = context;

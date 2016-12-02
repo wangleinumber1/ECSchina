@@ -202,9 +202,9 @@ public class BaseActivity extends FragmentActivity {
 		protected void onPostExecute(Object result) {
 			super.onPostExecute(result);
 			YokaLog.d("MyAsyncTask", "MyAsyncTask==onPostExecute()" + result);
-			if (myProgressDialog.isShowing()) {
+//			if (myProgressDialog.isShowing()) {
 				myProgressDialog.colseDialog();
-			}
+//			}
 		}
 	}
 

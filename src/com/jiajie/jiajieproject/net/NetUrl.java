@@ -22,8 +22,8 @@ public class NetUrl {
 	 * 准生产环境 测试环境 + 正式数据
 	 */
 //	public static final String TEST_HOST = "http://117.78.36.198/index.php/";
-//	public static final String TEST_HOST = "http://mall.ecs-svs.com/index.php/";
-	public static final String TEST_HOST = "http://172.31.160.59/index.php/";
+	public static final String TEST_HOST = "http://mall.ecsits.com/index.php/";
+//	public static final String TEST_HOST = "http://172.31.160.59/index.php/";
 	public static final String DateBaseUrl = "http://117.78.35.247:8080/index.php/download";
 	
 

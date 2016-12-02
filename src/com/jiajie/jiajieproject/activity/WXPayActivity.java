@@ -25,6 +25,7 @@ import android.widget.Button;
 
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.contents.UserData;
+import com.jiajie.jiajieproject.utils.ToastUtil;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -38,19 +39,12 @@ public class WXPayActivity extends Activity {
 	final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 	Map<String, String> resultunifiedorder;
 	StringBuffer sb;
-	private String json;
 	private String orderMessage;
 	private String orderprice;
 	private String ordername;
 	private String orderid;
-	private String stuName;
-	private String idcard;
-	private String stuPhone;
-	private String feeprice;
-	private String eduSystem;
-	private String schoolCode;
 	private String notifyUrl = "http://www.onlcy.com/d/pay/alipay/notify";
-	
+	IWXAPI api;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,9 +55,8 @@ public class WXPayActivity extends Activity {
 		orderJson();
 		GetPrepayIdTask getPrepayId = new GetPrepayIdTask();
 		getPrepayId.execute();
-		String packageSign = MD5.getMessageDigest(sb.toString().getBytes())
+		MD5.getMessageDigest(sb.toString().getBytes())
 				.toUpperCase();
-
 	}
 
 	/**
@@ -139,9 +132,8 @@ public class WXPayActivity extends Activity {
 			if (dialog != null) {
 				dialog.dismiss();
 			}
-			sb.append("prepay_id\n" + result.get("prepay_id") + "\n\n");
-			// show.setText(sb.toString());
-
+			Log.e("Tag", result.toString());
+			sb.append("prepay_id\n" + result.get("prepay_id") + "\n\n");			
 			resultunifiedorder = result;
 			genPayReq();
 			sendPayReq();
@@ -156,7 +148,7 @@ public class WXPayActivity extends Activity {
 		protected Map<String, String> doInBackground(Void... params) {
 
 			String url = String
-					.format("https://api.mch.weixin.qq.com/pay/unifiedorder");
+					.format("http://wxpay.weixin.qq.com/pub_v2/app/app_pay.php?plat=android");
 			String entity = genProductArgs();
 
 			Log.e("doInBackground", entity);
@@ -234,7 +226,7 @@ public class WXPayActivity extends Activity {
 			packageParams
 
 					.add(new BasicNameValuePair("appid", Constants.APP_ID));
-			packageParams.add(new BasicNameValuePair("body",ordername));
+			packageParams.add(new BasicNameValuePair("body","123"));
 
 			packageParams
 				.add(new BasicNameValuePair("mch_id", Constants.MCH_ID));
@@ -246,7 +238,7 @@ public class WXPayActivity extends Activity {
 			packageParams.add(new BasicNameValuePair("spbill_create_ip",
 					"127.0.0.1"));
 			//以一分钱为一个单位所以乘以100
-			packageParams.add(new BasicNameValuePair("total_fee",Integer.valueOf(orderprice)*100 +""));
+			packageParams.add(new BasicNameValuePair("total_fee",0.01*100 +""));
 			packageParams.add(new BasicNameValuePair("trade_type", "APP"));
 
 			String sign = genPackageSign(packageParams);
@@ -256,6 +248,7 @@ public class WXPayActivity extends Activity {
 			String xmlstring = toXml(packageParams);
 
 			return new String(xmlstring.toString().getBytes(), "ISO8859-1");
+			
 
 		} catch (Exception e) {
 			Log.e(TAG, "genProductArgs fail, ex = " + e.getMessage());
@@ -304,7 +297,7 @@ public class WXPayActivity extends Activity {
 		try {
 //			json=UserData.payMessage;
 //			Log.d(TAG, UserData.payMessage);
-			String json="{'schoolCode': '"+"1001"+"','stuName':'"+"123"+"','idcard':'"+"123"+"','stuPhone':'"+"123"+"','eduSystem':'"+"123"+"','feeprice':'"+"0.01"+"','orderid':'"+"123"+"','ordertitle':'"+"123"+"','ordercon':'"+"123"+"','orderprice':'"+"0.01"+"'}";
+			String json="{'schoolCode': '"+"1001"+"','stuName':'"+"123"+"','idcard':'"+"123"+"','stuPhone':'"+"123"+"','eduSystem':'"+"123"+"','feeprice':'"+"1"+"','orderid':'"+"123"+"','ordertitle':'"+"123"+"','ordercon':'"+"123"+"','orderprice':'"+"1"+"'}";
 			JSONObject jsonObject = new JSONObject(json);
 			orderMessage = jsonObject.getString("ordercon");
 			orderprice =(jsonObject.getString("orderprice")) ;

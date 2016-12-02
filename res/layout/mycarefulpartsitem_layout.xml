@@ -34,6 +34,8 @@
                 android:layout_marginTop="2dp"
                 android:text="惠普(HP)板卡AK344-630 02HP 8Gb PCI-E SP FC "
                 android:textColor="@color/textcolor"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:textSize="14sp" />
 
             <TextView

@@ -8,7 +8,7 @@ public class Constants {
   public static final String APP_ID = "wxe44d65eca3211fbe";
   //未改
   //商户号
-   public static final String MCH_ID = "1248267001";
+   public static final String MCH_ID = "1413934102";
 
 //未改
 //  API密钥，在商户平台设置

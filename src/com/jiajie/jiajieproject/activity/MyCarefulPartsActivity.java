@@ -24,10 +24,12 @@ import com.jiajie.jiajieproject.contents.Constants;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
 import com.jiajie.jiajieproject.model.OnlyClass;
 import com.jiajie.jiajieproject.utils.IntentUtil;
+import com.jiajie.jiajieproject.utils.PullToRefreshView;
+import com.jiajie.jiajieproject.utils.PullToRefreshView.OnFooterRefreshListener;
+import com.jiajie.jiajieproject.utils.PullToRefreshView.OnHeaderRefreshListener;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 import com.jiajie.jiajieproject.widget.MyGridView;
 import com.mrwujay.cascade.model.MainPageObject;
-import com.mrwujay.cascade.model.produceClass;
 
 /**
  * 项目名称：NewProject 类名称：MyCarefulParts 类描述： 创建人：王蕾 创建时间：2015-9-29 下午4:44:20 修改备注：
@@ -36,12 +38,10 @@ import com.mrwujay.cascade.model.produceClass;
 public class MyCarefulPartsActivity extends BaseActivity implements
 		OnItemClickListener, OnClickListener {
 	private ImageView headerleftImg;
-	// private PullToRefreshView mycarefulpartslayout_pull;
-	private MyGridView mycarefulpartslayout_gridview;
+	private GridView mycarefulpartslayout_gridview;
 	private MyCarefulPartsAdapter myCarefulPartsAdapter;
 	private boolean isFromcare = true;
 	private ArrayList<MainPageObject> list=new ArrayList<MainPageObject>();
-	// private int page = 1;
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
@@ -51,11 +51,10 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 	}
 
 	private void InitView() {
-		mycarefulpartslayout_gridview = (MyGridView) findViewById(R.id.mycarefulpartslayout_gridview);
+		mycarefulpartslayout_gridview = (GridView) findViewById(R.id.mycarefulpartslayout_gridview);
 		myCarefulPartsAdapter = new MyCarefulPartsAdapter(mActivity, mImgLoad);
 		mycarefulpartslayout_gridview.setAdapter(myCarefulPartsAdapter);
 		mycarefulpartslayout_gridview.setOnItemClickListener(this);
-
 		headerleftImg = (ImageView) findViewById(R.id.headerleftImg);
 		// 消除gridview黄色边框
 		mycarefulpartslayout_gridview.setSelector(new ColorDrawable(
@@ -116,6 +115,7 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 	 * */
 	@SuppressWarnings("unused")
 	private class PartsCarefulAsyTask extends MyAsyncTask {
+		
 
 		public PartsCarefulAsyTask() {
 			super();
@@ -127,7 +127,7 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 		@Override
 		protected Object doInBackground(Object... params) {
 			Map map = new HashMap<String, String>();
-			map.put("c_id", Constants.PartsCarefulCID);
+			map.put("c_id", Constants.PartsCarefulCID);		
 			return jsonservice.getDataList(InterfaceParams.WishList, map,
 					false, MainPageObject.class);
 		}
@@ -158,5 +158,7 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 		}
 
 	}
+
+	
 
 }

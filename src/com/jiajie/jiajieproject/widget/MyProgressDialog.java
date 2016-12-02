@@ -31,7 +31,7 @@ public class MyProgressDialog {
 		 this.context=context;
 		 flags=true;
 		 dialog=new Dialog(context,R.style.dialog);
-//		 dialog.setOnCancelListener(onCancelListener);
+		 dialog.setOnCancelListener(onCancelListener);
 		 dialog.setCanceledOnTouchOutside(false);
 	 }
 	 /**

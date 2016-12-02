@@ -23,12 +23,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alipay.sdk.pay.demo.PayDemoActivity;
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.activity.NotPayActivity;
 import com.jiajie.jiajieproject.activity.OrderDetailActivity;
 import com.jiajie.jiajieproject.activity.OrderInformationActivity;
+import com.jiajie.jiajieproject.activity.WXPayActivity;
 import com.jiajie.jiajieproject.contents.Constants;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
+import com.jiajie.jiajieproject.model.AlipayClass;
 import com.jiajie.jiajieproject.net.service.JosnService;
 import com.jiajie.jiajieproject.utils.ImageLoad;
 import com.jiajie.jiajieproject.utils.IntentUtil;
@@ -114,7 +117,7 @@ public class NotPayAdapter extends BaseAdapter implements OnClickListener {
 			convertView.setTag(vh);
 		} else {
 			vh = (ViewHolder) convertView.getTag();
-		}
+		}	
 		vh.notpayitem_layoutlayout1.setTag(position);
 		vh.notpayitem_layoutlayout1.setOnClickListener(this);
 		vh.notpayitem_layouttext1
@@ -152,7 +155,8 @@ public class NotPayAdapter extends BaseAdapter implements OnClickListener {
 			IntentUtil.activityForward(activity, OrderDetailActivity.class, bundle, false);
 			break;
 		case R.id.go_pay:
-			ToastUtil.showToast(activity, "去支付");
+//			new AlipayClass(activity);
+			IntentUtil.activityForward(activity, WXPayActivity.class, null, true);
 			break;
 		case R.id.cancle_order:
 			int pos=(Integer) v.getTag();
@@ -176,7 +180,7 @@ public class NotPayAdapter extends BaseAdapter implements OnClickListener {
 		
 			@Override
 			protected Object doInBackground(Object... params) {
-				Map map=new HashMap<String, String>();
+				Map<String, String> map=new HashMap<String, String>();
 				map.put("id", id);		
 				return josnService.getData(InterfaceParams.cancelOrder, map, false, null);
 			}
