@@ -8,22 +8,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.jiajie.jiajieproject.R;
-import com.jiajie.jiajieproject.activity.BaseActivity.MyAsyncTask;
 import com.jiajie.jiajieproject.adapter.NewNotcheckAdapter;
-import com.jiajie.jiajieproject.adapter.NotCheckAdapter;
-import com.jiajie.jiajieproject.adapter.NotPayAdapter;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
 import com.jiajie.jiajieproject.model.OnlyClass;
-import com.jiajie.jiajieproject.utils.PullToRefreshView;
-import com.jiajie.jiajieproject.utils.PullToRefreshView.OnFooterRefreshListener;
-import com.jiajie.jiajieproject.utils.PullToRefreshView.OnHeaderRefreshListener;
 import com.mrwujay.cascade.model.produceClass;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 import com.jiajie.jiajieproject.widget.MyListView;
@@ -39,7 +34,7 @@ public class NotCheckActivity extends BaseActivity implements OnClickListener {
 	private NewNotcheckAdapter NewNotcheckAdapter;
 	private ReboundScrollView notchecklayout;
 	private RelativeLayout no_orderlayout;
-
+	private Handler myHandler=new Myhandler();
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
@@ -53,11 +48,12 @@ public class NotCheckActivity extends BaseActivity implements OnClickListener {
 		no_orderlayout = (RelativeLayout) findViewById(R.id.no_orderlayout);
 		headerleftImg = (ImageView) findViewById(R.id.headerleftImg);
 		notcheck_layout_listview = (MyListView) findViewById(R.id.notcheck_layout_listview);
-		NewNotcheckAdapter = new NewNotcheckAdapter(mActivity, mImgLoad);
+		NewNotcheckAdapter = new NewNotcheckAdapter(mActivity, mImgLoad,jsonservice,myHandler);
 		notcheck_layout_listview.setAdapter(NewNotcheckAdapter);
 		headerleftImg.setOnClickListener(this);
 		new PartsAsyTask().execute();
 	}
+
 
 	@Override
 	public void onClick(View v) {
@@ -128,5 +124,23 @@ public class NotCheckActivity extends BaseActivity implements OnClickListener {
 			}
 		}
 
+	}
+	
+	
+	@SuppressWarnings("unused")
+	private class Myhandler extends Handler {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case 1:
+				new PartsAsyTask().execute();
+				break;
+			
+
+		}
+		}
 	}
 }

@@ -24,6 +24,7 @@ public class NetUrl {
 //	public static final String TEST_HOST = "http://117.78.36.198/index.php/";
 	public static final String TEST_HOST = "http://mall.ecsits.com/index.php/";
 //	public static final String TEST_HOST = "http://172.31.160.59/index.php/";
+//	public static final String TEST_HOST = "http://43.254.3.166/index.php/";
 	public static final String DateBaseUrl = "http://117.78.35.247:8080/index.php/download";
 	
 

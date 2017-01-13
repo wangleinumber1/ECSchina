@@ -94,6 +94,11 @@ public class InterfaceParams {
 	public static final String orderList = "app_api/api/orderListByStatus";
 	
 	/*
+	 * 我的订单接口
+	 */
+	public static final String MyorderList = "app_api/api/orderList";
+	
+	/*
 	 * 订单详情接口
 	 */
 	public static final String orderInfo = "app_api/api/orderInfo";
@@ -184,5 +189,25 @@ public class InterfaceParams {
 	/*获取首页数据
 	 * */
 	public static final String getAll="app_api/api/getAll";
+	
+	/*热门搜索接口
+	 * */
+	public static final String getTags="app_api/api/getTags";
+	/*微信订单完成回掉接口
+	 * */
+	public static final String notifyForApp="app_api/wexinpay/notifyForApp";
+	/*微信订单完成回掉接口
+	 * */
+	public static final String alinotifyForApp="app_api/alipayapi/notifyForApp";
+	/*去支付接口
+	 * */
+	public static final String Repay="app_api/api/rePay";
+	/*确认收货接口
+	 * */
+	public static final String completeOrder="app_api/api/completeOrder";
+	/*再次购买接口
+	 * */
+	public static final String reorder="app_api/api/reorder";
+	
 	
 }

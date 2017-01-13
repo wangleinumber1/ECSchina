@@ -90,7 +90,7 @@ public class OrderListAdapter extends BaseAdapter {
 			vh.salespartsitemtext2.setText(list.get(position).price);
 		} else {
 			vh.salespartsitemtext2.setText("¥"+list.get(position).price.substring(
-					0, list.get(position).price.lastIndexOf('.'))+".00");
+					0, list.get(position).price.lastIndexOf("00")));
 		}
 		vh.salespartsitemtext3.setText("数量："+produceClass.qty);
 		return convertView;

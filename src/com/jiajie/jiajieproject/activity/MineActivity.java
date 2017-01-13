@@ -5,6 +5,7 @@ package com.jiajie.jiajieproject.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -159,9 +160,7 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	private class MineLoginOutAsyTask extends MyAsyncTask {
-
-		@SuppressWarnings("unchecked")
+	private class MineLoginOutAsyTask extends AsyncTask {
 		@Override
 		protected Object doInBackground(Object... params) {
 			return jsonservice.getData(InterfaceParams.LOGINOUT, null, false,
@@ -191,6 +190,7 @@ public class MineActivity extends BaseActivity implements OnClickListener {
 			}
 
 		}
+
 	}
 
 	/**

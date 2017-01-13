@@ -9,7 +9,9 @@ import java.util.Map;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -24,16 +26,12 @@ import com.jiajie.jiajieproject.utils.StringUtil;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 
 /**
- * 项目名称：NewProject 
- * 类名称：CodeActivity 
- * 类描述： 
- * 创建人：王蕾 
- * 创建时间：2015-10-16 
- * 上午11:23:37 
+ * 项目名称：NewProject 类名称：CodeActivity 类描述： 创建人：王蕾 创建时间：2015-10-16 上午11:23:37
  * 修改备注：忘记密码
  */
 public class ForgetCodeActivity extends BaseActivity implements OnClickListener {
-	private TextView codetext1, completetext;
+	private TextView codetext1;
+	private ImageView completetext;
 	private EditText codeedit, codeedit1;
 	private ImageView headerleftImg;
 	private String phonenamber;
@@ -49,16 +47,77 @@ public class ForgetCodeActivity extends BaseActivity implements OnClickListener 
 	}
 
 	private void InitView() {
-		
+
 		headerleftImg = (ImageView) findViewById(R.id.headerleftImg);
 		codetext1 = (TextView) findViewById(R.id.codetext1);
-		completetext = (TextView) findViewById(R.id.completetext);
+		completetext = (ImageView) findViewById(R.id.completetext);
 		codeedit = (EditText) findViewById(R.id.codeedit);
 		codeedit1 = (EditText) findViewById(R.id.codeedit1);
 		completetext.setOnClickListener(this);
 		codetext1.setOnClickListener(this);
 		headerleftImg.setOnClickListener(this);
+		codeedit1.addTextChangedListener(watcher);
+		codeedit.addTextChangedListener(watcher1);
+		codetext1.setFocusable(false);
+		completetext.setFocusable(false);
 	}
+
+	private TextWatcher watcher1 = new TextWatcher() {
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			// TODO Auto-generated method stub
+			if (codeedit.getText().length() == 11) {
+				codetext1.setBackgroundResource(R.drawable.login_codeicon);
+				codetext1.setFocusable(true);
+			} else {
+				codetext1.setBackgroundResource(R.drawable.login_greycodeicon);
+				codetext1.setFocusable(false);
+			}
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			// TODO Auto-generated method stub
+
+		}
+	};
+	private TextWatcher watcher = new TextWatcher() {
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			// TODO Auto-generated method stub
+			if (codeedit1.getText().length() > 0) {
+				completetext.setImageResource(R.drawable.nextred);
+				completetext.setFocusable(true);
+			} else {
+				completetext.setImageResource(R.drawable.nextgray);
+				completetext.setFocusable(false);
+			}
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			// TODO Auto-generated method stub
+
+		}
+	};
 
 	@Override
 	public void onClick(View v) {
@@ -142,7 +201,7 @@ public class ForgetCodeActivity extends BaseActivity implements OnClickListener 
 
 		@Override
 		public void onFinish() {
-//			codetext1.setBackgroundResource(R.color.white);
+			// codetext1.setBackgroundResource(R.color.white);
 			codetext1.setText("重新获取");
 			codetext1.setClickable(true);
 
@@ -150,7 +209,7 @@ public class ForgetCodeActivity extends BaseActivity implements OnClickListener 
 
 		@Override
 		public void onTick(long millisUntilFinished) {
-//			codetext1.setBackgroundResource(R.color.loginbackgroundcolor);
+			// codetext1.setBackgroundResource(R.color.loginbackgroundcolor);
 			codetext1.setClickable(false);
 			codetext1.setText(millisUntilFinished / 1000 + "s");
 		}
@@ -230,9 +289,11 @@ public class ForgetCodeActivity extends BaseActivity implements OnClickListener 
 			if (jsonservice.getToastMessage()) {
 				OnlyClass onlyClass = (OnlyClass) result;
 				ToastUtil.showToast(mActivity, onlyClass.data);
+				if (onlyClass.success) {
+					IntentUtil.activityForward(mActivity,
+							SetpasswordActivity.class, null, false);
+				}
 			}
-			IntentUtil.activityForward(mActivity, SetpasswordActivity.class,
-					null, false);
 
 		}
 

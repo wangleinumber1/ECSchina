@@ -16,6 +16,9 @@
         android:paddingBottom="7dp"
         android:textColor="#8d8d8d"
         android:text="D7000"
+        android:maxEms="4"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:background="@drawable/search_yuanjiao"
         android:textSize="13sp" />
 

@@ -2,12 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+  >
+<RelativeLayout
+    android:id="@+id/search_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:paddingBottom="15dp"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
-    android:paddingTop="15dp" >
-
+    android:paddingTop="15dp"
+    
+    >
     <ImageView
         android:id="@+id/salespartsitemimage"
         android:layout_width="80dp"
@@ -49,5 +55,5 @@
         android:text="￥9999.00"
         android:textColor="#E94516"
         android:textSize="12sp" />
-
+</RelativeLayout>
 </RelativeLayout>

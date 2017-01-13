@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -51,8 +53,39 @@ public class SetpasswordActivity extends BaseActivity implements
 		completetext = (TextView) findViewById(R.id.completetext);
 		headerleftImg.setOnClickListener(this);
 		completetext.setOnClickListener(this);
-
+		mimaedit2.addTextChangedListener(watcher);
+		completetext.setFocusable(false);
 	}
+
+	private TextWatcher watcher = new TextWatcher() {
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			// TODO Auto-generated method stub
+			if (count>=6) {
+				completetext.setBackgroundColor(R.color.loginbackgroundcolor);
+				completetext.setFocusable(true);
+			} else {
+				completetext
+						.setBackgroundColor(R.color.loginbackgroundigreycolor);
+				completetext.setFocusable(false);
+			}
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			// TODO Auto-generated method stub
+
+		}
+	};
 
 	@Override
 	public void onClick(View v) {

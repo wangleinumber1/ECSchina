@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -64,7 +65,7 @@ public class CarShopppingActivity extends BaseActivity implements
 	private ArrayList<produceClass> selectedproduce = new ArrayList<produceClass>();
 	// private SharePreferDB sharePreferDB;
 	public static String TAG = "CarShopppingActivity";
-
+	private double totalprice;
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
@@ -114,24 +115,13 @@ public class CarShopppingActivity extends BaseActivity implements
 			finish();
 			break;
 		case R.id.car_delete:
-			if (!carShopppingAdapter.isclear) {
-				ArrayList<produceClass> arraydelete = getselectedList(carShopppingAdapter
-						.getData());
-				Map map2 = new HashMap<String, String>();
-				String message11 = "";
-				for (int i = 0; i < arraydelete.size(); i++) {
-					message11 = message11 + arraydelete.get(i).id + ",";
-				}
-				message11 = message11.substring(0, message11.length() - 1);
-				map2.put("id", message11);
-				new AddRemoveCarsDeleteAsyTask(map2, InterfaceParams.deleteCart)
-						.execute();
-				carShopppingAdapter.clearData();
-				carShopppingAdapter.notifyDataSetChanged();
-			}
+			//删除
+			myHandler.sendEmptyMessage(7);
+
 			break;
 		case R.id.movetocare:
-			if (!carShopppingAdapter.isclear) {
+			try {
+			if (!carShopppingAdapter.isclear&&carShopppingAdapter.getData().size()>0) {
 				ArrayList<produceClass> arraycare = getselectedList(carShopppingAdapter
 						.getData());
 				HashMap<String, String> caremap1 = new HashMap<String, String>();
@@ -139,12 +129,17 @@ public class CarShopppingActivity extends BaseActivity implements
 				for (int i = 0; i < arraycare.size(); i++) {
 					message = message + arraycare.get(i).productId + ",";
 				}
-				message = message.substring(0, message.length() - 1);
+				if(arraycare.size()>=1){
+					message = message.substring(0, message.length() - 1);
+				}
 				caremap1.put("id", message);
 				new AddRemoveCarsDeleteAsyTask(caremap1,
 						InterfaceParams.addWishList).execute();
-				// 关注后清空列表
+				//删除
 				myHandler.sendEmptyMessage(7);
+			}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			break;
 		case R.id.balance:
@@ -238,7 +233,7 @@ public class CarShopppingActivity extends BaseActivity implements
 	 * 移除购物车 添加 结算
 	 * */
 	@SuppressWarnings({ "unused", "rawtypes" })
-	private class AddRemoveCarsDeleteAsyTask extends MyAsyncTask {
+	private class AddRemoveCarsDeleteAsyTask extends AsyncTask {
 		private String interfacename;
 		private Map map;
 
@@ -268,8 +263,9 @@ public class CarShopppingActivity extends BaseActivity implements
 				OnlyClass onlyClass = (OnlyClass) result;
 
 				ToastUtil.showToast(mActivity, onlyClass.data);
+				
 			}
-
+			
 		}
 
 	}
@@ -336,6 +332,7 @@ public class CarShopppingActivity extends BaseActivity implements
 		case 1:
 			Message message1 = myHandler.obtainMessage(2);
 			message1.arg1 = position;
+			Log.e(TAG, position+"////////////");
 			myHandler.sendMessage(message1);
 
 			break;
@@ -349,10 +346,12 @@ public class CarShopppingActivity extends BaseActivity implements
 
 	@SuppressLint("HandlerLeak")
 	private class MyHandler extends Handler {
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "static-access" })
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
+			ArrayList<produceClass> list=carShopppingAdapter.getData();
+			
 			switch (msg.what) {
 			case 1:
 				// 移入关注
@@ -372,17 +371,24 @@ public class CarShopppingActivity extends BaseActivity implements
 				deletemap.put("id", list.get(msg.arg1).id);
 				new AddRemoveCarsDeleteAsyTask(deletemap,
 						InterfaceParams.deleteCart).execute();
-				carShopppingAdapter.getData().remove(msg.arg1);
-				flag = false;
-				carshopping_price.setText("0.00");
-				selectedAll(); // 删除商品后，取消所有的选择
-				flag = true;
+				
+				produceClass produceClass=list.get(msg.arg1);
+//				flag = false;
+				Log.e(TAG, msg.arg1+"////////////");
+				
+//				selectedAll(); // 删除商品后，取消所有的选择
+				list.remove(msg.arg1);
+				if(carShopppingAdapter.getData().size()==0){
+					carshopping_price.setText("0.00");
+					allselect.setChecked(false);
+//					carShopppingAdapter.getIsSelected().remove(produceClass.id);
+				}
 				carShopppingAdapter.notifyDataSetChanged();
 				break;
 
 			case 10:
-				float price = (Float) msg.obj;
-
+				double price = (Double) msg.obj;
+				totalprice= price;
 				carshopping_price.setText("" + price);
 
 				break;
@@ -395,8 +401,7 @@ public class CarShopppingActivity extends BaseActivity implements
 				break;
 			case 6:
 
-				OrdercoConfirmationActivity.newlist = getselectedList(carShopppingAdapter
-						.getData());
+				OrdercoConfirmationActivity.newlist = getselectedList(list);
 				if (OrdercoConfirmationActivity.newlist.size() > 0) {
 					IntentUtil.activityForward(mActivity,
 							OrdercoConfirmationActivity.class, null, false);
@@ -409,22 +414,35 @@ public class CarShopppingActivity extends BaseActivity implements
 				break;
 			case 7:
 
-				if (!carShopppingAdapter.isclear) {
-					ArrayList<produceClass> arraydelete = getselectedList(carShopppingAdapter
-							.getData());
+					ArrayList<produceClass> arraydelete = getselectedList(list);
 					Map map2 = new HashMap<String, String>();
 					String message11 = "";
 					for (int i = 0; i < arraydelete.size(); i++) {
+						carShopppingAdapter.getData().remove(arraydelete.get(i));
+//						
 						message11 = message11 + arraydelete.get(i).id
 								+ ",";
 					}
-					message11 = message11.substring(0, message11.length() - 1);
-					map2.put("id", message11);
-					new AddRemoveCarsDeleteAsyTask(map2,
-							InterfaceParams.deleteCart).execute();
-					carShopppingAdapter.clearData();
-					carShopppingAdapter.notifyDataSetChanged();
-				}
+					if(arraydelete.size()>=1){
+						message11 = message11.substring(0, message11.length() - 1);
+						map2.put("id", message11);
+						new AddRemoveCarsDeleteAsyTask(map2,
+								InterfaceParams.deleteCart).execute();
+						
+						carShopppingAdapter.notifyDataSetChanged();
+					}
+						if(getselectedList(list).size()==0){
+							
+//						//没有被选中的
+						allselect.setChecked(false);					
+						carshopping_price.setText("0.00");
+						//删除了选中的其他的就会为非选中
+						flag=false;
+						selectedAll();
+//						
+					}
+					
+				
 				break;
 
 			}
@@ -436,9 +454,9 @@ public class CarShopppingActivity extends BaseActivity implements
 
 	@SuppressWarnings("static-access")
 	private void selectedAll() {
-
+		ArrayList<produceClass> list=carShopppingAdapter.getData();
 		for (int i = 0; i < list.size(); i++) {
-			carShopppingAdapter.getIsSelected().put(i, flag);
+			carShopppingAdapter.getIsSelected().put(list.get(i).id, flag);
 		}
 		carShopppingAdapter.notifyDataSetChanged();
 	}
@@ -459,6 +477,7 @@ public class CarShopppingActivity extends BaseActivity implements
 	@SuppressWarnings("unused")
 	public ArrayList<produceClass> getselectedList(ArrayList<produceClass> list) {
 		ArrayList<produceClass> newlist = new ArrayList<produceClass>();
+		
 		// 遍历list找到对应ID的值
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).isChoosed) {

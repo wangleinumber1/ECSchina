@@ -71,6 +71,35 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="公司"
+            android:textColor="@color/textcolor"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="北京伟仕佳杰信息技术服务有限公司"
+            android:textColor="#666666"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroud" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="地址"
             android:textColor="@color/textcolor"
             android:textSize="14sp" />
@@ -112,10 +141,9 @@
             android:background="@null"
             android:drawablePadding="5dp"
             android:drawableRight="@drawable/fanyeicon"
-            android:text="010-5730-3088"
+            android:text="4008106800"
             android:textColor="#666666"
             android:textSize="12sp" />
-
     </RelativeLayout>
 
     <ImageView
@@ -142,7 +170,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="sales@ecs-svs.com"
+            android:text="parts@ecsits.com"
             android:textColor="#666666"
             android:textSize="12sp" />
     </RelativeLayout>
@@ -151,19 +179,26 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/backgroud" />
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    
-    >
-    <ImageView
+
+    <TextView
+        android:id="@+id/serviceID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:paddingBottom="15dp"
-        android:src="@drawable/about_bottom_icon"
-        />
-    
-</RelativeLayout>
+        android:padding="10dp"
+        android:text="服务协议"
+        android:textColor="@color/hotcolor" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="15dp"
+            android:src="@drawable/about_bottom_icon" />
+    </RelativeLayout>
+
 </LinearLayout>

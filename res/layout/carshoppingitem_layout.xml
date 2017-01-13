@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="false"
-            android:text="IBM power 7 内存  DDR3 16G"
+            android:text=""
             android:singleLine="true"
             android:ellipsize="end" 
             android:textColor="@color/carpricetextcolor" />
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/pricetext"
             android:layout_marginTop="10dp"
-            android:text="SN号： 3248938458"
+            android:text=""
             android:textColor="@color/textcolor"
             android:textSize="15sp" />
 
@@ -83,7 +83,7 @@
                 android:layout_alignBottom="@+id/my_add_sub"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@+id/my_add_sub"
-                android:text="￥1000.00"
+                android:text=""
                 android:textColor="#E94516"
                 android:textSize="16sp" />
         </RelativeLayout>

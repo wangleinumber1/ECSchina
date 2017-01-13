@@ -53,7 +53,8 @@ public class GoodsdetailActivity extends BaseActivity implements
 	private int isFirstCare = 0;
 	private ImageView detail_back, qq_link, phone_link, wechat_link,
 			email_link, detai_incar;
-	private TextView detailtext1, detailtext2, detailtext3, detailtext4;
+	private TextView detailtext1, detailtext2, detailtext3, detailtext4,
+			detaildescription;
 	private CheckBox careful;
 	private String product_id;
 	private String item_id;
@@ -92,6 +93,7 @@ public class GoodsdetailActivity extends BaseActivity implements
 		detailtext2 = (TextView) findViewById(R.id.detailtext2);
 		detailtext3 = (TextView) findViewById(R.id.detailtext3);
 		detailtext4 = (TextView) findViewById(R.id.detailtext4);
+		detaildescription = (TextView) findViewById(R.id.detaildescription);
 		detail_back.setOnClickListener(this);
 		qq_link.setOnClickListener(this);
 		phone_link.setOnClickListener(this);
@@ -118,28 +120,28 @@ public class GoodsdetailActivity extends BaseActivity implements
 			URL = mainPageObject.image;
 
 		}
-		// mImgLoad.loadImg(detail_imageView, URL, R.drawable.jiazaitupian);
 		ImageLoader.getInstance().displayImage(URL, detail_imageView);
 		detailtext1.setText(mainPageObject.name);
 		detailtext2.setText("PN:" + mainPageObject.pn);
+		detaildescription.setText(mainPageObject.description);
 		detailtext3.setText("¥"
 				+ mainPageObject.price.substring(0,
-						mainPageObject.price.lastIndexOf('.')) + ".00");
-		count=Integer.parseInt(mainPageObject.qty.substring(0,
-						mainPageObject.qty.lastIndexOf('.')));
-		detailtext4.setText("库存"+ count + "件");
+						mainPageObject.price.lastIndexOf("00")));
+		count = Integer.parseInt(mainPageObject.qty.substring(0,
+				mainPageObject.qty.lastIndexOf('.')));
+		detailtext4.setText("库存" + count + "件");
 		Map<String, String> map = new HashMap<String, String>();
 
 		if (StringUtil.checkStr(mainPageObject.id)) {
 			product_id = mainPageObject.id;
 		} else {
 			product_id = mainPageObject.product_id;
+
 		}
-		map.put("product_id", mainPageObject.product_id);
+		map.put("product_id", product_id);
 		new orderCarefulsyTask(map, InterfaceParams.userWishList).execute();
 	}
 
-	@SuppressWarnings({ "unchecked", "unchecked", "unchecked" })
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -168,8 +170,6 @@ public class GoodsdetailActivity extends BaseActivity implements
 			bundle.putInt("locationY", location[1]);
 			bundle.putInt("width", detail_imageView.getWidth());
 			bundle.putInt("height", detail_imageView.getHeight());
-			// IntentUtil.activityForward(mActivity,
-			// SpaceImageDetailActivity.class, bundle, false);
 			intent.putExtras(bundle);
 			startActivity(intent);
 			overridePendingTransition(0, 0);
@@ -185,7 +185,13 @@ public class GoodsdetailActivity extends BaseActivity implements
 			} else {
 
 				Map<String, String> map1 = new HashMap<String, String>();
-				map1.put("product_id", mainPageObject.id);
+				if (StringUtil.checkStr(mainPageObject.id)) {
+					product_id = mainPageObject.id;
+				} else {
+					product_id = mainPageObject.product_id;
+
+				}
+				map1.put("product_id", product_id);
 				map1.put("qty", "1");
 				new CarefulsyTask(map1, InterfaceParams.addCart).execute();
 			}
@@ -226,20 +232,18 @@ public class GoodsdetailActivity extends BaseActivity implements
 				return;
 			}
 
-			// if (jsonservice.getToastMessage()) {
 			OnlyClass onlyClass = (OnlyClass) result;
-			// if (!onlyClass.success) {
-			if(Interface.equalsIgnoreCase(InterfaceParams.addCart)){
-				if(count>0){
-				count--;
-				detailtext4.setText("库存"+ count + "件");
-				}else{					
-					detailtext4.setText("库存"+ 0 + "件");
+			if (Interface.equalsIgnoreCase(InterfaceParams.addCart)) {
+				if (count > 0) {
+					count--;
+					detailtext4.setText("库存" + count + "件");
+				} else {
+					detailtext4.setText("库存" + 0 + "件");
 				}
+			}else if(Interface.equalsIgnoreCase(InterfaceParams.removeWishList)){
+				GoodsdetailActivity.this.finish();
 			}
 			ToastUtil.showToast(mActivity, onlyClass.data);
-			// }
-			// }
 
 		}
 
@@ -275,12 +279,9 @@ public class GoodsdetailActivity extends BaseActivity implements
 				return;
 			}
 
-			// if (jsonservice.getsuccessState()) {
-
 			OnlyClass onlyClass = (OnlyClass) result;
 			wishlist_id = onlyClass.wishlist_id;
 			ToastUtil.showToast(mContext, onlyClass.data);
-			// }
 
 		}
 
@@ -338,7 +339,7 @@ public class GoodsdetailActivity extends BaseActivity implements
 			case 1:
 				// 用户已经关注的接口
 				Map map = new HashMap<String, String>();
-				map.put("product_id", mainPageObject.id);
+				map.put("product_id", product_id);
 				new orderCarefulsyTask(map, InterfaceParams.userWishList)
 						.execute();
 				break;
@@ -393,7 +394,7 @@ public class GoodsdetailActivity extends BaseActivity implements
 				if (isChecked) {
 					if (isFirstCare > 0) {
 						// 防止一进入界面就调关注接口
-						map.put("id", mainPageObject.id);
+						map.put("id", product_id);
 						new AddCarefulsyTask(map, InterfaceParams.addWishList)
 								.execute();
 						ToastUtil.showToast(mActivity, "已关注");
@@ -407,9 +408,10 @@ public class GoodsdetailActivity extends BaseActivity implements
 						new CarefulsyTask(map, InterfaceParams.removeWishList)
 								.execute();
 						ToastUtil.showToast(mActivity, "移除关注");
+						
 					} else {
 						isFirstCare++;
-						map.put("product_id",product_id);
+						map.put("product_id", product_id);
 						map.put("wishlist_id", wishlist_id);
 						// product_id = 当前的产品id wishlist_id =
 						new CarefulsyTask(map,
@@ -430,12 +432,12 @@ public class GoodsdetailActivity extends BaseActivity implements
 	@SuppressWarnings("unused")
 	private void openQQ() {
 		try {
-			String url = "mqqwpa://im/chat?chat_type=wpa&uin=1790815223";
+			String url = "mqqwpa://im/chat?chat_type=wpa&uin=3410743855";
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 		} catch (Exception e) {
-		ToastUtil.showToast(mContext, "QQ还没有安装");
+			ToastUtil.showToast(mContext, "QQ还没有安装");
 		}
-		
+
 	}
 
 	/**
@@ -444,27 +446,27 @@ public class GoodsdetailActivity extends BaseActivity implements
 	@SuppressWarnings("unused")
 	private void openWechat() {
 		Intent intent = new Intent();
-		ComponentName cmp = new ComponentName("com.tencent.mm","com.tencent.mm.ui.LauncherUI");
+		ComponentName cmp = new ComponentName("com.tencent.mm",
+				"com.tencent.mm.ui.LauncherUI");
 		intent.setAction(Intent.ACTION_MAIN);
 		intent.addCategory(Intent.CATEGORY_LAUNCHER);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.setComponent(cmp);
 		startActivityForResult(intent, 0);
 	}
+
 	/**
 	 * 打开手机邮箱
 	 * */
 	@SuppressWarnings("unused")
 	private void openEmail() {
-		Uri uri = Uri.parse("mailto:"+"1243191154@qq.com"); 
-	    Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-	    //intent.putExtra(Intent.EXTRA_CC, email); // 抄送人
-	   // intent.putExtra(Intent.EXTRA_SUBJECT, "这是邮件的主题部分"); // 主题
-	   // intent.putExtra(Intent.EXTRA_TEXT, "这是邮件的正文部分"); // 正文
-	    startActivity(Intent.createChooser(intent, "请选择邮件类应用"));
+		Uri uri = Uri.parse("mailto:" + Constants.email);
+		Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+		intent.putExtra(Intent.EXTRA_CC, "excemple@ecsits.com"); // 抄送人
+		intent.putExtra(Intent.EXTRA_SUBJECT, "这是邮件的主题部分"); // 主题
+		intent.putExtra(Intent.EXTRA_TEXT, "这是邮件的正文部分"); // 正文
+		startActivity(Intent.createChooser(intent, "请选择邮件类应用"));
 	}
-
-	
 
 	// 打电话
 	private void callphone() {

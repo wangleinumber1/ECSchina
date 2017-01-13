@@ -31,6 +31,10 @@ public class ReciverContents {
 	 *支付成功
 	 * */
 	public static final String PaySuccess = "com.ksfc.haichuanproject.PaySuccess";
+	/**
+	 *再次购买
+	 * */
+	public static final String ReorderReciver = "com.jiajie.jiajieproject.ReorderReciver";
 	
 	
 }

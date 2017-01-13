@@ -107,7 +107,7 @@ public class mainpagesellAdapter extends BaseAdapter implements OnClickListener{
 		vh.sellparttext.setText(list.get(position).name);
 		vh.sellpartprice.setText("¥"
 				+ list.get(position).price.substring(0,
-						list.get(position).price.lastIndexOf('.')) + ".00");
+						list.get(position).price.lastIndexOf("00")));
 		return convertView;
 	}
 

@@ -9,6 +9,8 @@ import java.util.Map;
 import android.app.Activity;
 import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.alibaba.fastjson.JSON;
+import com.alipay.android.app.IAlixPay;
 import com.jiajie.jiajieproject.contents.Constants;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
 import com.jiajie.jiajieproject.contents.UserData;
@@ -39,13 +42,15 @@ import com.jiajie.jiajieproject.utils.ToastUtil;
  * 项目名称：NewProject 类名称：ZhuCeActivity 类描述： 创建人：王蕾 创建时间：2015-10-16 下午5:34:56 修改备注：
  */
 public class ZhuCeActivity extends BaseActivity implements OnClickListener {
-	private TextView completetext;
+	private ImageView completetext;
 	ImageView headerleftImg;
 	private EditText registeedit1, registeedit2, registeedit3, registeedit4;
 	private View View;
 	public static final String TAG = "ZhuCeActivity";
 	private UserDataService userDataService;
 	private String phone;
+	private ImageView serviceID;
+
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
@@ -56,18 +61,51 @@ public class ZhuCeActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void InitView() {
-		phone=getIntent().getExtras().getString("phone");
+		phone = getIntent().getExtras().getString("phone");
 		View = inflater.inflate(R.layout.zhuce_layout, null);
 		headerleftImg = (ImageView) findViewById(R.id.headerleftImg);
 		registeedit1 = (EditText) findViewById(R.id.registeedit1);
 		registeedit2 = (EditText) findViewById(R.id.registeedit2);
 		registeedit3 = (EditText) findViewById(R.id.registeedit3);
 		registeedit4 = (EditText) findViewById(R.id.registeedit4);
-		completetext = (TextView) findViewById(R.id.completetext);
+		completetext = (ImageView) findViewById(R.id.completetext);
+		serviceID = (ImageView) findViewById(R.id.serviceID);
 		headerleftImg.setOnClickListener(this);
 		completetext.setOnClickListener(this);
+		serviceID.setOnClickListener(this);
 		activityManager.pushActivity(this);
+		registeedit4.addTextChangedListener(watcher);
+		completetext.setFocusable(false);
 	}
+
+	private TextWatcher watcher = new TextWatcher() {
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			// TODO Auto-generated method stub
+			if (registeedit4.getText().length() >= 6) {
+				completetext.setImageResource(R.drawable.nextred);
+				completetext.setFocusable(true);
+			} else {
+				completetext.setImageResource(R.drawable.nextgray);
+				completetext.setFocusable(false);
+			}
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			// TODO Auto-generated method stub
+
+		}
+	};
 
 	private PopupWindow popupWindow;
 
@@ -80,6 +118,10 @@ public class ZhuCeActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.headerleftImg:
 			finish();
+			break;
+		case R.id.serviceID:
+			IntentUtil.activityForward(mActivity, WebActivity.class, null,
+					false);
 			break;
 		case R.id.completetext:
 			if (!StringUtil.checkStr(name)) {
@@ -162,7 +204,7 @@ public class ZhuCeActivity extends BaseActivity implements OnClickListener {
 		TextView text2 = (TextView) poplayout.findViewById(R.id.text2);
 		TextView text3 = (TextView) poplayout.findViewById(R.id.text3);
 		text1.setText("温馨提示");
-		text2.setText("普通会员已注册成功，可下单促销备件");
+		text2.setText("普通会员已注册成功");
 		text3.setText("确定");
 		text3.setOnClickListener(onClickListener);
 
@@ -220,12 +262,12 @@ public class ZhuCeActivity extends BaseActivity implements OnClickListener {
 			}
 			if (jsonservice.getsuccessState()) {
 				DengluClass denglu = (DengluClass) result;
-				UserData.userId = denglu.entity_id;	
-				Map map=new HashMap();
+				UserData.userId = denglu.entity_id;
+				Map map = new HashMap();
 				map.put(Constants.NEW_USER_ID, denglu.entity_id);
 				userDataService.saveData(map);
-				IntentUtil.activityForward(mActivity,MainActivity.class,
-						null, false);
+				IntentUtil.activityForward(mActivity, MainActivity.class, null,
+						false);
 				activityManager.popAllActivity();
 				finish();
 

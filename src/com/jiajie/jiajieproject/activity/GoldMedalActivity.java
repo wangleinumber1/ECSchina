@@ -7,18 +7,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -39,7 +38,6 @@ import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.PullToRefreshView;
 import com.jiajie.jiajieproject.utils.PullToRefreshView.OnFooterRefreshListener;
 import com.jiajie.jiajieproject.utils.PullToRefreshView.OnHeaderRefreshListener;
-import com.jiajie.jiajieproject.utils.ToastUtil;
 import com.jiajie.jiajieproject.widget.ReboundScrollView;
 import com.mrwujay.cascade.model.MainPageObject;
 
@@ -71,8 +69,9 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	private PullToRefreshView goldPullToRefreshView;
 	int page = 1;
 	int pageSize = 10;
-	String cid="10";
+	String cid = "10";
 	private SharePreferDB sharePreferDB;
+
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onInit(Bundle bundle) {
@@ -80,7 +79,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		super.onInit(bundle);
 		setContentView(R.layout.goldactivity_layout);
 		scrollView = (ReboundScrollView) findViewById(R.id.tools_scrlllview);
-		sharePreferDB=new SharePreferDB(mContext, "appversion.db");
+		sharePreferDB = new SharePreferDB(mContext, "appversion.db");
 		new GetIdAsyTask("10").execute();
 		new GetProductsByCidAsyTask(cid, page).execute();
 		InitView();
@@ -109,11 +108,6 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 		blackcolors = getResources().getColorStateList(R.color.classblackcolor);
 
 	}
-
-	
-	
-	
-	
 
 	@Override
 	public void onClick(View v) {
@@ -152,8 +146,6 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	@SuppressWarnings("unused")
 	private void showToolsView(ArrayList<CategoriesClass> list) {
 		toolsTextViews = new TextView[list.size()];
-		// toolsTextViews = new TextView[toolsList.length];
-		// views = new View[toolsList.length];
 		views = new View[list.size()];
 
 		for (int i = 0; i < list.size(); i++) {
@@ -168,7 +160,6 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 			views[i] = view;
 		}
 
-	
 	}
 
 	private View.OnClickListener toolsItemListener = new View.OnClickListener() {
@@ -177,8 +168,9 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 			changeTextColor(v.getId());
 			changeTextLocation(v.getId());
 			getPopupWindow(v.getHeight(), (String) v.getTag());
-			if ((CategoriesClassList.size() - v.getId()) < 4&CategoriesClassList.size()>8) {
-				
+			if ((CategoriesClassList.size() - v.getId()) < 4
+					& CategoriesClassList.size() > 8) {
+
 				int[] location = new int[2];
 				v.getLocationOnScreen(location);
 				popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0]
@@ -250,7 +242,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 
 	private PopupWindow popupWindow;
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	protected void initPopuptWindow(int height, String c_id) {
 		// TODO Auto-generated method stub
 		// 获取自定义布局文件activity_popupwindow_left.xml的视图
@@ -259,7 +251,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 				R.layout.poplistview, null, false);
 		// 创建PopupWindow实例,200,LayoutParams.MATCH_PARENT分别是宽度和高度
 		ListView listview = (ListView) popupWindow_view;
-		cid=c_id;
+		cid = c_id;
 		new GetIdSecondAsyTask(c_id).execute();
 		listview.setAdapter(classPopAdapter);
 		popupWindow = new PopupWindow(popupWindow_view, 200, height * 4, true);
@@ -274,7 +266,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 					long arg3) {
 
 				Message message = myHandler.obtainMessage(1);
-				cid=poplist.get(arg2).id;
+				cid = poplist.get(arg2).id;
 				message.arg1 = Integer.parseInt(cid);
 				myHandler.sendMessage(message);
 				arg1.setBackgroundResource(R.drawable.classbg_white);
@@ -293,14 +285,8 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	 */
 	@SuppressWarnings("unchecked")
 	private void getPopupWindow(int height, String cid) {
-		// if (null != popupWindow) {
-		// popupWindow.dismiss();
-		//
-		// return;
-		// } else {
-
 		initPopuptWindow(height, cid);
-		// }
+	
 	}
 
 	@Override
@@ -394,7 +380,7 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 			super();
 			this.c_id = c_id;
 			this.page = page;
-		
+
 		}
 
 		private String c_id;
@@ -419,9 +405,9 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 			if (result == null) {
 				return;
 			}
-			//保存版本信息，便于首页更新版本
-			Map<String,String> map=new HashMap<String,String>();			
-			map.put("version", 	PartsActivity.version);
+			// 保存版本信息，便于首页更新版本
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("version", PartsActivity.version);
 			map.put("appUpdateUrl", PartsActivity.appUrl);
 			sharePreferDB.saveData(map);
 			goldFragmentList = (ArrayList<MainPageObject>) result;
@@ -440,9 +426,9 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 1:
-				page=1;
+				page = 1;
 				goldFragmentadapter.clearData();
-				new GetProductsByCidAsyTask(msg.arg1 + "",page).execute();
+				new GetProductsByCidAsyTask(msg.arg1 + "", page).execute();
 				break;
 
 			default:
@@ -454,9 +440,9 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 
 	@Override
 	public void onHeaderRefresh(PullToRefreshView view) {
-		page=1;
+		page = 1;
 		goldFragmentadapter.clearData();
-		new GetProductsByCidAsyTask(cid,page).execute();
+		new GetProductsByCidAsyTask(cid, page).execute();
 		view.onHeaderRefreshComplete();
 
 	}
@@ -464,8 +450,26 @@ public class GoldMedalActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public void onFooterRefresh(PullToRefreshView view) {
 		page++;
-		new GetProductsByCidAsyTask(cid,page).execute();
+		new GetProductsByCidAsyTask(cid, page).execute();
 		view.onFooterRefreshComplete();
 	}
+ 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
+			case 102:
+				callphone();
+				break;
+			}
+		}
+	}
 
+	// 打电话
+	private void callphone() {
+		Intent phoneIntent = new Intent("android.intent.action.CALL",
+				Uri.parse("tel:" + Constants.phonenumber));
+		// 启动
+		startActivity(phoneIntent);
+	}
 }

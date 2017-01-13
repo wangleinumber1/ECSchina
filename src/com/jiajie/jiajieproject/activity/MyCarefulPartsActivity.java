@@ -98,11 +98,6 @@ public class MyCarefulPartsActivity extends BaseActivity implements
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//		String produce_id = myCarefulPartsAdapter.getdata().get(arg2).product_id;
-//		String item_id = myCarefulPartsAdapter.getdata().get(arg2).item_id;
-//		Bundle bundle = new Bundle();
-//		bundle.putString("id", produce_id);
-//		bundle.putString("item_id", item_id);
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(PartsActivity.TAG, list.get(arg2));
 		bundle.putBoolean("isFromcare", isFromcare);

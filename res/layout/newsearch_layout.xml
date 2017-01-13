@@ -54,6 +54,7 @@
                         android:imeOptions="actionSearch"
                         android:textColor="#999999"
                         android:textColorHint="#a8a8a8"
+                        android:hint="请输入搜索内容"
                         android:textSize="10sp" />
 
                     <ImageView

@@ -9,10 +9,9 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,19 +21,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.alipay.sdk.pay.demo.PayDemoActivity;
 import com.jiajie.jiajieproject.R;
-import com.jiajie.jiajieproject.activity.NotPayActivity;
 import com.jiajie.jiajieproject.activity.OrderDetailActivity;
-import com.jiajie.jiajieproject.activity.OrderInformationActivity;
-import com.jiajie.jiajieproject.activity.WXPayActivity;
-import com.jiajie.jiajieproject.contents.Constants;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
-import com.jiajie.jiajieproject.model.AlipayClass;
+import com.jiajie.jiajieproject.model.OnlyClass;
 import com.jiajie.jiajieproject.net.service.JosnService;
 import com.jiajie.jiajieproject.utils.ImageLoad;
 import com.jiajie.jiajieproject.utils.IntentUtil;
+import com.jiajie.jiajieproject.utils.MyAsyncTask;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 import com.mrwujay.cascade.model.produceClass;
 
@@ -121,15 +115,18 @@ public class NotPayAdapter extends BaseAdapter implements OnClickListener {
 		vh.notpayitem_layoutlayout1.setTag(position);
 		vh.notpayitem_layoutlayout1.setOnClickListener(this);
 		vh.notpayitem_layouttext1
-				.setText("订单号" + list.get(position).order_code);
+				.setText("订单号" + list.get(position).order_id);
 		vh.notpayitem_layouttext2.setText(list.get(position).product_name);
-		vh.notpayitem_layouttext4.setText(list.get(position).price);
-		vh.notpayitem_layouttext5.setText(list.get(position).order_qty);
+		vh.notpayitem_layouttext3.setText("PN号："+list.get(position).pn);
+//		vh.notpayitem_layouttext4.setText(list.get(position).price);
+		vh.notpayitem_layouttext5.setText("x"+list.get(position).order_qty);
 		vh.notpay_all.setText(list.get(position).order_qty);
-		vh.notpay_yingfu.setText(list.get(position).total_price);
+		vh.notpay_yingfu.setText(list.get(position).price);
 		vh.go_pay.setOnClickListener(this);
+		imageLoad.loadImg(vh.notpayitem_layoutImgeView1, list.get(position).image, R.drawable.jiazaitupian);
 		vh.cancle_order.setOnClickListener(this);
 		vh.cancle_order.setTag(position);
+		vh.go_pay.setTag(position);		
 		return convertView;
 	}
 
@@ -150,17 +147,21 @@ public class NotPayAdapter extends BaseAdapter implements OnClickListener {
 		case R.id.notpayitem_layoutlayout1:
 			int position=(Integer) v.getTag();
 			Bundle bundle=new Bundle();
-			bundle.putString(OrderDetailActivity.TAG, list.get(position).id);	
-			bundle.putString(OrderDetailActivity.TAG1, list.get(position).address_id);	
+			bundle.putString(OrderDetailActivity.TAG, list.get(position).order_id);	
+			bundle.putString("id", list.get(position).id);	
+			bundle.putString("product_name", list.get(position).product_name);	
 			IntentUtil.activityForward(activity, OrderDetailActivity.class, bundle, false);
 			break;
 		case R.id.go_pay:
-//			new AlipayClass(activity);
-			IntentUtil.activityForward(activity, WXPayActivity.class, null, true);
+			int go_paypos=(Integer) v.getTag();
+			Message message=new Message();
+			message.what=2;
+			message.obj=list.get(go_paypos);
+			myhandler.sendMessage(message);
 			break;
 		case R.id.cancle_order:
 			int pos=(Integer) v.getTag();
-			new CancleOrderAsyTask(activity, list.get(pos).id).execute();
+			new CancleOrderAsyTask(activity, list.get(pos).order_id).execute();
 			break;
 
 		default:
@@ -170,18 +171,18 @@ public class NotPayAdapter extends BaseAdapter implements OnClickListener {
 	}
 
 	//取消订单
-		private class CancleOrderAsyTask extends com.jiajie.jiajieproject.utils.MyAsyncTask{
-			private String id;
-			public CancleOrderAsyTask(Context context, String id) {
+		private class CancleOrderAsyTask extends MyAsyncTask{
+			private String orderid;
+			public CancleOrderAsyTask(Context context, String orderid) {
 				super(context);
-				this.id = id;
+				this.orderid = orderid;
 			}
 
 		
 			@Override
 			protected Object doInBackground(Object... params) {
 				Map<String, String> map=new HashMap<String, String>();
-				map.put("id", id);		
+				map.put("order_id", orderid);		
 				return josnService.getData(InterfaceParams.cancelOrder, map, false, null);
 			}
 
@@ -192,6 +193,8 @@ public class NotPayAdapter extends BaseAdapter implements OnClickListener {
 				if(result==null){
 					return;
 				}
+				OnlyClass onlyClass = (OnlyClass) result;
+				ToastUtil.showToast(activity, onlyClass.data);
 				myhandler.sendEmptyMessage(1);
 				
 			}

@@ -45,6 +45,7 @@
         android:paddingBottom="10dp"
         android:paddingLeft="35dp"
         android:paddingTop="10dp"
+        android:maxEms="11"
         android:singleLine="true"
         android:textSize="13sp" />
 
@@ -70,7 +71,6 @@
             android:drawableLeft="@drawable/password_icon1"
             android:drawablePadding="25dp"
             android:hint="请输入验证码"
-            android:inputType="textPassword"
             android:maxEms="8"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
@@ -80,7 +80,7 @@
             android:id="@+id/codetext1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/login_codeicon"
+            android:background="@drawable/login_greycodeicon"
             android:layout_alignParentRight="true"
             android:textSize="12sp"
             android:gravity="center"
@@ -102,18 +102,16 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" >
 
-        <TextView
+        <ImageView
             android:id="@+id/completetext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@color/loginbackgroundcolor"
+            android:src="@drawable/nextred"
             android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="下一步"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+             />
     </RelativeLayout>
 
 </LinearLayout>

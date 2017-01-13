@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="赵晶"
+            android:text="姓名"
             android:textColor="#DDE1E4"
             android:textSize="16sp" />
 
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="23dp"
             android:layout_toRightOf="@+id/headernametext"
-            android:text="16032853584"
+            android:text="电话"
             android:textColor="#DDE1E4"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/mapicon"
-            android:text="北京市海淀区长春路11号万柳亿城大厦A座"
+            android:text="地址"
             android:textColor="#DDE1E4"
             android:textSize="15sp" />
 
@@ -124,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/back_arrow"
-            android:text="共3件"
+            android:text=""
             android:layout_marginRight="25dp"
             android:textColor="#696969"
             android:layout_centerVertical="true"

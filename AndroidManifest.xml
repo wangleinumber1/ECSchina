@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jiajie.jiajieproject"
-    android:versionCode="2"
-    android:versionName="1.1" >
-
+    android:versionCode="3"
+    android:versionName="2.0" >
     <uses-sdk
         android:minSdkVersion="17"
         android:targetSdkVersion="21" />
@@ -73,7 +72,7 @@
         android:allowBackup="true"
         android:icon="@drawable/logoicon"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar" >
+        android:theme="@android:style/Theme.NoTitleBar" android:isGame="false">
 
         <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen" -->
         <activity
@@ -233,12 +232,10 @@
             android:screenOrientation="behind" >
         </activity>
         <!-- 微信支付 -->
-        <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+         <activity
+            android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:launchMode="singleTop"/>
         <activity
             android:name=".activity.WXPayActivity"
             android:exported="true"
@@ -405,6 +402,7 @@
         </activity>
         <activity android:name=".activity.SpaceImageDetailActivity" >
         </activity>
+        <activity android:name=".activity.WebActivity"></activity>
     </application>
 
 </manifest>

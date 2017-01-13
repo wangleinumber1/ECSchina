@@ -49,34 +49,35 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		OnCheckedChangeListener, OnClickAddAndSubListener {
 	private Activity activity;
 	private ArrayList<produceClass> list = new ArrayList<produceClass>();
-	public static Map<Integer, Boolean> isSelected = new HashMap<Integer, Boolean>();
+	public static Map<String, Boolean> isSelected = new HashMap<String, Boolean>();
 	private Handler mHandler;
 	private ImageLoad imageLoad;
 	private static String TAG = "CarShopppingAdapter";
 	private JosnService josnService;
-	public Boolean isclear=false;
+	public Boolean isclear = false;
+
 	@SuppressLint("UseSparseArrays")
 	public CarShopppingAdapter(Activity activity, Handler mHandler,
 			ImageLoad imageLoad) {
 		this.activity = activity;
 		this.mHandler = mHandler;
 		this.imageLoad = imageLoad;
-		isSelected = new HashMap<Integer, Boolean>();
-		josnService=new JosnService(activity);
+		isSelected = new HashMap<String, Boolean>();
+		josnService = new JosnService(activity);
 	}
 
 	// 初始化isSelected的数据
 	private void initDate() {
 		for (int i = 0; i < list.size(); i++) {
-			getIsSelected().put(i, false);
+			getIsSelected().put((list.get(i).id), false);
 		}
 	}
 
-	public static Map<Integer, Boolean> getIsSelected() {
+	public static Map<String, Boolean> getIsSelected() {
 		return isSelected;
 	}
 
-	public static void setIsSelected(Map<Integer, Boolean> isSelected) {
+	public static void setIsSelected(Map<String, Boolean> isSelected) {
 		CarShopppingAdapter.isSelected = isSelected;
 	}
 
@@ -92,7 +93,7 @@ public class CarShopppingAdapter extends BaseAdapter implements
 
 	// 清空数据
 	public void clearData() {
-		isclear=true;
+		isclear = true;
 		list.clear();
 
 	}
@@ -137,11 +138,11 @@ public class CarShopppingAdapter extends BaseAdapter implements
 		}
 		vh.imgeView1.setOnCheckedChangeListener(this);
 		vh.imgeView1.setTag(position);
-		vh.imgeView1.setChecked(getIsSelected().get(position));
+		vh.imgeView1.setChecked(getIsSelected().get((list.get(position).id)));
 
 		vh.numbertext.setText("¥"
 				+ list.get(position).price.substring(0,
-						list.get(position).price.lastIndexOf('.')) + ".00");
+						list.get(position).price.lastIndexOf("00")) );
 		vh.catshoppingitem_layouttext1.setText(list.get(position).pn);
 		vh.pricetext.setText(list.get(position).productName);
 		vh.my_add_sub.setOnClickAddAndSubListener(this);
@@ -164,7 +165,7 @@ public class CarShopppingAdapter extends BaseAdapter implements
 	public void onCheckedChanged(CompoundButton buttonView, boolean flag) {
 
 		int position = (Integer) buttonView.getTag();
-		getIsSelected().put(position, flag);
+		getIsSelected().put(list.get(position).id, flag);
 		produceClass produceClass = list.get(position);
 		produceClass.setChoosed(flag);
 		mHandler.sendMessage(mHandler.obtainMessage(10, getTotalPrice()));
@@ -177,17 +178,24 @@ public class CarShopppingAdapter extends BaseAdapter implements
 	 * 
 	 * @return 返回需要付费的总金额
 	 */
-	private float getTotalPrice() {
+	private double getTotalPrice() {
 		produceClass produceClass = null;
-		float totalPrice = 0;
-		int price;
-		for (int i = 0; i < list.size(); i++) {
-			produceClass = list.get(i);
-			if (produceClass.isChoosed()) {
-				price = Integer.parseInt(produceClass.price.split(".0000")[0]);
-				totalPrice += Integer.parseInt(produceClass.qty) * price;
+		Double totalPrice = 0.00;
+		Double price;
+
+		try {
+			for (int i = 0; i < list.size(); i++) {
+				produceClass = list.get(i);
+				if (produceClass.isChoosed()) {
+					price = Double
+							.parseDouble(produceClass.price.split("00")[0]);
+					totalPrice += Integer.parseInt(produceClass.qty) * price;
+				}
+
 			}
-			
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return totalPrice;
 	}
@@ -200,11 +208,12 @@ public class CarShopppingAdapter extends BaseAdapter implements
 	private boolean isAllSelected() {
 		boolean flag = true;
 		for (int i = 0; i < list.size(); i++) {
-			if (!getIsSelected().get(i)) {
+			if (!getIsSelected().get(list.get(i).id)) {
 				flag = false;
 				break;
 			}
 		}
+
 		return flag;
 	}
 
@@ -223,22 +232,25 @@ public class CarShopppingAdapter extends BaseAdapter implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public void clickAdd(int count, View view) {
+		MyAddAndSubView myAddView=(MyAddAndSubView) view;
 		produceClass produceClass = list.get((Integer) view.getTag());
-		produceClass.setqty(count+"");
+		produceClass.setqty(count + "");
 		handler.sendEmptyMessage(1);
-		new UpdateAsyTask(produceClass.id,count+"").execute();
+		new UpdateAsyTask(produceClass.id, count + "",produceClass.productId,myAddView).execute();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void clickSub(int count, View view) {
-		if(count>0){
-		produceClass produceClass1=list.get((Integer) view.getTag());
-		produceClass1.setqty(count+"");
-		handler.sendEmptyMessage(1);
-		new UpdateAsyTask(produceClass1.id,count+"").execute();
+		MyAddAndSubView mySubView=(MyAddAndSubView) view;
+		if (count > 0) {
+			produceClass produceClass1 = list.get((Integer) view.getTag());
+			produceClass1.setqty(count + "");
+			handler.sendEmptyMessage(1);
+			new UpdateAsyTask(produceClass1.id, count + "",produceClass1.productId,mySubView).execute();
 		}
 	}
+
 	/**
 	 * 提交数量
 	 * */
@@ -246,24 +258,29 @@ public class CarShopppingAdapter extends BaseAdapter implements
 	private class UpdateAsyTask extends MyAsyncTask {
 		private String qty;
 		private String id;
-		public UpdateAsyTask(String id, String qty) {
+		private String product_id;
+		private MyAddAndSubView view;
+
+		public UpdateAsyTask(String id, String qty,String product_id,MyAddAndSubView view) {
 			super(activity);
-		this.qty=qty;
-		this.id=id;
-	
+			this.qty = qty;
+			this.id = id;
+			this.product_id = product_id;
+			this.view = view;
 
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		protected Object doInBackground(Object... params) {
-			HashMap<String, String> map=new HashMap<String, String>();
-			 String message = "{" + "\"" + id
-			 + "\"" + ":" + "{\"" + "qty" + "\"" + ":" + "\""
-			 + qty + "\"" + "}}";
-			 map.put("update_cart_action", "update_qty");
-			 map.put("cart", message);
-			return josnService.getData(InterfaceParams.updateCart, map, false, null);
+			HashMap<String, String> map = new HashMap<String, String>();
+			String message = "{" + "\"" + id + "\"" + ":" + "{\"" + "qty"
+					+ "\"" + ":" + "\"" + qty +"\"" +","+"\""+"product_id"
+					+ "\"" + ":" + "\"" + product_id + "\"" + "}}";
+			map.put("update_cart_action", "update_qty");
+			map.put("cart", message);
+			return josnService.getData(InterfaceParams.updateCart, map, false,
+					null);
 		}
 
 		@SuppressWarnings("unchecked")
@@ -277,8 +294,10 @@ public class CarShopppingAdapter extends BaseAdapter implements
 
 			if (josnService.getToastMessage()) {
 				OnlyClass onlyClass = (OnlyClass) result;
-				if (onlyClass.success) {
-
+				if (!onlyClass.success) {
+					//数量达到最大控制在这个数量减一的基础上
+//					Integer count=Integer.parseInt(qty);
+//					view.setMax(count-1);
 				}
 				ToastUtil.showToast(activity, onlyClass.data);
 			}

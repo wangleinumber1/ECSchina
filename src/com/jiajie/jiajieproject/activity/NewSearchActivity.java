@@ -22,10 +22,15 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.adapter.NewSearchgridAdapter;
 import com.jiajie.jiajieproject.adapter.NewSearchlistAdapter;
+import com.jiajie.jiajieproject.contents.InterfaceParams;
 import com.jiajie.jiajieproject.db.service.SharePreferDB;
+import com.jiajie.jiajieproject.model.OnlyClass;
+import com.jiajie.jiajieproject.net.service.JosnService;
 import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 import com.jiajie.jiajieproject.widget.MyListView;
@@ -54,6 +59,7 @@ public class NewSearchActivity extends BaseActivity implements OnClickListener,
 		// TODO Auto-generated method stub
 		super.onInit(bundle);
 		setContentView(R.layout.newsearch_layout);
+		new SearchAsyTask().execute();
 		initView();
 	}
 
@@ -66,7 +72,6 @@ public class NewSearchActivity extends BaseActivity implements OnClickListener,
 		history_search_list = (MyListView) findViewById(R.id.history_search_list);
 		searchpage_search = (EditText) findViewById(R.id.searchpage_search);
 		list = MapToList(sharePreferDB.readData());
-
 		NewSearchlistAdapter = new NewSearchlistAdapter(this, mImgLoad, list);
 		NewSearchgridAdapter = new NewSearchgridAdapter(this, mImgLoad);
 		cancle = (ImageView) findViewById(R.id.cancle);
@@ -77,7 +82,7 @@ public class NewSearchActivity extends BaseActivity implements OnClickListener,
 		history_search_list.setAdapter(NewSearchlistAdapter);
 		seach_gridview.setAdapter(NewSearchgridAdapter);
 		history_search_list.setOnItemClickListener(this);
-//		seach_gridview.setOnItemClickListener(this);
+		seach_gridview.setOnItemClickListener(this);
 		cancle.setOnClickListener(this);
 		search_bottom.setOnClickListener(this);
 		if (list.size() > 0) {
@@ -164,4 +169,31 @@ public class NewSearchActivity extends BaseActivity implements OnClickListener,
 		}
 
 	}
+	
+	@SuppressWarnings("unused")
+	private class SearchAsyTask extends MyAsyncTask{
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			// TODO Auto-generated method stub
+			return jsonservice.getCareData(InterfaceParams.getTags, null, true, null);
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		protected void onPostExecute(Object result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if(result==null){
+				return;
+			}
+			OnlyClass onlyClass=(OnlyClass) result;
+			JSONArray list=JSON.parseArray(onlyClass.data);
+			NewSearchgridAdapter.setdata(list);
+			NewSearchgridAdapter.notifyDataSetChanged();
+		}
+		
+	}
+	
+	
 }

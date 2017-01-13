@@ -34,7 +34,8 @@
                         android:id="@+id/headImage"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
-                        android:src="@drawable/headerimage" />
+                        android:src="@drawable/head"
+                        />
 
                     <TextView
                         android:id="@+id/headname"
@@ -42,7 +43,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center_horizontal"
-                        android:text="霸气男神"
+                        android:text="头像"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
                 </LinearLayout>

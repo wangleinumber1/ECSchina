@@ -28,5 +28,8 @@ public class OnlyClass {
 	public String onsale;
 	public String featured;
 	public String newArrival;
+	public String order_id;
+	public String pay_sign;
+	public String sign;
 
 }

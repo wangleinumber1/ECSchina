@@ -94,6 +94,7 @@ public class CaptureActivity extends BaseActivity implements Callback,
 	private SurfaceView surfaceVie;
 	private SurfaceHolder surfaceHolder;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -124,7 +125,7 @@ public class CaptureActivity extends BaseActivity implements Callback,
 			handler.quitSynchronously();
 			handler = null;
 		}
-		// CameraManager.get().closeDriver();
+		 CameraManager.get().closeDriver();
 	}
 
 	@Override

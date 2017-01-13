@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+    <RelativeLayout
+            android:id="@+id/orderdetail_layoutlayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <ImageView
+                android:id="@+id/orderdetail_layoutImgeView1"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                />
+
+            <TextView
+                android:id="@+id/orderdetail_layouttext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/orderdetail_layoutImgeView1"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/orderdetail_layoutImgeView1"
+                android:text=""
+                android:textColor="@color/textcolor"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/orderdetail_layouttext3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/orderdetail_layouttext2"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/orderdetail_layoutImgeView1"
+                android:text=""
+                android:textColor="@color/textcolor"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/orderdetail_layouttext4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/orderdetail_layouttext3"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/orderdetail_layoutImgeView1"
+                android:text=""
+                android:textColor="@color/textcolor"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/orderdetail_layouttext5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/orderdetail_layouttext4"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:text=""
+                android:textColor="#999999"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+</LinearLayout>

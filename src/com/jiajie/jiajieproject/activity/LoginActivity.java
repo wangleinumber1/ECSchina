@@ -7,8 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -34,11 +37,11 @@ import com.jiajie.jiajieproject.utils.ToastUtil;
  * 修改备注：登录
  */
 public class LoginActivity extends BaseActivity implements OnClickListener {
-	private TextView forgettext, completetext, register_button;
-	ImageView headerleftImg;
+	private TextView forgettext,  register_button;
+	ImageView headerleftImg,completetext;
 	private EditText loginedit1, loginedit2;
 	private UserDataService userDataService;
-
+	
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
@@ -55,11 +58,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		register_button = (TextView) findViewById(R.id.register_button);
 		loginedit1 = (EditText) findViewById(R.id.loginedit1);
 		loginedit2 = (EditText) findViewById(R.id.loginedit2);
-		completetext = (TextView) findViewById(R.id.completetext);
+		completetext = (ImageView) findViewById(R.id.completetext);
 		headerleftImg.setOnClickListener(this);
 		forgettext.setOnClickListener(this);
 		completetext.setOnClickListener(this);
 		register_button.setOnClickListener(this);
+		loginedit2.addTextChangedListener(watcher);
+		completetext.setFocusable(false);
 	}
 
 	@Override
@@ -103,6 +108,34 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	}
 
+	private TextWatcher watcher = new TextWatcher() {
+	    
+	    @Override
+	    public void onTextChanged(CharSequence s, int start, int before, int count) {
+	        // TODO Auto-generated method stub
+	        if(loginedit2.getText().length()>=6){
+	        	completetext.setImageResource(R.drawable.longin_redbutton);
+	        	completetext.setFocusable(true);
+	        }else{
+	        	completetext.setImageResource(R.drawable.login_greybutton);
+	        	completetext.setFocusable(false);
+	        }
+	    }
+	    
+	    @Override
+	    public void beforeTextChanged(CharSequence s, int start, int count,
+	            int after) {
+	        // TODO Auto-generated method stub
+	        
+	    }
+	    
+	    @Override
+	    public void afterTextChanged(Editable s) {
+	        // TODO Auto-generated method stub
+	        
+	    }
+	};
+	
 	/**
 	 * 登录
 	 * */

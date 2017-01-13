@@ -39,7 +39,7 @@ public class ErWeiMaActivity extends BaseActivity implements
 	// private int page = 1;
 	@Override
 	protected void onInit(Bundle bundle) {
-		// TODO Auto-generated method stub
+	
 		super.onInit(bundle);
 		setContentView(R.layout.mycarefulparts_layout);
 		if (getIntent().getExtras() != null) {

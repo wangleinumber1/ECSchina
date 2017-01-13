@@ -71,7 +71,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/head_forward"
-                    android:src="@drawable/headerimage" />
+                    android:src="@drawable/head"
+                     />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -116,7 +117,7 @@
                         android:background="@null"
                         android:drawablePadding="10dp"
                         android:drawableRight="@drawable/fanyeicon"
-                        android:text="霸气男神"
+                        android:text=""
                         android:textColor="#999999"
                         android:textSize="14sp" />
                 </RelativeLayout>
@@ -148,7 +149,7 @@
                         android:background="@null"
                         android:drawablePadding="10dp"
                         android:drawableRight="@drawable/fanyeicon"
-                        android:text="伟仕佳杰"
+                        android:text=""
                         android:textColor="#999999"
                         android:textSize="14sp" />
                 </RelativeLayout>
@@ -180,7 +181,7 @@
                         android:background="@null"
                         android:drawablePadding="10dp"
                         android:drawableRight="@drawable/fanyeicon"
-                        android:text="manman.liu@ecschina.com"
+                        android:text=""
                         android:textColor="#999999"
                         android:textSize="14sp" />
                 </RelativeLayout>
@@ -217,7 +218,7 @@
                         android:background="@null"
                         android:drawablePadding="10dp"
                         android:drawableRight="@drawable/fanyeicon"
-                        android:text="18010173603"
+                        android:text=""
                         android:textColor="#999999"
                         android:inputType="number"
                         android:textSize="14sp" />

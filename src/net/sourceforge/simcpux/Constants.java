@@ -13,6 +13,8 @@ public class Constants {
 //未改
 //  API密钥，在商户平台设置
     public static final  String API_KEY="3B689B0104B9D065FAEDDFE320444179";
+// 订单id
+    public static  String ORDER_ID;
 
 
 

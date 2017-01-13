@@ -20,24 +20,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONArray;
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.activity.GoodsdetailActivity;
 import com.jiajie.jiajieproject.activity.HistoryLogisticsActivity;
+import com.jiajie.jiajieproject.activity.NewSearchActivity;
 import com.jiajie.jiajieproject.activity.OrderInformationActivity;
+import com.jiajie.jiajieproject.activity.SearchActivity;
 import com.jiajie.jiajieproject.adapter.HistoryBuyPartsAdapter.ViewHolder;
 import com.jiajie.jiajieproject.contents.Constants;
 import com.jiajie.jiajieproject.utils.ImageLoad;
 import com.jiajie.jiajieproject.utils.IntentUtil;
-import com.mrwujay.cascade.model.produceClass;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 
 /**
  * 项目名称：HaiChuanProject 类名称：FaBuSearchAdapter 类描述： 创建人：王蕾 创建时间：2015-7-29
  * 下午2:19:53 修改备注：
  */
-public class NewSearchgridAdapter extends BaseAdapter {
-
-	private ArrayList<produceClass> list = new ArrayList<produceClass>();
+@SuppressWarnings("unused")
+public class NewSearchgridAdapter extends BaseAdapter implements OnClickListener{
+	JSONArray list = new JSONArray();
 	private Activity activity;
 
 	public NewSearchgridAdapter(Activity activity, ImageLoad imageLoad) {
@@ -46,8 +48,13 @@ public class NewSearchgridAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 8;
+		if (list.size() < 8) {
+			return list.size();
+
+		} else {
+			return 8;
+		}
+
 	}
 
 	@Override
@@ -56,12 +63,8 @@ public class NewSearchgridAdapter extends BaseAdapter {
 		return position;
 	}
 
-	public void setdata(ArrayList<produceClass> list) {
-		this.list.addAll(list);
-	}
-
-	public ArrayList<produceClass> getdata() {
-		return list;
+	public void setdata(JSONArray list) {
+		this.list = list;
 	}
 
 	@Override
@@ -84,7 +87,9 @@ public class NewSearchgridAdapter extends BaseAdapter {
 		} else {
 			vh = (ViewHolder) convertView.getTag();
 		}
-
+		vh.newsearch_griditem.setText(list.getString(position));
+		vh.newsearch_griditem.setTag(position);
+		vh.newsearch_griditem.setOnClickListener(this);
 		return convertView;
 	}
 
@@ -94,12 +99,14 @@ public class NewSearchgridAdapter extends BaseAdapter {
 
 	}
 
-	// // 打电话
-	// private void callphone() {
-	// Intent phoneIntent = new Intent("android.intent.action.CALL",
-	// Uri.parse("tel:" + Constants.phonenumber));
-	// // 启动
-	// activity.startActivity(phoneIntent);
-	// }
+	@Override
+	public void onClick(View v) {
+		int position=(Integer) v.getTag();
+		Bundle bundle = new Bundle();
+		bundle.putString(NewSearchActivity.TAG, list.get(position).toString());
+		IntentUtil.activityForward(activity, SearchActivity.class, bundle,
+				true);
+	}
+
 
 }

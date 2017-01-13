@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/backgroud"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+           >
+
+            <Button
+                android:id="@+id/notpay_yingfu"               
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text=""
+                android:textSize="13sp"
+                android:background="@null"
+                android:layout_centerVertical="true"
+              android:layout_marginRight="10dp"
+                android:textColor="@color/textcolor"
+                android:drawableLeft="@drawable/notpay_yingfu" />
+
+            <Button
+                android:id="@+id/notpay_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/notpay_yingfu"
+                android:background="@null"
+                android:textSize="13sp"
+                android:drawablePadding="5dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/textcolor"
+                android:drawableLeft="@drawable/notpay_all"
+                android:text=""
+                android:drawableRight="@drawable/notpay_jian"
+                 />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/backgroud"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textcolor"
+                android:textSize="14sp" 
+                android:text="发票信息"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+        <TextView
+            android:id="@+id/orderdetailtext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#666666"
+                android:textSize="14sp" 
+                android:text=""
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+         <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingBottom="6dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="20dp" >
+
+            <ImageView
+                android:id="@+id/go_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/go_pay" />
+
+            <ImageView
+                android:id="@+id/cancle_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/go_pay"
+                android:src="@drawable/cancle_order" />
+        </RelativeLayout>
+ 
+</LinearLayout>

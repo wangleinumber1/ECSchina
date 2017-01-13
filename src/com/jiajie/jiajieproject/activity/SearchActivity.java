@@ -16,6 +16,7 @@ import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.PullToRefreshView;
 import com.jiajie.jiajieproject.utils.PullToRefreshView.OnFooterRefreshListener;
 import com.jiajie.jiajieproject.utils.PullToRefreshView.OnHeaderRefreshListener;
+import com.mrwujay.cascade.model.MainPageObject;
 import com.mrwujay.cascade.model.produceClass;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 
@@ -175,7 +176,7 @@ public class SearchActivity extends BaseActivity implements
 			map.put("page", page);
 			map.put("pageSize", Constants.goodsize);
 			return jsonservice.getDataList(InterfaceParams.searchProducts, map,
-					false, produceClass.class);
+					false, MainPageObject.class);
 		}
 
 		@SuppressWarnings("unchecked")
@@ -192,7 +193,7 @@ public class SearchActivity extends BaseActivity implements
 				ToastUtil.showToast(mActivity, onlyClass.data);
 			}
 			if (jsonservice.getsuccessState()) {
-				ArrayList<produceClass> list = (ArrayList<produceClass>) result;
+				ArrayList<MainPageObject> list = (ArrayList<MainPageObject>) result;
 				salesPartsAdapter.setdata(list);
 				salesPartsAdapter.notifyDataSetChanged();
 			}

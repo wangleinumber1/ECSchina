@@ -6,6 +6,8 @@ package com.jiajie.jiajieproject.net.service;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
@@ -107,17 +109,28 @@ public class JosnService {
 
 	// 单纯返回数据不处理
 	public Object getCareData(String Interface, Map map, boolean needCach,
-			Class anyclass) {
+			@SuppressWarnings("rawtypes") Class anyclass) {
 		String str = mNetRequService.requestData("POST", Interface, map,
 				needCach);
 		if (!StringUtil.checkStr(str))
 			return null;
-
 		Log.d(TAG, str);
-
 		OnlyClass onlyClass = JSON.parseObject(str, OnlyClass.class);
 		return onlyClass;
 
+	}
+	
+	//微信支付回掉接口
+	public Object getWXData(String Interface, Map map, boolean needCach,
+			@SuppressWarnings("rawtypes") Class anyclass) {
+		String str = mNetRequService.requestData("POST", Interface, map,
+				needCach);
+		if (!StringUtil.checkStr(str))
+			return null;
+		Log.d(TAG, str);
+		return str;
+		
+		
 	}
 
 	/**
@@ -137,8 +150,6 @@ public class JosnService {
 		Log.d(TAG, str);
 
 		OnlyClass onlyClass = JSON.parseObject(str, OnlyClass.class);
-//		OnlyClass onlyClass1 = JSON.parseObject(onlyClass.v, OnlyClass.class);
-		// success=onlyClass.success;
 		if (onlyClass.success) {
 			if (anyclass == null) {
 				isToast = true;
@@ -146,8 +157,6 @@ public class JosnService {
 				return onlyClass;
 			} else {
 				success = true;			
-//				PartsActivity.appUrl = onlyClass1.url;
-//				PartsActivity.version = onlyClass1.version;
 				@SuppressWarnings("unchecked")
 				Object object = JSON.parseObject(onlyClass.data, OnlyClass.class);
 				isToast = false;

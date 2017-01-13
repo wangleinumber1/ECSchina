@@ -28,7 +28,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingTop="10dp"
             android:text="完成"
             android:textColor="@color/headercolor"
             android:textSize="16sp" />

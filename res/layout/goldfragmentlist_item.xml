@@ -16,6 +16,7 @@
             android:layout_height="72dp"
             android:layout_margin="10dp"
             android:background="@color/white"
+            android:paddingRight="10dp"
             android:src="@drawable/class_pruduce" />
     </LinearLayout>
 
@@ -32,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="IBM DS 300GB 15K FC HDD (136)"
+            android:text=""
             android:textColor="@color/classblackcolor"
             android:textSize="15sp" />
 
@@ -41,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="￥  690.00"
+            android:text=""
             android:textColor="@color/classredcolor"
             android:textSize="14sp" />
 
@@ -51,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
             android:layout_marginTop="10dp"
-            android:text="库存件数： 6"
+            android:text=""
             android:textColor="#8C8C8C"
             android:textSize="14sp" />
     </LinearLayout>

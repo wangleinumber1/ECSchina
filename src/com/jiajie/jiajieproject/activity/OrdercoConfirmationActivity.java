@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import net.sourceforge.simcpux.Constants;
+
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.activity.BaseActivity.MyAsyncTask;
 import com.jiajie.jiajieproject.adapter.CarShopppingAdapter;
@@ -16,7 +21,9 @@ import com.jiajie.jiajieproject.adapter.OrdercoConfirmationAdapter;
 import com.jiajie.jiajieproject.adapter.PartsAdapter;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
 import com.jiajie.jiajieproject.model.AdressClass;
+import com.jiajie.jiajieproject.model.AlipayClass;
 import com.jiajie.jiajieproject.model.OnlyClass;
+import com.jiajie.jiajieproject.net.NetUrl;
 import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.PullToRefreshView;
 import com.jiajie.jiajieproject.utils.StringUtil;
@@ -25,10 +32,14 @@ import com.jiajie.jiajieproject.utils.PullToRefreshView.OnFooterRefreshListener;
 import com.jiajie.jiajieproject.utils.PullToRefreshView.OnHeaderRefreshListener;
 import com.mrwujay.cascade.model.SomeMessage;
 import com.mrwujay.cascade.model.produceClass;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,6 +53,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -53,6 +65,10 @@ import android.widget.TextView;
 @SuppressWarnings("unused")
 public class OrdercoConfirmationActivity extends BaseActivity implements
 		OnClickListener, OnCheckedChangeListener {
+	final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
+	Map<String, String> resultunifiedorder;
+	StringBuffer sb;
+	IWXAPI api;
 	// 地址
 	private TextView headernametext, headernnmbertext, headeradresstext;
 	private LinearLayout adress_layout;
@@ -77,7 +93,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 	// 类型
 	private RadioButton fapiaostyle3, fapiaostyle4;
 	// 发票内容
-	private RadioButton fapiaocontent1, fapiaocontent2;
+	private RadioButton fapiaocontent1;
 	// 抬头
 	private EditText company_edittext;
 	// 提交订单
@@ -85,16 +101,25 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 	// 总价
 	Button pricecount;
 	private String bill_type = "General Invoice";
-	private String bill_content = "";
+	private String bill_content = "Detail";
 	private String bill_title = "Personal";
 	private String bill_company;
+	private String paymentMethod;
+	private String product_name;
 	public static List<produceClass> newlist = new ArrayList<produceClass>();
-	private Boolean ISAlipay=true;
+	private String ISAlipay="alipay";
+	public static final String TAG="OrdercoConfirmationActivity";
+	private PayReq req ;
+	private Button callServer;
+	private RelativeLayout acountLayout;
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
 		super.onInit(bundle);
 		setContentView(R.layout.orderconfirmation_layout);
+		api = WXAPIFactory.createWXAPI(this, Constants.APP_ID);
+		api.registerApp(Constants.APP_ID);
+		 req = new PayReq();
 		InitView();
 
 	}
@@ -122,6 +147,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 
 	// 支付发票部分
 	private void middleView() {
+		acountLayout=(RelativeLayout) findViewById(R.id.acountLayout);
 		produce_list = (LinearLayout) findViewById(R.id.produce_list);
 		pay_radioGroup = (RadioGroup) findViewById(R.id.pay_radioGroup);
 		company_edittext = (EditText) findViewById(R.id.company_edittext);
@@ -139,14 +165,15 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		fapiaostyle4 = (RadioButton) findViewById(R.id.fapiaostyle4);
 		// 服务办公
 		fapiaocontent1 = (RadioButton) findViewById(R.id.fapiaocontent1);
-		fapiaocontent2 = (RadioButton) findViewById(R.id.fapiaocontent2);
-		produceCount=(TextView) findViewById(R.id.produceCount);
+		produceCount = (TextView) findViewById(R.id.produceCount);
+		callServer = (Button) findViewById(R.id.callServer);
 		pay_radioGroup.setOnCheckedChangeListener(this);
 		fapiaoRadioGroup1.setOnCheckedChangeListener(this);
 		fapiaoRadioGroup2.setOnCheckedChangeListener(this);
 		fapiaoRadioGroup3.setOnCheckedChangeListener(this);
 		produce_list.setOnClickListener(this);
-		produceCount.setText("共"+newlist.size()+"件");
+		callServer.setOnClickListener(this);
+		produceCount.setText("共" + newlist.size() + "件");
 	}
 
 	private void headView() {
@@ -159,16 +186,19 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		imageView3 = (ImageView) findViewById(R.id.imageView3);
 		adress_layout.setOnClickListener(this);
 		setIMage(newlist);
-		
-		int countprice = 0;
+
+		double countprice = 0.00;
 		for (int i = 0; i < newlist.size(); i++) {
 			produceClass produceClass = newlist.get(i);
+			if (i == 0) {
+				product_name = produceClass.productName;
+			}
 			countprice = countprice
-					+ Integer.parseInt(produceClass.total_price.substring(0,
-							produceClass.total_price.lastIndexOf('.')));
+					+ Double.parseDouble(produceClass.total_price.substring(0,
+							produceClass.total_price.lastIndexOf("00")));
 		}
-		pricecount.setText(countprice + ".00");
-		
+		pricecount.setText(countprice+"");
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -177,6 +207,10 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		switch (arg0.getId()) {
 		case R.id.headerleftImg:
 			finish();
+			break;
+		case R.id.callServer:
+			//打电话给客服
+			callphone();
 			break;
 		case R.id.adress_layout:
 			IntentUtil.activityForward(mActivity, AdressManageActivity.class,
@@ -202,6 +236,8 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 				@SuppressWarnings("rawtypes")
 				Map map1 = new HashMap<String, String>();
 				map1.put("address_id", AdressId);
+				map1.put("paymentMethod", ISAlipay);
+				map1.put("product_name", product_name);
 				map1.put("fapiao[bill_type]", bill_type);
 				map1.put("fapiao[bill_content]", bill_content);
 				map1.put("fapiao[bill_title]", bill_title);
@@ -232,7 +268,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 	}
 
 	/**
-	 * 结算
+	 * 提交订单
 	 * */
 	@SuppressWarnings("unused")
 	private class UpdateAsyTask extends MyAsyncTask {
@@ -249,7 +285,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		@SuppressWarnings("unchecked")
 		@Override
 		protected Object doInBackground(Object... params) {
-			return jsonservice.getData(interfacename, map, false, null);
+			return jsonservice.getCareData(interfacename, map, false, null);
 		}
 
 		@SuppressWarnings("unchecked")
@@ -260,15 +296,25 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 			if (result == null) {
 				return;
 			}
-
-			if (jsonservice.getToastMessage()) {
-				OnlyClass onlyClass = (OnlyClass) result;
-				ToastUtil.showToast(mActivity, onlyClass.data);
+			OnlyClass onlyClass=(OnlyClass) result;
+			Constants.ORDER_ID=onlyClass.order_id;
+			if(ISAlipay.equalsIgnoreCase("alipay")){
+				new AlipayClass(onlyClass.pay_sign, mActivity,true);
+			}else if(ISAlipay.equalsIgnoreCase("weixin")){
+				 WXPay(onlyClass.pay_sign);
+				 finish();
 			}
+			//对公转账为弹窗
+			else{
+				ToastUtil.showToast(mContext, "对公转账请联系客服");
+				finish();
+			}
+			
 
 		}
 
 	}
+
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		switch (group.getId()) {
@@ -276,13 +322,16 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		case R.id.pay_radioGroup:
 			switch (checkedId) {
 			case R.id.radioPay1:
-				ISAlipay=true;
+				ISAlipay = "alipay";
+				acountLayout.setVisibility(View.GONE);
 				break;
 			case R.id.radioPay2:
-				ISAlipay=false;
+				ISAlipay = "weixin";
+				acountLayout.setVisibility(View.GONE);
 				break;
 			case R.id.radioPay3:
-				ToastUtil.showToast(mContext, "对公");
+				ISAlipay = "checkmo";
+				acountLayout.setVisibility(View.VISIBLE);
 				break;
 
 			}
@@ -320,10 +369,7 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		case R.id.fapiaoRadioGroup3:
 			switch (checkedId) {
 			case R.id.fapiaocontent1:
-				ToastUtil.showToast(mContext, "服务费");
-				break;
-			case R.id.fapiaocontent2:
-				ToastUtil.showToast(mContext, "办公用品");
+				bill_content = "Detail";
 				break;
 
 			}
@@ -434,4 +480,32 @@ public class OrdercoConfirmationActivity extends BaseActivity implements
 		}
 	}
 
+	/**微信josn解析*/
+	private void WXPay(String pag_sign){
+		JSONObject json;
+		try {
+			json = new JSONObject(pag_sign);
+		
+		req.appId			= json.getString("appid");
+		req.partnerId		= json.getString("partnerid");
+		req.prepayId		= json.getString("prepayid");
+		req.nonceStr		= json.getString("noncestr");
+		req.timeStamp		= json.getString("timestamp");
+		req.packageValue	= json.getString("package");
+		req.sign			= json.getString("sign");
+		req.extData			= "app data"; // optional
+		api.sendReq(req);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	// 打电话
+		private void callphone() {
+			Intent phoneIntent = new Intent("android.intent.action.CALL",
+					Uri.parse("tel:" + com.jiajie.jiajieproject.contents.Constants.phonenumber));
+			// 启动
+			startActivity(phoneIntent);
+		}
 }

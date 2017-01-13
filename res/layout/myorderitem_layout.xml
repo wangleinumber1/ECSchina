@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="订单号1234567894567"
+                android:text=""
                 android:textColor="#999999"
                 android:textSize="13sp" />
             <!--
@@ -69,8 +69,8 @@ android:text="数据库调优服务"
 
             <ImageView
                 android:id="@+id/myorderitem_layoutImgeView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:src="@drawable/class_pruduce" />
 
             <TextView
@@ -80,7 +80,7 @@ android:text="数据库调优服务"
                 android:layout_alignTop="@+id/myorderitem_layoutImgeView1"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/myorderitem_layoutImgeView1"
-                android:text="IBM power 7 内存 DDR3 16G"
+                android:text=""
                 android:textColor="@color/textcolor"
                 android:textSize="15sp" />
 
@@ -92,7 +92,7 @@ android:text="数据库调优服务"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/myorderitem_layoutImgeView1"
-                android:text="SN号：3248938595"
+                android:text=""
                 android:textColor="@color/textcolor"
                 android:textSize="15sp" />
 
@@ -105,6 +105,7 @@ android:text="数据库调优服务"
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/myorderitem_layoutImgeView1"
                 android:text="￥10000.00"
+                android:visibility="invisible"
                 android:textColor="@color/textcolor"
                 android:textSize="15sp" />
 
@@ -116,7 +117,7 @@ android:text="数据库调优服务"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
-                android:text="x2"
+                android:text=""
                 android:textColor="#999999"
                 android:textSize="13sp" />
         </RelativeLayout>
@@ -138,7 +139,7 @@ android:text="数据库调优服务"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="8000.00"
+                android:text=""
                 android:textSize="13sp"
                 android:background="@null"
                 android:layout_centerVertical="true"
@@ -158,7 +159,7 @@ android:text="数据库调优服务"
                 android:layout_centerVertical="true"
                 android:textColor="@color/textcolor"
                 android:drawableLeft="@drawable/notpay_all"
-                android:text="2"
+                android:text=""
                 android:drawableRight="@drawable/notpay_jian"
                  />
         </RelativeLayout>

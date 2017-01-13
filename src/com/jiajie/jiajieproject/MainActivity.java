@@ -104,7 +104,7 @@ public class MainActivity extends TabActivity {
 
 				case R.id.rb_cart:
 					if (userDataService.getUserId() == null) {
-						String[] str = { "登录", "是否登陆", "是", "否" };
+						String[] str = { "登录", "是否登录", "是", "否" };
 						Bundle bundle = new Bundle();
 						bundle.putStringArray(ClearCacheActivity.TAG, str);
 						IntentUtil.startActivityForResult(MainActivity.this,
@@ -112,7 +112,7 @@ public class MainActivity extends TabActivity {
 					} else {
 						mTabHost.setCurrentTabByTag(TAB_LIST[2]);
 					}
-//					mTabHost.setCurrentTabByTag(TAB_LIST[2]);
+					// mTabHost.setCurrentTabByTag(TAB_LIST[2]);
 					break;
 				case R.id.rb_mine:
 					if (userDataService.getUserId() == null) {
@@ -132,7 +132,7 @@ public class MainActivity extends TabActivity {
 		});
 
 		((RadioButton) mRadioGroup.getChildAt(0)).toggle();
-		//注册广播
+		// 注册广播
 		registerReceiver();
 	}
 
@@ -166,10 +166,13 @@ public class MainActivity extends TabActivity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		if (Constants.isfromcarshoping)
+		if (Constants.isfromcarshoping){
 			mRadioGroup.check(R.id.rb_mainpage);
 		Constants.isfromcarshoping = false;
-
+		}else if(Constants.isReOrder){
+			mRadioGroup.check(R.id.rb_cart);
+			Constants.isReOrder=false;
+		};
 	}
 
 	private Intent getTabItemIntent(int index) {
@@ -232,6 +235,11 @@ public class MainActivity extends TabActivity {
 				((RadioButton) mRadioGroup.getChildAt(0)).toggle();
 				break;
 
+			case 3:
+
+				((RadioButton) mRadioGroup.getChildAt(2)).toggle();
+				break;
+
 			}
 
 		}
@@ -245,6 +253,9 @@ public class MainActivity extends TabActivity {
 		public void onReceive(Context arg0, Intent arg1) {
 			if (ReciverContents.cityListReciver == arg1.getAction()) {
 				myhandler.sendEmptyMessage(2);
+			}
+			if (ReciverContents.ReorderReciver == arg1.getAction()) {
+				myhandler.sendEmptyMessage(3);
 			}
 		}
 	}
@@ -270,7 +281,6 @@ public class MainActivity extends TabActivity {
 			mReceiver = null;
 		}
 	}
-	
 
 	@Override
 	protected void onDestroy() {

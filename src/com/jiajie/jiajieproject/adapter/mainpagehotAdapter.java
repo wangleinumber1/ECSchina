@@ -96,7 +96,7 @@ public class mainpagehotAdapter extends BaseAdapter implements OnClickListener{
 		vh. hotparttext.setText(list.get(position).name);
 	
 		 vh.hotpartprice.setText("¥"+list.get(position).price.substring(
-					0, list.get(position).price.lastIndexOf('.'))+".00");
+					0, list.get(position).price.lastIndexOf("00")));
 		return convertView;
 	}
 

@@ -7,12 +7,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.simcpux.Constants;
+
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.adapter.HistoryBuyAdapter;
 import com.jiajie.jiajieproject.contents.InterfaceParams;
@@ -33,7 +38,7 @@ public class HistoryBuyPartsActivity extends BaseActivity implements
 	private RelativeLayout no_orderlayout;
 	private MyListView historybuyparts_layout_listview;
 	private HistoryBuyAdapter HistoryBuyAdapter;
-
+	private Myhandler myHandler=new Myhandler();
 	@Override
 	protected void onInit(Bundle bundle) {
 		// TODO Auto-generated method stub
@@ -46,7 +51,7 @@ public class HistoryBuyPartsActivity extends BaseActivity implements
 		Myorderlayout = (ReboundScrollView) findViewById(R.id.Myorderlayout);
 		no_orderlayout = (RelativeLayout) findViewById(R.id.no_orderlayout);
 		historybuyparts_layout_listview = (MyListView) findViewById(R.id.historybuyparts_layout_listview);
-		HistoryBuyAdapter = new HistoryBuyAdapter(mActivity, mImgLoad);
+		HistoryBuyAdapter = new HistoryBuyAdapter(mActivity, mImgLoad, jsonservice, myHandler);
 		historybuyparts_layout_listview.setAdapter(HistoryBuyAdapter);
 		headerleftImg = (ImageView) findViewById(R.id.headerleftImg);
 		headerleftImg.setOnClickListener(this);
@@ -64,20 +69,18 @@ public class HistoryBuyPartsActivity extends BaseActivity implements
 		}
 
 	}
+	
 
 	/**
 	 * 备件
 	 * */
 	@SuppressWarnings("unused")
 	private class PartsAsyTask extends MyAsyncTask {
-		private String sortColumn;
 
 		public PartsAsyTask() {
 			super();
 		}
 
-		private String search;
-		private String page;
 
 		// c_id=分类的id、sortColumn=排序的字段、search=搜索的产品名、
 		// sort=升序/降序(我这里有默认值为升序，可以不传)、page=当前页数、pageSize=每页显示数
@@ -117,6 +120,24 @@ public class HistoryBuyPartsActivity extends BaseActivity implements
 					Myorderlayout.setVisibility(View.GONE);
 					no_orderlayout.setVisibility(View.VISIBLE);
 				}
+			}
+
+		}
+
+	}
+	
+	@SuppressWarnings("unused")
+	private class Myhandler extends Handler {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case 1:
+				new PartsAsyTask().execute();
+				break;
+	
 			}
 
 		}

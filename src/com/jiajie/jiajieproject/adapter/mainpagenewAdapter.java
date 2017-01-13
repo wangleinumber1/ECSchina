@@ -105,7 +105,7 @@ public class mainpagenewAdapter extends BaseAdapter implements OnClickListener{
 		imageLoad.loadImg(vh.newpartimage, list.get(position).small_image, R.drawable.jiazaitupian);
 		vh. newparttext.setText(list.get(position).name);
 		 vh.newpartprice.setText("¥"+list.get(position).price.substring(
-					0, list.get(position).price.lastIndexOf('.'))+".00");
+					0, list.get(position).price.lastIndexOf("00")));
 		return convertView;
 	}
 

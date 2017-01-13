@@ -5,6 +5,7 @@ package com.jiajie.jiajieproject.activity;
 
 import com.jiajie.jiajieproject.R;
 import com.jiajie.jiajieproject.contents.Constants;
+import com.jiajie.jiajieproject.utils.IntentUtil;
 import com.jiajie.jiajieproject.utils.PublicPopWindow;
 
 import android.content.Intent;
@@ -25,8 +26,9 @@ public class AboutActivity extends BaseActivity implements OnClickListener {
 	private TextView text1;
 	ImageView headerleftImg;
 	private RelativeLayout phone_button;
-	private String[] str = { "确定要拨打热线吗？", "010-5730-3088", "取消", "确定" };
+	private String[] str = { "确定要拨打热线吗？",Constants.phonenumber, "取消", "确定" };
 	private View view;
+	private TextView serviceID;
 
 	@Override
 	protected void onInit(Bundle bundle) {
@@ -36,9 +38,11 @@ public class AboutActivity extends BaseActivity implements OnClickListener {
 		view = inflater.inflate(R.layout.about_layout, null);
 		headerleftImg = (ImageView) findViewById(R.id.headerleftImg);
 		text1 = (TextView) findViewById(R.id.text1);
+		serviceID = (TextView) findViewById(R.id.serviceID);
 		phone_button = (RelativeLayout) findViewById(R.id.phone_button);
 		headerleftImg.setOnClickListener(this);
 		phone_button.setOnClickListener(this);
+		serviceID.setOnClickListener(this);
 	}
 
 	private PopupWindow popupWindow;
@@ -53,6 +57,9 @@ public class AboutActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.headerleftImg:
 			finish();
+			break;
+		case R.id.serviceID:
+			IntentUtil.activityForward(mActivity, WebActivity.class, null, false);
 			break;
 
 		default:

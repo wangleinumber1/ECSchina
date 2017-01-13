@@ -38,6 +38,8 @@ public class produceClass implements Serializable{
 	public String description;
 	public String short_description;
 	public String pn;
+	public String order_id;
+	public String pay_method;
 	public boolean isChoosed;
 	@Override
 	public String toString() {

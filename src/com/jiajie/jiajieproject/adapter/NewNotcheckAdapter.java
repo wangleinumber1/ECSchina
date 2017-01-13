@@ -4,11 +4,15 @@
 package com.jiajie.jiajieproject.adapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,10 +24,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jiajie.jiajieproject.R;
+import com.jiajie.jiajieproject.activity.OrderDetailActivity;
 import com.jiajie.jiajieproject.activity.OrderInformationActivity;
 import com.jiajie.jiajieproject.contents.Constants;
+import com.jiajie.jiajieproject.contents.InterfaceParams;
+import com.jiajie.jiajieproject.model.OnlyClass;
+import com.jiajie.jiajieproject.net.service.JosnService;
 import com.jiajie.jiajieproject.utils.ImageLoad;
 import com.jiajie.jiajieproject.utils.IntentUtil;
+import com.jiajie.jiajieproject.utils.MyAsyncTask;
 import com.jiajie.jiajieproject.utils.ToastUtil;
 import com.mrwujay.cascade.model.produceClass;
 
@@ -36,10 +45,15 @@ public class NewNotcheckAdapter extends BaseAdapter implements OnClickListener {
 	private ArrayList<produceClass> list = new ArrayList<produceClass>();
 	private Activity activity;
 	private ImageLoad imageLoad;
-
-	public NewNotcheckAdapter(Activity activity, ImageLoad imageLoad) {
+	private JosnService josnService;
+	private Handler myHandler;
+	public NewNotcheckAdapter(Activity activity, ImageLoad imageLoad,
+			JosnService josnService,Handler myHandler) {
+		super();
 		this.activity = activity;
 		this.imageLoad = imageLoad;
+		this.josnService = josnService;
+		this.myHandler = myHandler;
 	}
 
 	@Override
@@ -55,7 +69,7 @@ public class NewNotcheckAdapter extends BaseAdapter implements OnClickListener {
 	}
 
 	public void setdata(ArrayList<produceClass> list) {
-		this.list.addAll(list);
+		this.list=list;
 	}
 
 	public ArrayList<produceClass> getdata() {
@@ -105,15 +119,18 @@ public class NewNotcheckAdapter extends BaseAdapter implements OnClickListener {
 		}
 		vh.notpayitem_layoutlayout1.setTag(position);
 		vh.notpayitem_layoutlayout1.setOnClickListener(this);
-		vh.notpayitem_layouttext1
-				.setText("订单号" + list.get(position).order_code);
+		vh.notpayitem_layouttext1.setText("订单号" + list.get(position).order_id);
 		vh.notpayitem_layouttext2.setText(list.get(position).product_name);
-		vh.notpayitem_layouttext4.setText(list.get(position).price);
-		vh.notpayitem_layouttext5.setText(list.get(position).order_qty);
+		vh.notpayitem_layouttext3.setText("PN号:" + list.get(position).pn);
+		// vh.notpayitem_layouttext4.setText(list.get(position).price);
+		vh.notpayitem_layouttext5.setText("x" + list.get(position).order_qty);
 		vh.notpay_all.setText(list.get(position).order_qty);
-		vh.notpay_yingfu.setText(list.get(position).total_price);
+		vh.notpay_yingfu.setText(list.get(position).price);
 		vh.getgoods_button.setOnClickListener(this);
+		vh.getgoods_button.setTag(position);
 		vh.wuliu_button.setOnClickListener(this);
+		imageLoad.loadImg(vh.notpayitem_layoutImgeView1,
+				list.get(position).image, R.drawable.jifangbanqian);
 		return convertView;
 	}
 
@@ -134,20 +151,55 @@ public class NewNotcheckAdapter extends BaseAdapter implements OnClickListener {
 		case R.id.notpayitem_layoutlayout1:
 			int position = (Integer) v.getTag();
 			Bundle bundle = new Bundle();
-			bundle.putString("notpayid", list.get(position).id);
-			bundle.putString("notpayadressid", list.get(position).address_id);
-			IntentUtil.activityForward(activity,
-					OrderInformationActivity.class, bundle, false);
+			bundle.putString(OrderDetailActivity.TAG,
+					list.get(position).order_id);
+			bundle.putString("order_id", list.get(position).order_id);
+			bundle.putString("product_name", list.get(position).product_name);
+			IntentUtil.activityForward(activity, OrderDetailActivity.class,
+					bundle, false);
 			break;
 		case R.id.getgoods_button:
-			ToastUtil.showToast(activity, "确认收货");
+			int position1 = (Integer) v.getTag();
+		new CompleteOrderAsyTask(activity,list.get(position1).order_id).execute();
 			break;
 		case R.id.wuliu_button:
-			ToastUtil.showToast(activity, "查看物流");
+			ToastUtil.showToast(activity, "开发中");
 			break;
 
 		default:
 			break;
+		}
+
+	}
+
+	// 确认收货
+	private class CompleteOrderAsyTask extends MyAsyncTask {
+		private String order_id;
+
+		public CompleteOrderAsyTask(Context context, String order_id) {
+			super(context);
+			this.order_id = order_id;
+		}
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("order_id",order_id );
+			return josnService.getData(InterfaceParams.completeOrder, map,
+					false, null);
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if (result == null) {
+				return;
+			}
+			OnlyClass onlyClass = (OnlyClass) result;
+			ToastUtil.showToast(activity, onlyClass.data);
+			myHandler.sendEmptyMessage(1);
+
 		}
 
 	}

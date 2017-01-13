@@ -94,7 +94,7 @@ public class OrderInformationActivity extends BaseActivity implements
 		fapiaostyle3 = (RadioButton) findViewById(R.id.fapiaostyle3);
 		fapiaostyle4 = (RadioButton) findViewById(R.id.fapiaostyle4);
 		fapiaocontent1 = (RadioButton) findViewById(R.id.fapiaocontent1);
-		fapiaocontent2 = (RadioButton) findViewById(R.id.fapiaocontent2);
+//		fapiaocontent2 = (RadioButton) findViewById(R.id.fapiaocontent2);
 		OncheckChangeObject oncheckChangeObject = new OncheckChangeObject();
 		pay_radioGroup.setOnCheckedChangeListener(oncheckChangeObject);
 		fapiaoRadioGroup1.setOnCheckedChangeListener(oncheckChangeObject);

@@ -34,8 +34,8 @@ import com.jiajie.jiajieproject.utils.PullToRefreshView;
 import com.jiajie.jiajieproject.utils.StringUtil;
 import com.jiajie.jiajieproject.utils.PullToRefreshView.OnFooterRefreshListener;
 import com.jiajie.jiajieproject.utils.PullToRefreshView.OnHeaderRefreshListener;
-import com.mrwujay.cascade.model.produceClass;
 import com.jiajie.jiajieproject.utils.ToastUtil;
+import com.mrwujay.cascade.model.MainPageObject;
 
 /**   
  * 项目名称：NewProject   
@@ -45,7 +45,7 @@ import com.jiajie.jiajieproject.utils.ToastUtil;
  * 创建时间：2015-9-9 上午11:55:04   
  * 修改备注：    促销备件
  */
-public class SalesPartsAcitivity extends BaseActivity implements OnItemClickListener,OnFooterRefreshListener, OnHeaderRefreshListener, OnClickListener{
+public class SalesPartsAcitivity extends BaseActivity implements OnFooterRefreshListener, OnHeaderRefreshListener, OnClickListener{
 	private ImageView rightImg;
 	private ImageView leftImage;
 	private EditText searchedit;
@@ -83,7 +83,6 @@ public class SalesPartsAcitivity extends BaseActivity implements OnItemClickList
 		salespartslayout_listview.setAdapter(salesPartsAdapter);
 		salespartslayout_pull.setOnFooterRefreshListener(this);
 		salespartslayout_pull.setOnHeaderRefreshListener(this);
-		salespartslayout_listview.setOnItemClickListener(this);
 		new PartsAsyTask("", "", page + "").execute();
 	}
 
@@ -167,14 +166,7 @@ public class SalesPartsAcitivity extends BaseActivity implements OnItemClickList
 				});
 	}
 
-		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-			String produce_id=salesPartsAdapter.getdata().get(arg2).id;
-			Bundle bundle=new Bundle();
-			bundle.putString("id", produce_id);
-			IntentUtil.activityForward(mActivity, GoodsdetailActivity.class, bundle,
-					false);
-	}
+	
 	/**
 	 * 促销备件
 	 * */
@@ -204,7 +196,7 @@ public class SalesPartsAcitivity extends BaseActivity implements OnItemClickList
 			map.put("page", page);
 			map.put("pageSize", Constants.goodsize);
 			return jsonservice.getDataList(InterfaceParams.getProductsByCid,
-					map, false, produceClass.class);
+					map, false, MainPageObject.class);
 		}
 
 		@SuppressWarnings("unchecked")
@@ -222,7 +214,7 @@ public class SalesPartsAcitivity extends BaseActivity implements OnItemClickList
 			}
 			if (jsonservice.getsuccessState()) {
 				
-				ArrayList<produceClass> list = (ArrayList<produceClass>) result;
+				ArrayList<MainPageObject> list = (ArrayList<MainPageObject>) result;
 				salesPartsAdapter.setdata(list);
 				
 				salesPartsAdapter.notifyDataSetChanged();

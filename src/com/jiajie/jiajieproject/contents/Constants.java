@@ -42,13 +42,15 @@ public class Constants {
 	//系统页面的cid
 	public static final String  PerfisionallistCID6="20";
 	//联系客服
-	public static final String  phonenumber="010-5730-3088";
+	public static final String  phonenumber="4008106800";
 	//联系邮箱
-	public static final String  email="business@ecs-svs.com";
+	public static final String  email="parts@ecsits.com";
 	//每个列表一次性加载的产品数
 	public static final String  goodsize="20";
 	//控制购物车去选备件的开关
 	public static  boolean  isfromcarshoping=false;
+	//再次购买开关
+	public static  boolean  isReOrder=false;
 	
 
 	

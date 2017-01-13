@@ -114,10 +114,6 @@ public class MyAccontActivity extends BaseActivity implements OnClickListener {
 
 			finish();
 			break;
-		// case R.id.layout1:
-		// done(filePath);
-		//
-		// break;
 		case R.id.layout6:
 			IntentUtil.activityForward(mActivity, AdressManageActivity.class,
 					null, false);

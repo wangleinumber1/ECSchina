@@ -26,7 +26,7 @@
                 android:paddingRight="10dp"
                 android:maxEms="7"
                 android:ellipsize="end"
-                android:text="EMC 整机 900-566-003"
+                android:text=""
                 android:textColor="#333333"
                 android:textSize="11sp" />
 
@@ -37,7 +37,7 @@
                 android:layout_marginTop="13dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="￥28750.00"
+                android:text=""
                 android:textColor="#E94516"
                 android:textSize="11sp" />
             <ImageView

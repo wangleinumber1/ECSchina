@@ -142,7 +142,7 @@ public class AddAdressActivity extends WheelViewBaseActivity implements
 		case R.id.addadress_layout1:
 			popwindowUpDown();
 			/* 弹出键盘 */
-			getPopKeyboard();
+//			getPopKeyboard();
 
 			break;
 		case R.id.addadress_layoutImage1:
@@ -188,6 +188,8 @@ public class AddAdressActivity extends WheelViewBaseActivity implements
 				usernumber = phone
 						.getString(phone
 								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+				//电话获取会有空格
+				usernumber=usernumber.replace(" ", "");
 				addadress_layoutedit2.setText(usernumber);
 			}
 
